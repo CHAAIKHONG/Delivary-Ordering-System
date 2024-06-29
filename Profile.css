@@ -1,0 +1,137 @@
+body{
+    font-family: Calibri, Helvetica, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.all_infor{
+    display: flex;
+    flex-direction: row;
+    margin: 60px auto;
+    padding: 20px;
+    width:1000px;
+    justify-content: space-between;
+}
+
+.left_infor{
+    width: 200px;
+    background-color: #333;
+    padding: 20px;
+    height: 100vh;
+    /* position: fixed; */
+    /* top: 60px;
+    left: 60px; */
+    margin: 0 20px ;
+}
+
+.left_infor a{
+    display: block;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.left_infor a:hover{
+    /* background-color: #555; */
+    color: rgba(255, 0, 0, 0.616);
+}
+
+.left_infor a:focus{
+    color: rgba(255, 60, 0, 0.904);
+}
+
+.show_infor{
+    margin-left: 0px;
+    padding: 10px;
+    width: calc(100% - 240px);
+    background-color: #fff;
+    min-height: calc(100vh - 80px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile_information, .profile_detail{
+    display: flex;
+    flex-direction: column;
+}
+
+.profile_detail input {
+    margin: 10px 0;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    border-bottom: black solid;
+
+}
+
+.all_name{
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+.all_information {
+    margin: 0% 10%;
+}
+
+.btnsave_container{
+    padding: 50px 0;
+}
+
+.btnsave{
+    width: 200px;
+    height: 50px;
+    background-color: yellow;
+    border: 1px black solid;
+    border-radius: 25px;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.address-container {
+    width: auto;
+}
+
+.address-item, .add-address {
+    background-color: #f0f2f5;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.address-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.address-title {
+    font-weight: bold;
+    color: #555;
+}
+
+.address-details {
+    color: #777;
+    margin-top: 5px;
+}
+
+.edit-icon, .add-icon {
+    font-size: 20px;
+    color: #888;
+}
+
+.add-address {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.add-address span {
+    margin-right: 5px;
+    color: #777;
+}
