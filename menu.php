@@ -66,7 +66,7 @@ $result = mysqli_query($connect, $query);
                                 <span class="ste_price">RM'.$row['price'].'</span>
                             </div>
                             <div class="orderbtm">
-                                <a href="#" onclick="">Order</a>
+                                <a href="#" onclick="">Add Cart</a>
                             </div>
                         </div>
                     </div>';
