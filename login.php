@@ -1,3 +1,43 @@
+<?php
+session_start();
+
+// 模拟用户数据库
+$valid_username = 'user'; // 假设这是正确的用户名
+$valid_password = 'password'; // 假设这是正确的密码
+
+// 处理登录表单提交
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $remember = isset($_POST['remember']); // 是否选择了Remember Me
+
+    // 简单的验证
+    if ($username === $valid_username && $password === $valid_password) {
+        // 登录成功，设置会话
+        $_SESSION['username'] = $username;
+
+        // 如果选择了Remember Me，设置Cookie
+        if ($remember) {
+            $cookie_name = 'user_cookie';
+            $cookie_value = $username;
+            setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 30天有效期的Cookie
+        }
+
+        // 重定向到其他页面，例如主页
+        header('Location: index.php'); // 替换成你的主页地址
+        exit;
+    } else {
+        // 登录失败，可以添加错误提示
+        $error_message = "Invalid username or password";
+    }
+}
+
+// 检查是否存在持久性Cookie，如果存在且没有会话则自动登录
+if (!isset($_SESSION['username']) && isset($_COOKIE['user_cookie'])) {
+    $_SESSION['username'] = $_COOKIE['user_cookie'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,30 +60,35 @@
         </div>
         <div class="all_topright">
             <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding-right: 15px;"> Help</i></li>
-            <li class="user"><a href="login.html" style="font-size: 15px; text-decoration: none;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Login</a></i></li>
+            <?php if (!isset($_SESSION['username'])) : ?>
+                <li class="user"><a href="login.php" style="font-size: 15px; text-decoration: none;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Login</a></i></li>
+            <?php else : ?>
+                <li class="user"><a href="logout.php" style="font-size: 15px; text-decoration: none;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Logout</a></i></li>
+            <?php endif; ?>
         </div>
     </ul>
         
-    <main class="abc" >
+    <main class="abc">
         <div class="video_container">
             <video autoplay muted loop src="video/11805691-hd_2048_1024_24fps.mp4" id="background_video"></video>
         </div>
         <div class="form_container">
-            <form>
+            <form method="post" action="login.php">
                 <div class="container">
                     <h1>Login</h1>
-                    <!-- <label>Username</label> -->
                     <input type="text" placeholder="Enter Username" name="username" required>
-                    <!-- <label>Password</label> -->
                     <div class="kuang">
                         <input type="password" id="password" placeholder="Enter Password" name="password" required>
                         <div class="concel" id="concel"></div>
                     </div>
                     <button type="submit">Login</button>
-                    <input type="checkbox">Remember Me
+                    <input type="checkbox" name="remember">Remember Me
                     <a href="#" class="forgetpass">Forget password</a>
                     <hr>
-                    <p>New to our shop? <a href="register.html">Sign Up</a></p>
+                    <p>New to our shop? <a href="register.php">Sign Up</a></p>
+                    <?php if (isset($error_message)) : ?>
+                        <p><?php echo $error_message; ?></p>
+                    <?php endif; ?>
                 </div>
             </form>
         </div>
@@ -82,7 +127,6 @@
             </ul>
         </div>
     </footer>
-    
 
 </body>
 </html>
