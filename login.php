@@ -27,7 +27,7 @@
     <main class="abc" >
         <div class="video_container">
             <video autoplay muted loop id="background_video">
-                <source src="/video/11805691-hd_2048_1024_24fps.mp4" type="/video/mp4">
+                <source src="11805691-hd_2048_1024_24fps.mp4" type="/video/mp4">
             </video>
         </div>
         <div class="form_container">
