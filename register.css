@@ -1,0 +1,118 @@
+body{
+    font-family: Calibri,Helvetica,sans-serif;
+    background-color: white;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background-image: url(image/6.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-position-y: 10px;
+    /* position: relative; */
+    /* z-index: 1; */
+}
+
+/* body::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: -1;
+} */
+
+.createacc{
+    /* background: rgb(121, 117, 117); */
+    color: rgb(255, 255, 255);
+    padding: 20px;
+    margin: auto;
+    margin-top: 70px;
+    border-radius: 10px;
+    max-width: 400px;
+    text-align: center;
+    backdrop-filter: blur(20px);
+}
+
+.createacc h1, .createacc h3 {
+    margin: 10px 0;
+    font-size: 50px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.container input {
+    margin: 10px 0;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(255, 238, 0);
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+input[type=text],input[type=password]{
+    width: 100%;
+    margin: 8px 0;
+    padding: 12px 20px;
+    display: inline-block;
+    border: none;
+    box-sizing: border-box;
+}
+    
+.all_name{
+    display: flex;
+    gap: 10px;
+}
+    /* .name_container{
+ 
+} */
+
+.kuang, .confirm_kuang{
+    position: relative;
+    width: auto;
+    height: 60px;
+    border-radius: 5px;
+}
+
+
+.concel, .confirm_concel{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    background-image: url(image/close.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    cursor: pointer;
+}
+
+.open{
+    background-image: url(image/open.png);
+    background-size: 100%;
+    top: 20px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+}
