@@ -1,4 +1,10 @@
-<?php $connect = mysqli_connect("localhost","root","","moonbeedb"); ?>
+<?php 
+$connect = mysqli_connect("localhost","root","","moonbeedb"); 
+
+$query = "SELECT p.*, c.category_name FROM product p JOIN category c ON p.category_id = c.category_id";
+$result = mysqli_query($connect, $query);
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,443 +45,36 @@
         </div>
 
         <div class="product_list">
-            <!-- Meal -->
-            <div class="product_container meal">
-                <div class="product_body">
-                    <div class="product_image_detail">
-                        <div class="product_image">
-                            <img src="image/food/1.png" alt="food_set_1">
-                            <p>Chicken Patty Combo</p>
+            <?php
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo '<div class="product_container '.strtolower(str_replace(' ', '_', $row['category_name'])).'">
+                        <div class="product_body">
+                            <div class="product_image_detail">
+                                <div class="product_image">
+                                    <img src="image/food/'.$row['photo'].'" alt="'.$row['product_name'].'">
+                                    <p>'.$row['product_name'].'</p>
+                                </div>
+                                <div class="product_content">
+                                    <h2>Detail</h2>
+                                    <p>'.$row['description'].'</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="product_content">
-                            <h2>Detail</h2>
-                            <p>Burger Chicken Patty</p>
-                            <p>French fries</p>
-                            <p>Coca-cola</p>
+                        <div class="product_footer">
+                            <div class="product_price">
+                                <span class="ste_price">RM'.$row['price'].'</span>
+                            </div>
+                            <div class="orderbtm">
+                                <a href="#" onclick="">Order</a>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
+                    </div>';
+                }
+            }
 
-            <div class="product_container meal">
-                <div class="product_body">
-                    <div class="product_image_detail">
-                        <div class="product_image">
-                            <img src="image/food/2.png" alt="food_set_2">
-                            <p>Chicken Crispy Combo</p>
-                        </div>
-                        <div class="product_content">
-                            <h2>Detail</h2>
-                            <p>Burger Chicken Crispy</p>
-                            <p>French fries</p>
-                            <p>Coca-cola</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product_container meal">
-                <div class="product_body">
-                    <div class="product_image_detail">
-                        <div class="product_image">
-                            <img src="image/food/3.png" alt="food_set_2">
-                            <p>Chicken Grill Combo</p>
-                        </div>
-                        <div class="product_content">
-                            <h2>Detail</h2>
-                            <p>Burger Chicken Grill</p>
-                            <p>French fries</p>
-                            <p>Coca-cola</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product_container meal">
-                <div class="product_body">
-                    <div class="product_image_detail">
-                        <div class="product_image">
-                            <img src="image/food/4.png" alt="food_set_2">
-                            <p>Beef Grill Combo</p>
-                        </div>
-                        <div class="product_content">
-                            <h2>Detail</h2>
-                            <p>Burger Beef Grill</p>
-                            <p>French fries</p>
-                            <p>Coca-cola</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product_container meal">
-                <div class="product_body">
-                    <div class="product_image_detail">
-                        <div class="product_image">
-                            <img src="image/food/5.png" alt="food_set_2">
-                            <p>Special Beef Combo</p>
-                        </div>
-                        <div class="product_content">
-                            <h2>Detail</h2>
-                            <p>Burger Special Beef</p>
-                            <p>French fries</p>
-                            <p>Coca-cola</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product_container meal">
-                <div class="product_body">
-                    <div class="product_image_detail">
-                        <div class="product_image">
-                            <img src="image/food/6.png" alt="food_set_2">
-                            <p>Fries Chicken Regular Combo</p>
-                        </div>
-                        <div class="product_content">
-                            <h2>Detail</h2>
-                            <p>Fries Chicken Regular(2pc)</p>
-                            <p>French fries</p>
-                            <p>Coca-cola</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product_container meal">
-                <div class="product_body">
-                    <div class="product_image_detail">
-                        <div class="product_image">
-                            <img src="image/food/7.png" alt="food_set_2">
-                            <p>Fries Chicken Spicy Combo</p>
-                        </div>
-                        <div class="product_content">
-                            <h2>Detail</h2>
-                            <p>Fries Chicken Spicy(2pc)</p>
-                            <p>French fries</p>
-                            <p>Coca-cola</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Burger -->
-            <div class="product_container burger">
-                <div class="product_body">
-                    <div class="product_image_detail">
-                        <div class="product_image">
-                            <img src="image/food/8.png" alt="Burger_1">
-                            <p>Burger Chicken Patty</p>
-                        </div>
-                        <div class="product_content">
-                            <h2>Detail</h2>
-                            <p>Burger Chicken Patty</p>
-                            <p>French fries</p>
-                            <p>Coca-cola</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product_container burger">
-                <div class="product_body">
-                    <div class="product_image_detail">
-                        <div class="product_image">
-                            <img src="image/food/9.png" alt="Burger_2">
-                            <p>Burger Chicken Crispy</p>
-                        </div>
-                        <div class="product_content">
-                            <h2>Detail</h2>
-                            <p>Burger Chicken Patty</p>
-                            <p>French fries</p>
-                            <p>Coca-cola</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product_container burger">
-                <div class="product_body">
-                    <div class="product_image_detail">
-                        <div class="product_image">
-                            <img src="image/food/10.png" alt="Burger_3">
-                            <p>Burger Beef Grill</p>
-                        </div>
-                        <div class="product_content">
-                            <h2>Detail</h2>
-                            <p>Burger Chicken Patty</p>
-                            <p>French fries</p>
-                            <p>Coca-cola</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product_container burger">
-                <div class="product_body">
-                    <div class="product_image_detail">
-                        <div class="product_image">
-                            <img src="image/food/11.png" alt="Burger_3">
-                            <p>Burger Special Beef</p>
-                        </div>
-                        <div class="product_content">
-                            <h2>Detail</h2>
-                            <p>Burger Chicken Patty</p>
-                            <p>French fries</p>
-                            <p>Coca-cola</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product_container burger">
-                <div class="product_body">
-                    <div class="product_image_detail">
-                        <div class="product_image">
-                            <img src="image/food/12.png" alt="Burger_3">
-                            <p>Burger Chicken Grill</p>
-                        </div>
-                        <div class="product_content">
-                            <h2>Detail</h2>
-                            <p>Burger Chicken Patty</p>
-                            <p>French fries</p>
-                            <p>Coca-cola</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Chicken -->
-            <div class="product_container fried_chicken">
-                <div class="product_body">
-                    <img src="image/food/13.png" alt="normal">
-                    <p>Fries Chicken Regular(2pc)</p>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product_container fried_chicken">
-                <div class="product_body">
-                    <img src="image/food/14.png" alt="spicial">
-                    <p>Fries Chicken Spicy(2pc)</p>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-             <!-- Drinks -->
-            <div class="product_container drinks">
-                <div class="product_body">
-                    <img src="image/food/15.png" alt="Cola">
-                    <p>Coca-cola</p>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product_container drinks">
-                <div class="product_body">
-                    <img src="image/food/16.png" alt="Teh O">
-                    <p>Teh O</p>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product_container drinks">
-                <div class="product_body">
-                    <img src="image/food/17.png" alt="Teh">
-                    <p>Teh</p>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product_container drinks">
-                <div class="product_body">
-                    <img src="image/food/18.png" alt="Coffee">
-                    <p>Coffee</p>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Dessert_Sides -->
-            <div class="product_container dessert_sides">
-                <div class="product_body">
-                    <img src="image/food/20.png" alt="Salad">
-                    <p>Salad</p>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product_container dessert_sides">
-                <div class="product_body">
-                    <img src="image/food/21.png" alt="Nuggets">
-                    <p>Nuggets(6pc)</p>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product_container dessert_sides">
-                <div class="product_body">
-                    <img src="image/food/22.png" alt="Onion Ring">
-                    <p>Onion Ring</p>
-                </div>
-                <div class="product_footer">
-                    <div class="product_price">
-                        <span class="ste_price">RM9.90</span>
-                    </div>
-                    <div class="orderbtm">
-                        <a href="#" onclick="">Order</a>
-                    </div>
-                </div>
-            </div>
+            mysqli_close($connect);
+            ?>
         </div>
     </div>
 
@@ -515,3 +114,5 @@
     </footer>
 </body>
 </html>
+
+

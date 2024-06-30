@@ -1,3 +1,4 @@
+
 function filterProducts(category) {
     // Hide all products
     const allProducts = document.querySelectorAll('.product_container');
