@@ -206,7 +206,7 @@ ul {
 
 main{
     padding: 0px 100px;
-    margin-left: 150px;
+    margin-left: 15px;
 }
 
 /* .our-team-section{
@@ -244,11 +244,12 @@ main{
     padding-top: 1px;
     background-repeat: no-repeat;
     background-position-y: -45px;
+
 }
 
 .teampic{
     padding: 0px 100px;
-    margin-left: 100px;
+    margin-left: -100px;
 }
 
 .our-team-section h2{
@@ -260,7 +261,7 @@ main{
 .meetthemoonbeeteam, .Member{
     padding-left: 6%;
     padding: 0px 100px;
-    margin-left: 200px;
+    margin-left: 20px;
 }
 
 /* .background2{
