@@ -1,42 +1,47 @@
 <?php
-session_start();
+    session_start();
 
-// 模拟用户数据库
-$valid_username = 'user'; // 假设这是正确的用户名
-$valid_password = 'password'; // 假设这是正确的密码
+    // 连接到数据库
+    $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
-// 处理登录表单提交
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $remember = isset($_POST['remember']); // 是否选择了Remember Me
+    // 处理登录表单提交
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $email = mysqli_real_escape_string($connect, $_POST['username']);
+        $password = mysqli_real_escape_string($connect, $_POST['password']);
+        $remember = isset($_POST['remember']); // 是否选择了Remember Me
 
-    // 简单的验证
-    if ($username === $valid_username && $password === $valid_password) {
-        // 登录成功，设置会话
-        $_SESSION['username'] = $username;
+        // 查询数据库检查email和password
+        $sql = "SELECT * FROM user WHERE email='$email' AND password='$password'";
+        $result = mysqli_query($connect, $sql);
 
-        // 如果选择了Remember Me，设置Cookie
-        if ($remember) {
-            $cookie_name = 'user_cookie';
-            $cookie_value = $username;
-            setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 30天有效期的Cookie
+        if (mysqli_num_rows($result) > 0) {
+            // 登录成功，设置会话
+            $_SESSION['username'] = $email;
+
+            // 如果选择了Remember Me，设置Cookie
+            if ($remember) {
+                $cookie_name = 'user_cookie';
+                $cookie_value = $email;
+                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 30天有效期的Cookie
+            }
+
+            // 重定向到其他页面，例如主页
+            header('Location: menu.php'); // 替换成你的主页地址
+            exit;
+        } else {
+            // 登录失败，可以添加错误提示
+            echo '<script>alert("Invalid email or password")</script>';
         }
-
-        // 重定向到其他页面，例如主页
-        header('Location: index.php'); // 替换成你的主页地址
-        exit;
-    } else {
-        // 登录失败，可以添加错误提示
-        $error_message = "Invalid username or password";
     }
-}
 
-// 检查是否存在持久性Cookie，如果存在且没有会话则自动登录
-if (!isset($_SESSION['username']) && isset($_COOKIE['user_cookie'])) {
-    $_SESSION['username'] = $_COOKIE['user_cookie'];
-}
+    // 检查是否存在持久性Cookie，如果存在且没有会话则自动登录
+    if (!isset($_SESSION['username']) && isset($_COOKIE['user_cookie'])) {
+        $_SESSION['username'] = $_COOKIE['user_cookie'];
+    }
+
+    mysqli_close($connect);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -86,9 +91,6 @@ if (!isset($_SESSION['username']) && isset($_COOKIE['user_cookie'])) {
                     <a href="#" class="forgetpass">Forget password</a>
                     <hr>
                     <p>New to our shop? <a href="register.php">Sign Up</a></p>
-                    <?php if (isset($error_message)) : ?>
-                        <p><?php echo $error_message; ?></p>
-                    <?php endif; ?>
                 </div>
             </form>
         </div>
