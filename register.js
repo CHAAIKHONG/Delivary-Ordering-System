@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', function(){
     var password = document.querySelector('input[name="pass"]');
     var button = document.getElementById('concel');
+    var confirmPassword = document.querySelector('input[name="confirm_pass"]');
+    var confirmButton = document.getElementById('confirm_concel');
+    var form = document.getElementById('registerForm');
+    var errorMessage = document.getElementById('error_message');
 
     if (password && button) {
         button.addEventListener('click', function(){
@@ -14,19 +18,24 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     }
 
-    var con_password = document.querySelector('input[name="confirm_pass"]');
-    var con_button = document.getElementById('confirm_concel');
-    
-    if (con_password && con_button) {
-        con_button.addEventListener('click', function(){
-            if (con_password.type === 'password') {
-                con_password.setAttribute('type', 'text');
-                con_button.classList.add('open');
+    if (confirmPassword && confirmButton) {
+        confirmButton.addEventListener('click', function(){
+            if (confirmPassword.type === 'password') {
+                confirmPassword.setAttribute('type', 'text');
+                confirmButton.classList.add('open');
             } else {
-                con_password.setAttribute('type', 'password');
-                con_button.classList.remove('open');
+                confirmPassword.setAttribute('type', 'password');
+                confirmButton.classList.remove('open');
             }
         });
     }
-});
 
+    form.addEventListener('submit', function(event) {
+        if (password.value !== confirmPassword.value) {
+            event.preventDefault();
+            errorMessage.textContent = 'Password and Confirm Password do not match. Please re-enter.';
+            password.value = '';
+            confirmPassword.value = '';
+        }
+    });
+});

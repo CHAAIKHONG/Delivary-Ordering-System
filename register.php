@@ -13,20 +13,18 @@
         $last_name = mysqli_real_escape_string($connect, $_POST['last_name']);
         $email = mysqli_real_escape_string($connect, $_POST['email']);
         $phone_num = mysqli_real_escape_string($connect, $_POST['phone_num']);
-        $username = mysqli_real_escape_string($connect, $_POST['username']);
         $password = mysqli_real_escape_string($connect, $_POST['pass']);
 
         // 可以添加更多字段，根据你的数据库表格设计
 
         // 插入用户数据到数据库
-        $sql = "INSERT INTO user (username, password, first_name, last_name, address, phone_number, email)
-            VALUES ('$username', '$password', '$first_name', '$last_name', '', '$phone_num', '$email')";
+        $sql = "INSERT INTO user (password, first_name, last_name, address, phone_number, email)
+            VALUES ('$password', '$first_name', '$last_name', '', '$phone_num', '$email')";
 
         if (mysqli_query($connect, $sql)) {
-            echo "New record created successfully";
-            // 可以重定向到登录页面或其他操作
-            // header("Location: login.php"); // 例如重定向到登录页面
-            // exit();
+            echo '<script>alert("Registration Done")</script>';
+            echo '<script>window.location.href = "login.php";</script>';
+            exit; 
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($connect);
         }
@@ -44,7 +42,7 @@
     <link rel="icon" type="image/png" href="image/burger-removebg-preview.png">
     <link rel="stylesheet" href="head_footer.css">
     <link rel="stylesheet" href="register.css">
-    <script src="register.js" type="text/javascript"></script>
+    <!-- <script src="register.js" type="text/javascript"></script> -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
 </head>
 <body>
@@ -64,14 +62,14 @@
         <div class="createacc">
             <h1 class="title_frm">Join Our Member</h1>
             <div class="frm">
-                <form method="post" action="register.php">
+                <form method="post" action="register.php" id="registerForm">
                     <h3>Register</h3>
+                    <div id="error_message" style="color:#E74C3C; font-size: 20px;"></div>
                     <div class="container">
                         <div class="all_name"> 
                             <input type="text" placeholder="First Name" name="first_name" required>
                             <input type="text" placeholder="Last Name" name="last_name" required>
                         </div>
-                        <input type="text" placeholder="Username" name="username" required>
                         <input type="email" placeholder="Email" name="email" required>
                         <input type="number" placeholder="Phone number" name="phone_num" required>
                         <div class="kuang">
@@ -123,5 +121,49 @@
             </ul>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            var password = document.querySelector('input[name="pass"]');
+            var button = document.getElementById('concel');
+            var confirmPassword = document.querySelector('input[name="confirm_pass"]');
+            var confirmButton = document.getElementById('confirm_concel');
+            var form = document.getElementById('registerForm');
+            var errorMessage = document.getElementById('error_message');
+
+            if (password && button) {
+                button.addEventListener('click', function(){
+                    if (password.type === 'password') {
+                        password.setAttribute('type', 'text');
+                        button.classList.add('open');
+                    } else {
+                        password.setAttribute('type', 'password');
+                        button.classList.remove('open');
+                    }
+                });
+            }
+
+            if (confirmPassword && confirmButton) {
+                confirmButton.addEventListener('click', function(){
+                    if (confirmPassword.type === 'password') {
+                        confirmPassword.setAttribute('type', 'text');
+                        confirmButton.classList.add('open');
+                    } else {
+                        confirmPassword.setAttribute('type', 'password');
+                        confirmButton.classList.remove('open');
+                    }
+                });
+            }
+
+            form.addEventListener('submit', function(event) {
+                if (password.value !== confirmPassword.value) {
+                    event.preventDefault();
+                    errorMessage.textContent = 'Password and Confirm Password do not match. Please re-enter.';
+                    password.value = '';
+                    confirmPassword.value = '';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
