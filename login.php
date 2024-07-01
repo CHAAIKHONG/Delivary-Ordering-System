@@ -81,7 +81,7 @@
             <form method="post" action="login.php">
                 <div class="container">
                     <h1>Login</h1>
-                    <input type="text" placeholder="Enter Username" name="username" required>
+                    <input type="text" placeholder="Enter Email" name="username" required>
                     <div class="kuang">
                         <input type="password" id="password" placeholder="Enter Password" name="password" required>
                         <div class="concel" id="concel"></div>
