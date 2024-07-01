@@ -5,9 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MoonBees Staff | Admin Main Page</title>
 <link rel="icon" href="burger.png" type="image/png">
-<link
-    href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
-    rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
 <style>
 body {
@@ -15,8 +13,7 @@ body {
     background-image: url("bg.jpg.png"); 
     background-size: cover;
     background-repeat: no-repeat; 
-    background-attachment:fixed;
-
+    background-attachment: fixed;
 }
 
 ul.head{
@@ -54,7 +51,7 @@ ul.head li.topcenter:hover{
 }
 
 .all_topcenter{
-margin-left: 37%;
+    margin-left: 37%;
 }
 
 .all_topright{
@@ -118,7 +115,7 @@ body, html {
 }
 
 .border-box {
-    border: 5px ; /* Border around the entire content */
+    border: 5px; /* Border around the entire content */
     padding: 20px; /* Optional padding inside the border */
     margin: 50px auto; /* Center the box horizontally */
     background-color: rgba(107, 107, 107, 0.49); 
@@ -146,15 +143,15 @@ body, html {
                 <img src="logo_final.png" alt="logo" class="logo">
                 <h3 class="admin">Admin 1</h3>
                 <div class="all_button">
-                    <button class="option">
+                    <button class="option" onclick="location.href='managestaff.html'">
                         <img src="staff.png" alt="Staff">
                         Manage Staff
                     </button>
-                    <button class="option">
+                    <button class="option" onclick="location.href='manageproduct.html'">
                         <img src="product.png" alt="product">
                         Manage Product
                     </button>
-                    <button class="option">
+                    <button class="option" onclick="location.href='report.html'">
                         <img src="report.png" alt="report">
                         Report
                     </button>
