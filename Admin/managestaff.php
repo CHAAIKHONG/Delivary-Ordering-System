@@ -1,6 +1,21 @@
 <?php 
 $connect = mysqli_connect("localhost","root","","moonbeedb"); 
 
+if (!$connect) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+if (isset($_GET['delete_id'])) {
+    $id = intval($_GET['delete_id']);
+    $query = "DELETE FROM staff WHERE id=$id";
+
+    if (mysqli_query($connect, $query)) {
+        echo "Record deleted successfully";
+    } else {
+        echo "Error deleting record: " . mysqli_error($connect);
+    }
+}
+
 $query = "SELECT * FROM staff";
 $result = mysqli_query($connect, $query);
 ?>
@@ -15,13 +30,13 @@ $result = mysqli_query($connect, $query);
 <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
 <style>
-        body {
+    body {
         background-image: url("bg.jpg.png"); 
         background-size: cover;
         background-repeat: no-repeat; 
         background-attachment:fixed;
     }
-    
+
     ul.head {
         list-style-type: none;
         margin: 0;
@@ -137,7 +152,7 @@ $result = mysqli_query($connect, $query);
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
-        align-items: center;
+        align-items: center.
     }
 
     .staff-member {
@@ -202,7 +217,6 @@ $result = mysqli_query($connect, $query);
     .details button:hover {
         background-color: green;
     }
-
 </style>
 </head>
 <body>
@@ -242,7 +256,7 @@ $result = mysqli_query($connect, $query);
                         <p>'.$row['fullname'].'</p>
                         <div class="details">
                             <button onclick="location.href=\'staffdetails.php?id='.$row['id'].'\'">Staff Details</button>
-                            <button>Remove</button>
+                            <button onclick="if(confirm(\'Are you sure you want to delete this staff member?\')) location.href=\'managestaff.php?delete_id='.$row['id'].'\'">Remove</button>
                         </div>
                     </div>';
                 }
@@ -253,7 +267,7 @@ $result = mysqli_query($connect, $query);
                 <img src="add.png" alt="Add Staff" class="add">
                 <p>Add</p>
                 <div class="details">
-                    <button>Add New Staff</button>
+                <button type="button"  onclick="location.href='addnewstaff.php'">Add New Staff</button>
                 </div>
             </div>
         </div>
