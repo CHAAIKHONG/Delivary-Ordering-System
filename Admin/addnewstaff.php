@@ -1,6 +1,6 @@
 <?php
 $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
-
+// hihihihihihi
 $update_success = false;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -13,6 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $experience = $_POST['experience'];
     $skills = $_POST['skills'];
     $position = $_POST['position'];
+
+    $photo_destination = ''; // 初始化变量以避免未定义错误
+
 
     // 处理上传的照片
     if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
@@ -31,33 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($photo_error === 0) {
                 if ($photo_size < 5000000) { // 文件大小限制为 5MB
                     $photo_new_name = uniqid('', true) . "." . $photo_actual_ext;
-                    $photo_destination = __DIR__ . '/uploads/' . $photo_new_name;
+                    $photo_destination = 'uploads/' . $photo_new_name;
 
-                    // 调试信息
-                    echo "Temp file path: " . $photo_tmp_name . "<br>";
-                    echo "Destination path: " . $photo_destination . "<br>";
-
-                    if (!is_dir(__DIR__ . '/uploads')) {
-                        echo "The uploads directory does not exist.<br>";
-                        mkdir(__DIR__ . '/uploads', 0777, true);
-                        if (is_dir(__DIR__ . '/uploads')) {
-                            echo "The uploads directory has been created.<br>";
-                        } else {
-                            echo "Failed to create the uploads directory.<br>";
-                        }
-                    }
-
-                    if (!is_writable(__DIR__ . '/uploads')) {
-                        echo "The uploads directory is not writable.<br>";
-                        chmod(__DIR__ . '/uploads', 0777);
-                        if (is_writable(__DIR__ . '/uploads')) {
-                            echo "The uploads directory is now writable.<br>";
-                        } else {
-                            echo "Failed to make the uploads directory writable.<br>";
-                        }
+                    if (!is_dir('uploads')) {
+                        mkdir('uploads', 0777, true);
                     }
 
                     if (move_uploaded_file($photo_tmp_name, $photo_destination)) {
+                        // 文件上传成功
                         echo "File uploaded successfully.<br>";
                     } else {
                         echo "Failed to move the uploaded file.<br>";
@@ -72,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "You cannot upload files of this type!";
         }
     } else {
-        $photo_destination = ''; // 如果没有上传照片，路径为空
         echo "No file uploaded or there was an error!";
     }
 
@@ -88,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 mysqli_close($connect);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -381,7 +363,7 @@ body, html {
                         </div>
                     </form>
                     <button type="button" class="back-button" onclick="location.href='managestaff.php'">Back</button>
-                    </div>
+                </div>
             </div>
         </div>
     </div>
