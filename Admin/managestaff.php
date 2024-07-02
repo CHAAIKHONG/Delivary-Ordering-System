@@ -238,8 +238,8 @@ $result = mysqli_query($connect, $query);
             if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo '<div class="staff-member">
-                        <img src="image/staff/'.$row['photo'].'" alt="'.$row['fullname'].'">
-                        <p>'.$row['name'].'</p>
+                        <img src="'.$row['photo'].'" alt="'.$row['fullname'].'">
+                        <p>'.$row['fullname'].'</p>
                         <div class="details">
                             <button onclick="location.href=\'staffdetails.php?id='.$row['id'].'\'">Staff Details</button>
                             <button>Remove</button>
