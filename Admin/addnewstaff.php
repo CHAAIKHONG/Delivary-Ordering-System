@@ -1,6 +1,6 @@
 <?php
 $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
-// hihihihihihi
+
 $update_success = false;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
