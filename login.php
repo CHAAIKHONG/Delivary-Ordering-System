@@ -68,7 +68,7 @@
             <?php if (!isset($_SESSION['username'])) : ?>
                 <li class="user"><a href="login.php" style="font-size: 15px; text-decoration: none;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Login</a></i></li>
             <?php else : ?>
-                <li class="user"><a href="logout.php" style="font-size: 15px; text-decoration: none;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Logout</a></i></li>
+                <li class="user"><a href="login.php" style="font-size: 15px; text-decoration: none;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Logout</a></i></li>
             <?php endif; ?>
         </div>
     </ul>
