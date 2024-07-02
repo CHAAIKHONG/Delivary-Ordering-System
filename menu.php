@@ -1,8 +1,28 @@
-<?php 
-$connect = mysqli_connect("localhost","root","","moonbeedb"); 
+<?php
+    session_start();
+    $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
-$query = "SELECT p.*, c.category_name FROM product p JOIN category c ON p.category_id = c.category_id";
-$result = mysqli_query($connect, $query);
+    // 检查数据库连接
+    if (!$connect) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    // 检查用户登录状态和获取用户信息
+    $userPhoto = null;
+    $userName = 'Guest';
+
+    if (isset($_SESSION['photo'])) {
+        $userPhoto = $_SESSION['photo'];
+    }
+
+    if (isset($_SESSION['fullname'])) {
+        $userName = $_SESSION['fullname'];
+    }
+
+    // 查询产品信息
+    $query = "SELECT p.*, c.category_name FROM product p JOIN category c ON p.category_id = c.category_id";
+    $result = mysqli_query($connect, $query);
+
 ?>
 
 
@@ -29,7 +49,15 @@ $result = mysqli_query($connect, $query);
         <div class="all_topright">
             <li class="shopping_card"><a href="shopping_cart.html"><i class="ri-shopping-cart-fill" style="color: white; display: block; margin-top: 20px;"></i></a></li>
             <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding: 0px 15px;"> Help</i></li>
-            <li class="user"><a href="login.php" style="font-size: 15px; text-decoration: none;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Login</a></i></li>
+            <li class="user">
+                <a href="profile.html" style="font-size: 15px; text-decoration: none;">
+                <?php if ($userPhoto) : ?>
+                    <img src="image/user/<?php echo $userPhoto; ?>" alt="User Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;"><?php echo $userName; ?>
+                <?php else : ?>
+                    <i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"><?php echo $userName; ?></i>
+                <?php endif; ?>
+                </a>
+            </li>
         </div>
     </ul>
 
