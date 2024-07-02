@@ -9,8 +9,9 @@
 
     // 检查用户登录状态和获取用户信息
     $userPhoto = null;
-    $userName = 'Guest';
+    $userName = 'user';
 
+    
     $user_id = $_SESSION['user_id'];
 
     if (isset($_SESSION['photo'])) {
@@ -20,11 +21,10 @@
     if (isset($_SESSION['fullname'])) {
         $userName = $_SESSION['fullname'];
     }
-    
+
     // 查询产品信息
     $query = "SELECT p.*, c.category_name FROM product p JOIN category c ON p.category_id = c.category_id";
     $result = mysqli_query($connect, $query);
-
 ?>
 
 
@@ -96,7 +96,7 @@
                                 <span class="ste_price">RM'.$row['price'].'</span>
                             </div>
                             <div class="orderbtm">
-                                <button class="add-to-cart" data-id="<?php echo $row['product_id']; ?>">Add Cart</button>
+                                <a href="#" class="add-to-cart" data-id="'.$row['product_id'].'">Add Cart</a>
                             </div>
                         </div>
                     </div>';
