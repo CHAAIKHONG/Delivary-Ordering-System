@@ -10,18 +10,37 @@
     // 检查用户登录状态和获取用户信息
     $userPhoto = null;
     $userName = 'user';
+    $userAddress = '';
 
-    
-    $user_id = $_SESSION['user_id'];
+    if (isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id'];
 
-    if (isset($_SESSION['photo'])) {
-        $userPhoto = $_SESSION['photo'];
+        if (isset($_SESSION['photo'])) {
+            $userPhoto = $_SESSION['photo'];
+        }
+
+        if (isset($_SESSION['fullname'])) {
+            $userName = $_SESSION['fullname'];
+        }
+
+        // 获取用户地址
+        $query = "SELECT address FROM user WHERE user_id = ?";
+        $stmt = $connect->prepare($query);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $userAddress = $row['address'];
+        }
+
+        $stmt->close();
+    } else {
+        // 用户未登录，重定向到登录页面
+        header("Location: login.php");
+        exit();
     }
-
-    if (isset($_SESSION['fullname'])) {
-        $userName = $_SESSION['fullname'];
-    }
-
 ?>
 
 <!DOCTYPE html>
@@ -65,20 +84,25 @@
             <div class="cart_detail">
                 
                 <div class="address_detail_1">
-                    <div class="popup_container">
+                <div class="popup_container">
                         <div class="detail_2">
                             <h4>Deliver to</h4>
                             <div class="icon_address">
-                                <!-- <span class="icon"> -->
-                                    <i class="ri-home-8-line"></i>
-                                <!-- </span> -->
-                                <!-- <div> -->
-                                    <p>house</p>
-                                    <p>address</p>
-                                <!-- </div> -->
+                                <i class="ri-home-8-line"></i>
+                                <p><?php echo $userAddress ? $userAddress : "No address found"; ?></p>
                             </div>
                         </div>
-                        <i class="ri-arrow-right-s-line"></i>
+                        <button onclick="document.getElementById('addressModal').style.display='block'">Change Address</button>
+                    </div>
+                    <div id="addressModal" class="modal" style="display: none;">
+                        <div class="modal-content">
+                            <h2>Change Address</h2>
+                            <form id="changeAddressForm">
+                                <label for="newAddress">New Address:</label>
+                                <input type="text" id="newAddress" name="newAddress" required>
+                                <button type="submit">Save Address</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <hr>
@@ -201,31 +225,32 @@
         </div>
     </footer>
 
+    
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const reduceBtns = document.querySelectorAll('.quantity_reduce');
-            const increaseBtns = document.querySelectorAll('.quantity_increase');
-            const quantities = document.querySelectorAll('#items_quantity');
+            const modal = document.getElementById("addressModal");
 
-            reduceBtns.forEach((btn, index) => {
-                btn.addEventListener('click', () => {
-                    event.preventDefault();
-                    let quantity = parseInt(quantities[index].textContent);
-                    if (quantity > 1) {
-                        quantity--;
-                        quantities[index].textContent = quantity;
+            document.getElementById('changeAddressForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const newAddress = document.getElementById('newAddress').value;
+                saveAddress(newAddress);
+            });
+
+            function saveAddress(newAddress) {
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'save_address.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function() {
+                    if (this.status == 200) {
+                        // 刷新页面
+                        location.reload();
+                    } else {
+                        alert("Failed to save address");
                     }
-                });
-            });
-
-            increaseBtns.forEach((btn, index) => {
-                btn.addEventListener('click', () => {
-                    event.preventDefault();
-                    let quantity = parseInt(quantities[index].textContent);
-                    quantity++;
-                    quantities[index].textContent = quantity;
-                });
-            });
+                };
+                xhr.send('newAddress=' + encodeURIComponent(newAddress));
+            }
         });
     </script>
 </body>
