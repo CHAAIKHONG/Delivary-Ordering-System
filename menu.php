@@ -50,7 +50,7 @@
             <li class="shopping_card"><a href="shopping_cart.html"><i class="ri-shopping-cart-fill" style="color: white; display: block; margin-top: 20px;"></i></a></li>
             <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding: 0px 15px;"> Help</i></li>
             <li class="user">
-                <a href="profile.php" style="font-size: 15px; text-decoration: none;">
+                <a href="profile.html" style="font-size: 15px; text-decoration: none;">
                 <?php if ($userPhoto) : ?>
                     <img src="image/user/<?php echo $userPhoto; ?>" alt="User Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;"><?php echo $userName; ?>
                 <?php else : ?>
