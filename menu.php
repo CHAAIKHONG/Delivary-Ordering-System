@@ -21,7 +21,6 @@
         $userName = $_SESSION['fullname'];
     }
     
-
     // 查询产品信息
     $query = "SELECT p.*, c.category_name FROM product p JOIN category c ON p.category_id = c.category_id";
     $result = mysqli_query($connect, $query);
@@ -97,7 +96,7 @@
                                 <span class="ste_price">RM'.$row['price'].'</span>
                             </div>
                             <div class="orderbtm">
-                                <a href="#" onclick="">Add Cart</a>
+                                <button class="add-to-cart" data-id="<?php echo $row['product_id']; ?>">Add Cart</button>
                             </div>
                         </div>
                     </div>';
