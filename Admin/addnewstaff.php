@@ -15,7 +15,6 @@ body {
     background-attachment: fixed;
     height: 100vh;
     margin: 0;
-    overflow: hidden;
 }
 
 ul.head {
@@ -72,70 +71,141 @@ ul.head li.topright {
     margin-right: 10px;
 }
 
+body, html {
+    height: 100%;
+    margin: 0;
+    position: relative;
+    font-family: Arial, sans-serif;
+}
+
 .container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: calc(100vh - 80px); /* Adjusted for the header height */
+    margin-top: 80px; /* Adjust to avoid navbar */
+    height: calc(100vh - 80px); /* Adjust container height to avoid header */
+    overflow: hidden; 
+}
+
+.scrollable-content {
+    width: 100%;
+    max-width: 900px;
+    overflow-y: auto; /* Allow vertical scrolling */
     padding: 20px;
     box-sizing: border-box;
+    height: 100%;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE 10+ */
 }
 
-form {
+.scrollable-content::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 15px;
-    padding: 30px;
+    padding: 50px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 900px; /* Adjusted to match staffdetails */
+    margin-bottom: 20px;
+    position: relative; /* For positioning the button */
 }
 
-form h1 {
+.staff-profile {
     text-align: center;
+    margin-right: 20px;
+}
+
+.staff-profile img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 5px solid rgba(0, 0, 0, 0.2); /* Adjusted border size */
+}
+
+.staff-profile h2 {
+    margin: 10px 0;
+    font-size: 30px;
+}
+
+.position {
+    font-size: 20px;
+}
+
+.staff-details {
+    width: 100%;
+    position: relative;
+}
+
+.staff-details h3 {
+    margin-bottom: 15px;
+    font-size: 30px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.staff-details .form-group {
     margin-bottom: 20px;
 }
 
-form label {
+.staff-details .form-group label {
     display: block;
-    margin-bottom: 10px;
     font-weight: bold;
 }
 
-form input,
-form textarea {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-bottom: 15px;
+.staff-details .form-group input,
+.staff-details .form-group textarea {
+    width: 100%;
+    padding: 12px; /* Increased padding for better touch feel */
+    margin-top: 8px; /* Adjusted margin */
+    border-radius: 8px; /* Rounded corners */
     border: 1px solid #ccc;
-    border-radius: 5px;
     box-sizing: border-box;
+    font-size: 16px; /* Slightly increased font size */
 }
 
-form textarea {
-    height: 100px;
+.staff-details .form-row {
+    display: flex;
+    justify-content: space-between;
 }
 
-form button {
-    background-color: lightgrey;
+.staff-details .form-row .form-group {
+    width: 48%;
+}
+
+.staff-details .form-group textarea {
+    height: 120px; /* Increased height */
+    resize: vertical;
+}
+
+.back-button, .add-button {
+    position: absolute;
+    right: 10px;
+    bottom: 10px; /* Adjusted to bottom */
+    padding: 12px 24px; /* Increased padding */
+    font-size: 18px; /* Increased font size */
     color: black;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
+    background-color: lightgrey;
+    border: 1px solid #ccc;
+    border-radius: 8px; /* Rounded corners */
     cursor: pointer;
 }
 
-form button:hover {
-    background-color: grey;
+.add-button {
+    right: 140px; /* Adjusted position */
+}
+
+.back-button:hover, .add-button:hover {
+    background-color: grey; /* Hover color */
 }
 
 @media (max-width: 768px) {
     .container {
         padding: 10px;
-    }
-
-    form {
-        padding: 20px;
     }
 }
 </style>
@@ -195,7 +265,7 @@ form button:hover {
                     </div>
                 </div>
             </div>
-            <button type="submit">Add Staff</button>
+            <button type="submit" class="add-button">Add Staff</button>
             <button type="button" class="back-button" onclick="location.href='managestaff.php'">Back</button>
         </form>
     </div>
