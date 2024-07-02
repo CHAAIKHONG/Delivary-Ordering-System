@@ -45,8 +45,8 @@
         <li class="topleft"><a href="" class="head_title">MoonBees</a></li>
         <div class="all_topcenter">
             <li class="topcenter"><a href="menu.php" class="head_title">Menu</a></li>
-            <li class="topcenter"><a href="ContactUs.html" class="head_title">Contact Us</a></li>
-            <li class="topcenter"><a href="aboutus.html" class="head_title">About Us</a></li>
+            <li class="topcenter"><a href="ContactUs.php" class="head_title">Contact Us</a></li>
+            <li class="topcenter"><a href="aboutus.php" class="head_title">About Us</a></li>
         </div>
         <div class="all_topright">
             <li class="shopping_card"><a href="shopping_cart.php"><i class="ri-shopping-cart-fill" style="color: white; display: block; margin-top: 20px;"></i></a></li>
