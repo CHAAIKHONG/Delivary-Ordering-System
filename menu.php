@@ -11,6 +11,8 @@
     $userPhoto = null;
     $userName = 'Guest';
 
+    $user_id = $_SESSION['user_id'];
+
     if (isset($_SESSION['photo'])) {
         $userPhoto = $_SESSION['photo'];
     }
@@ -18,6 +20,7 @@
     if (isset($_SESSION['fullname'])) {
         $userName = $_SESSION['fullname'];
     }
+    
 
     // 查询产品信息
     $query = "SELECT p.*, c.category_name FROM product p JOIN category c ON p.category_id = c.category_id";
@@ -94,7 +97,7 @@
                                 <span class="ste_price">RM'.$row['price'].'</span>
                             </div>
                             <div class="orderbtm">
-                                <a href="add_to_cart.php?product_id=<?php echo $row['product_id']; ?>">Add Cart</a>
+                                <a href="#" onclick="">Add Cart</a>
                             </div>
                         </div>
                     </div>';
