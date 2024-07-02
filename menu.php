@@ -49,7 +49,7 @@
             <li class="topcenter"><a href="aboutus.html" class="head_title">About Us</a></li>
         </div>
         <div class="all_topright">
-            <li class="shopping_card"><a href="shopping_cart.html"><i class="ri-shopping-cart-fill" style="color: white; display: block; margin-top: 20px;"></i></a></li>
+            <li class="shopping_card"><a href="shopping_cart.php"><i class="ri-shopping-cart-fill" style="color: white; display: block; margin-top: 20px;"></i></a></li>
             <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding: 0px 15px;"> Help</i></li>
             <li class="user">
                 <a href="profile.html" style="font-size: 15px; text-decoration: none;">
