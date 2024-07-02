@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     if (move_uploaded_file($photo_tmp_name, $photo_destination)) {
                         // 文件上传成功
-                        echo "File uploaded successfully.<br>";
+                        echo '<script>alert("File uploaded successfully.<br>")</script>';
                     } else {
                         echo "Failed to move the uploaded file.<br>";
                     }
