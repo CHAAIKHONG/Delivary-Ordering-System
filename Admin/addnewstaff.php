@@ -1,3 +1,95 @@
+<?php
+$connect = mysqli_connect("localhost", "root", "", "moonbeedb");
+
+$update_success = false;
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $fullname = $_POST['Name'];
+    $years = $_POST['years'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $salary = $_POST['Salary'];
+    $address = $_POST['address'];
+    $experience = $_POST['experience'];
+    $skills = $_POST['skills'];
+    $position = $_POST['position'];
+
+    // 处理上传的照片
+    if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
+        $photo = $_FILES['photo'];
+        $photo_name = $photo['name'];
+        $photo_tmp_name = $photo['tmp_name'];
+        $photo_size = $photo['size'];
+        $photo_error = $photo['error'];
+        $photo_type = $photo['type'];
+
+        $photo_ext = explode('.', $photo_name);
+        $photo_actual_ext = strtolower(end($photo_ext));
+        $allowed = array('jpg', 'jpeg', 'png');
+
+        if (in_array($photo_actual_ext, $allowed)) {
+            if ($photo_error === 0) {
+                if ($photo_size < 5000000) { // 文件大小限制为 5MB
+                    $photo_new_name = uniqid('', true) . "." . $photo_actual_ext;
+                    $photo_destination = __DIR__ . '/uploads/' . $photo_new_name;
+
+                    // 调试信息
+                    echo "Temp file path: " . $photo_tmp_name . "<br>";
+                    echo "Destination path: " . $photo_destination . "<br>";
+
+                    if (!is_dir(__DIR__ . '/uploads')) {
+                        echo "The uploads directory does not exist.<br>";
+                        mkdir(__DIR__ . '/uploads', 0777, true);
+                        if (is_dir(__DIR__ . '/uploads')) {
+                            echo "The uploads directory has been created.<br>";
+                        } else {
+                            echo "Failed to create the uploads directory.<br>";
+                        }
+                    }
+
+                    if (!is_writable(__DIR__ . '/uploads')) {
+                        echo "The uploads directory is not writable.<br>";
+                        chmod(__DIR__ . '/uploads', 0777);
+                        if (is_writable(__DIR__ . '/uploads')) {
+                            echo "The uploads directory is now writable.<br>";
+                        } else {
+                            echo "Failed to make the uploads directory writable.<br>";
+                        }
+                    }
+
+                    if (move_uploaded_file($photo_tmp_name, $photo_destination)) {
+                        echo "File uploaded successfully.<br>";
+                    } else {
+                        echo "Failed to move the uploaded file.<br>";
+                    }
+                } else {
+                    echo "Your file is too big!";
+                }
+            } else {
+                echo "There was an error uploading your file!";
+            }
+        } else {
+            echo "You cannot upload files of this type!";
+        }
+    } else {
+        $photo_destination = ''; // 如果没有上传照片，路径为空
+        echo "No file uploaded or there was an error!";
+    }
+
+    // 插入数据到数据库
+    $query = "INSERT INTO staff (fullname, yearsold, email, phone, salary, address, workexperience, skill, photo, position) VALUES ('$fullname', '$years', '$email', '$phone', '$salary', '$address', '$experience', '$skills', '$photo_destination', '$position')";
+
+    if (mysqli_query($connect, $query)) {
+        $update_success = true;
+    } else {
+        echo "Error adding new record: " . mysqli_error($connect);
+    }
+}
+
+mysqli_close($connect);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +107,7 @@ body {
     background-attachment: fixed;
     height: 100vh;
     margin: 0;
+    overflow: hidden; 
 }
 
 ul.head {
@@ -149,7 +242,7 @@ body, html {
 }
 
 .staff-details .form-group {
-    margin-bottom: 20px;
+    margin: 10px 0;
 }
 
 .staff-details .form-group label {
@@ -160,12 +253,11 @@ body, html {
 .staff-details .form-group input,
 .staff-details .form-group textarea {
     width: 100%;
-    padding: 12px; /* Increased padding for better touch feel */
-    margin-top: 8px; /* Adjusted margin */
-    border-radius: 8px; /* Rounded corners */
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
     border: 1px solid #ccc;
     box-sizing: border-box;
-    font-size: 16px; /* Slightly increased font size */
 }
 
 .staff-details .form-row {
@@ -177,97 +269,132 @@ body, html {
     width: 48%;
 }
 
+.staff-details .form-group input[type="text"],
+.staff-details .form-group input[type="email"],
+.staff-details .form-group input[type="tel"] {
+    height: 30px;
+}
+
 .staff-details .form-group textarea {
-    height: 120px; /* Increased height */
+    height: 80px;
     resize: vertical;
 }
 
-.back-button, .add-button {
+.back-button {
     position: absolute;
+    top: 10px;
     right: 10px;
-    bottom: 10px; /* Adjusted to bottom */
-    padding: 12px 24px; /* Increased padding */
-    font-size: 18px; /* Increased font size */
-    color: black;
-    background-color: lightgrey;
-    border: 1px solid #ccc;
-    border-radius: 8px; /* Rounded corners */
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 18px;
     cursor: pointer;
+    text-decoration: none;
 }
 
-.add-button {
-    right: 140px; /* Adjusted position */
+.staff-details .form-group input[type="submit"] {
+    width: auto;
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-.back-button:hover, .add-button:hover {
-    background-color: grey; /* Hover color */
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
+.staff-details .form-group input[type="submit"]:hover {
+    background-color: #45a049;
 }
 </style>
-
 </head>
 <body>
     <ul class="head">
         <li class="topleft">
-            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-            <a href="#home">MoonBees</a>
+            <a href="javascript:void(0);" onclick="toggleMenu()">&#9776;</a>
+            <a href="staffdetails.php">Staff Details</a>
         </li>
-        <div class="all_topright">
-            <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding: 0px 15px;"> Help</i></li>
-            <li class="user"><a href="staff_login.html" style="font-size: 15px; text-decoration: none; padding: 0;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Login</a></i></li>
-        </div>
+        <li class="topright">
+            <a href="index.php" class="all_topright">Home</a>
+        </li>
+        <li class="topright">
+            <a href="logout.php">Logout</a>
+        </li>
     </ul>
 
     <div class="container">
-        <form action="" method="post">
-            <h1>Add New Staff</h1>
+        <div class="scrollable-content">
             <div class="profile-container">
-                <div class="staff-profile">
-                    <img src="default_profile.jpg" alt="Profile Picture">
-                </div>
                 <div class="staff-details">
-                    <div class="form-group">
-                        <label for="Name">Full Name:</label>
-                        <input type="text" id="Name" name="Name" required>
+                    <h3>Staff Details</h3>
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="Name">Full Name:</label>
+                                <input type="text" id="Name" name="Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="years">Years Old:</label>
+                                <input type="text" id="years" name="years" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone:</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="Salary">Salary:</label>
+                                <input type="text" id="Salary" name="Salary" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Address:</label>
+                                <input type="text" id="address" name="address" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="experience">Work Experience:</label>
+                            <textarea id="experience" name="experience" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="skills">Skills:</label>
+                            <textarea id="skills" name="skills" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="position">Position:</label>
+                            <input type="text" id="position" name="position" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="photo">Upload Photo:</label>
+                            <input type="file" id="photo" name="photo" accept="image/*">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Add Staff">
+                        </div>
+                    </form>
+                    <button type="button" class="back-button" onclick="location.href='managestaff.php'">Back</button>
                     </div>
-                    <div class="form-group">
-                        <label for="years">Years old:</label>
-                        <input type="text" id="years" name="years" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone:</label>
-                        <input type="tel" id="phone" name="phone" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="Salary">Salary:</label>
-                        <input type="text" id="Salary" name="Salary" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address:</label>
-                        <input type="text" id="address" name="address" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="experience">Work Experience:</label>
-                        <textarea id="experience" name="experience" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="skills">Skills:</label>
-                        <textarea id="skills" name="skills" required></textarea>
-                    </div>
-                </div>
             </div>
-            <button type="submit" class="add-button">Add Staff</button>
-            <button type="button" class="back-button" onclick="location.href='managestaff.php'">Back</button>
-        </form>
+        </div>
     </div>
+
+<script>
+function toggleMenu() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
+</script>
 </body>
 </html>
