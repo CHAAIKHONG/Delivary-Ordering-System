@@ -94,7 +94,7 @@
                                 <span class="ste_price">RM'.$row['price'].'</span>
                             </div>
                             <div class="orderbtm">
-                                <a href="#" onclick="">Add Cart</a>
+                                <a href="add_to_cart.php?product_id=<?php echo $row['product_id']; ?>">Add Cart</a>
                             </div>
                         </div>
                     </div>';
