@@ -54,7 +54,7 @@ $result = mysqli_query($connect, $query);
                 $category_query = "SELECT * FROM category";
                 $category_result = mysqli_query($connect, $category_query);
                 while ($row = mysqli_fetch_assoc($category_result)) {
-                    echo "<button onclick=\"filterCategory('" . $row['category_name'] . "')\">" . $row['category_name'] . "</button>";
+                    echo "<button onclick=\"filterCategory('" . htmlspecialchars($row['category_name']) . "')\">" . htmlspecialchars($row['category_name']) . "</button>";
                 }
                 ?>
             </div>
@@ -75,16 +75,17 @@ $result = mysqli_query($connect, $query);
                     <?php
                     while ($row = mysqli_fetch_assoc($result)) {
                         $image_path = !empty($row['image_path']) ? $row['image_path'] : 'images/default.png';
+                        $quantity = isset($row['quantity']) ? $row['quantity'] : 0;
                         echo "<tr>
-                            <td><img src='$image_path' alt='Product Image' width='50' height='50'></td>
-                            <td>" . $row['product_name'] . "</td>
-                            <td>" . $row['category_name'] . "</td>
-                            <td>" . $row['price'] . "</td>
-                            <td>" . $row['quantity'] . "</td>
-                            <td>" . $row['description'] . "</td>
+                            <td><img src='" . htmlspecialchars($image_path) . "' alt='Product Image' width='50' height='50'></td>
+                            <td>" . htmlspecialchars($row['product_name']) . "</td>
+                            <td>" . htmlspecialchars($row['category_name']) . "</td>
+                            <td>" . htmlspecialchars($row['price']) . "</td>
+                            <td>" . htmlspecialchars($quantity) . "</td>
+                            <td>" . nl2br(htmlspecialchars_decode($row['description'])) . "</td>
                             <td class='actions'>
-                                <button onclick=\"showEditProductModal(" . $row['product_id'] . ")\">Edit</button>
-                                <button onclick=\"deleteProduct(" . $row['product_id'] . ")\">Delete</button>
+                                <button onclick=\"showEditProductModal(" . htmlspecialchars($row['product_id']) . ")\">Edit</button>
+                                <button onclick=\"deleteProduct(" . htmlspecialchars($row['product_id']) . ")\">Delete</button>
                             </td>
                         </tr>";
                     }
@@ -110,7 +111,7 @@ $result = mysqli_query($connect, $query);
                     $category_query = "SELECT * FROM category";
                     $category_result = mysqli_query($connect, $category_query);
                     while ($row = mysqli_fetch_assoc($category_result)) {
-                        echo "<option value='" . $row["category_id"] . "'>" . $row["category_name"] . "</option>";
+                        echo "<option value='" . htmlspecialchars($row["category_id"]) . "'>" . htmlspecialchars($row["category_name"]) . "</option>";
                     }
                     ?>
                 </select><br>
@@ -148,7 +149,7 @@ $result = mysqli_query($connect, $query);
                     $category_query = "SELECT * FROM category";
                     $category_result = mysqli_query($connect, $category_query);
                     while ($row = mysqli_fetch_assoc($category_result)) {
-                        echo "<option value='" . $row["category_id"] . "'>" . $row["category_name"] . "</option>";
+                        echo "<option value='" . htmlspecialchars($row["category_id"]) . "'>" . htmlspecialchars($row["category_name"]) . "</option>";
                     }
                     ?>
                 </select><br>
@@ -186,7 +187,7 @@ $result = mysqli_query($connect, $query);
             const category_id = document.getElementById('category_id_' + id).value;
             const price = document.getElementById('price_' + id).textContent;
             const quantity = document.getElementById('quantity_' + id).textContent;
-            const description = document.getElementById('description_' + id).textContent;
+            const description = document.getElementById('description_' + id).innerHTML;
 
             document.getElementById('edit_product_id').value = id;
             document.getElementById('edit_product_name').value = product_name;
