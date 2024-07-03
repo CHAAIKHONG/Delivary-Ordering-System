@@ -63,7 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $query = "INSERT INTO staff (fullname, yearsold, email, phone, salary, address, workexperience, skill, photo, position) VALUES ('$fullname', '$years', '$email', '$phone', '$salary', '$address', '$experience', '$skills', '$photo_destination', '$position')";
 
     if (mysqli_query($connect, $query)) {
-        $update_success = true;
+        header("Location: ".$_SERVER['PHP_SELF']."?success=1");
+        exit();
     } else {
         echo "Error adding new record: " . mysqli_error($connect);
     }
@@ -71,7 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 mysqli_close($connect);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -321,8 +321,7 @@ body, html {
 }</style>
 </head>
 <body>
-<?php $update_success = isset($_GET['success']); ?>
-<?php if ($update_success): ?>
+<?php if (isset($_GET['success'])): ?>
     <script>alert('Staff added successfully!');</script>
 <?php endif; ?>
 
@@ -421,3 +420,4 @@ function toggleSidebar() {
 </script>
 </body>
 </html>
+
