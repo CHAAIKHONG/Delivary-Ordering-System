@@ -30,7 +30,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $experience = $_POST['experience'];
     $skills = $_POST['skills'];
 
-    $query = "UPDATE staff SET fullname='$fullname', yearsold='$years', email='$email', phone='$phone', salary='$salary', address='$address', workexperience='$experience', skill='$skills' WHERE id='$id'";
+    // Handle file upload
+    if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
+        $photo = $_FILES['photo'];
+        $photo_name = $photo['name'];
+        $photo_tmp_name = $photo['tmp_name'];
+        $photo_size = $photo['size'];
+        $photo_error = $photo['error'];
+        $photo_type = $photo['type'];
+
+        $photo_ext = explode('.', $photo_name);
+        $photo_actual_ext = strtolower(end($photo_ext));
+
+        $allowed = array('jpg', 'jpeg', 'png', 'gif');
+
+        if (in_array($photo_actual_ext, $allowed)) {
+            if ($photo_error === 0) {
+                if ($photo_size < 1000000) { // 1MB limit
+                    $photo_new_name = "staff_" . $id . "." . $photo_actual_ext;
+                    $photo_destination = 'uploads/' . $photo_new_name;
+
+                    move_uploaded_file($photo_tmp_name, $photo_destination);
+
+                    // Update photo path in the database
+                    $photo_query = ", photo='$photo_destination'";
+                } else {
+                    echo "Your file is too big.";
+                    exit;
+                }
+            } else {
+                echo "There was an error uploading your file.";
+                exit;
+            }
+        } else {
+            echo "You cannot upload files of this type.";
+            exit;
+        }
+    } else {
+        $photo_query = "";
+    }
+
+    $query = "UPDATE staff SET fullname='$fullname', yearsold='$years', email='$email', phone='$phone', salary='$salary', address='$address', workexperience='$experience', skill='$skills' $photo_query WHERE id='$id'";
 
     if (mysqli_query($connect, $query)) {
         $update_success = true;
@@ -84,7 +124,7 @@ ul.head li {
 }
 
 ul.head li.topleft {
-    margin-left: 20px;
+    margin-left: 100px;
     display: flex;
     align-items: center;
 }
@@ -111,15 +151,6 @@ ul.head li.topright {
     margin-left: 80%;
 }
 
-.toggle-btn {
-    background-color: black;
-    color: white;
-    border: none;
-    padding: 14px 16px;
-    cursor: pointer;
-    font-size: 25px;
-    margin-right: 10px;
-}
 
 body, html {
     height: 100%;
@@ -135,6 +166,7 @@ body, html {
     margin-top: 80px; /* Adjust to avoid navbar */
     height: calc(100vh - 80px); /* Adjust container height to avoid header */
     overflow: hidden; 
+}
 
 .scrollable-content {
     width: 100%;
@@ -263,10 +295,6 @@ body, html {
 .back-button:hover {
     background-color: grey;
 }
-
-.back-button:hover {
-    background-color: grey;
-}
 </style>
 
 <script>
@@ -280,12 +308,17 @@ body, html {
     <div class="all_container">
         <ul class="head">
             <li class="topleft">
-                <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
                 <a href="#home">MoonBees</a>
             </li>
             <div class="all_topright">
-                <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding: 0px 15px;"> Help</i></li>
-                <li class="user"><a href="staff_login.html" style="font-size: 15px; text-decoration: none; padding: 0;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Login</a></i></li>
+                <li class="help">
+                    <i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding: 0px 15px;"> Help</i>
+                </li>
+                <li class="user">
+                    <a href="staff_login.html" style="font-size: 15px; text-decoration: none; padding: 0;">
+                        <i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Login</i>
+                    </a>
+                </li>
             </div>
         </ul>
 
@@ -298,7 +331,7 @@ body, html {
                         <p class="position"><?php echo $staff['position']; ?></p>
                     </div>
                     <div class="staff-details">
-                        <form action="" method="post">
+                        <form action="" method="post" enctype="multipart/form-data">
                             <h3>Personal Information</h3>
                             <div class="form-row">
                                 <div class="form-group">
@@ -335,6 +368,10 @@ body, html {
                             <div class="form-group">
                                 <label for="skills">Skills</label>
                                 <textarea id="skills" name="skills"><?php echo $staff['skill']; ?></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="photo">Update Photo</label>
+                                <input type="file" id="photo" name="photo">
                             </div>
                             <input type="hidden" name="id" value="<?php echo $staff['id']; ?>">
                             <button type="submit" class="save-button" style="background-color: lightgrey;">Save</button>
