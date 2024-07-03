@@ -124,7 +124,7 @@ ul.head li {
 }
 
 ul.head li.topleft {
-    margin-left: 20px;
+    margin-left: 100px;
     display: flex;
     align-items: center;
 }
@@ -151,15 +151,6 @@ ul.head li.topright {
     margin-left: 80%;
 }
 
-.toggle-btn {
-    background-color: black;
-    color: white;
-    border: none;
-    padding: 14px 16px;
-    cursor: pointer;
-    font-size: 25px;
-    margin-right: 10px;
-}
 
 body, html {
     height: 100%;
@@ -317,7 +308,6 @@ body, html {
     <div class="all_container">
         <ul class="head">
             <li class="topleft">
-                <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
                 <a href="#home">MoonBees</a>
             </li>
             <div class="all_topright">
