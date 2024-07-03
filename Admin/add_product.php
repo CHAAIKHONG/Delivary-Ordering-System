@@ -1,44 +1,44 @@
 <?php
-// 检查是否有文件上传
-if ($_FILES['file']['name']) {
+// Check if a file was uploaded
+if (isset($_FILES['file']) && $_FILES['file']['name']) {
     $filename = $_FILES['file']['name'];
     $tmp_filename = $_FILES['file']['tmp_name'];
     $location = 'images/';
 
-    // 尝试移动上传的文件到目标位置
+    // Try to move the uploaded file to the target location
     if (move_uploaded_file($tmp_filename, $location . $filename)) {
-        echo 'File uploaded successfully!';
+        echo 'File uploaded successfully!<br>';
     } else {
-        echo 'Error uploading file.';
+        echo 'Error uploading file.<br>';
     }
 } else {
-    echo 'No file uploaded.';
+    echo 'No file uploaded.<br>';
 }
 
-// 连接数据库
+// Connect to your database (replace 'your_database' with your actual database name)
 $connect = mysqli_connect("localhost", "root", "", "your_database");
 
-// 检查连接是否成功
+// Check connection
 if (!$connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// 获取表单提交的数据
-$product_name = $_POST['product_name'];
-$category = $_POST['category'];
-$price = $_POST['price'];
-$quantity = $_POST['quantity'];  // 确保这个变量存在并从表单中正确获取
+// Get form data (ensure these variables exist and are properly retrieved from the form)
+$product_name = isset($_POST['product_name']) ? $_POST['product_name'] : '';
+$category = isset($_POST['category']) ? $_POST['category'] : '';
+$price = isset($_POST['price']) ? $_POST['price'] : '';
+$quantity = isset($_POST['quantity']) ? $_POST['quantity'] : '';
 
-// 准备插入语句
+// Prepare insert statement (make sure to validate and sanitize input to prevent SQL injection)
 $query = "INSERT INTO product (product_name, category, price, quantity) VALUES ('$product_name', '$category', '$price', '$quantity')";
 
-// 执行查询
+// Execute query
 if (mysqli_query($connect, $query)) {
     echo "New record created successfully";
 } else {
     echo "Error: " . $query . "<br>" . mysqli_error($connect);
 }
 
-// 关闭数据库连接
+// Close database connection
 mysqli_close($connect);
 ?>
