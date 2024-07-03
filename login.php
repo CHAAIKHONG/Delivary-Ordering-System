@@ -15,8 +15,13 @@
         $result = mysqli_query($connect, $sql);
 
         if (mysqli_num_rows($result) > 0) {
+            $user = mysqli_fetch_assoc($result);
+
             // 登录成功，设置会话
             $_SESSION['username'] = $email;
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['fullname'] = $user['first_name'].''.$user['last_name'];
+            $_SESSION['photo'] = $user['user_photo'];
 
             // 如果选择了Remember Me，设置Cookie
             if ($remember) {
@@ -68,7 +73,7 @@
             <?php if (!isset($_SESSION['username'])) : ?>
                 <li class="user"><a href="login.php" style="font-size: 15px; text-decoration: none;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Login</a></i></li>
             <?php else : ?>
-                <li class="user"><a href="logout.php" style="font-size: 15px; text-decoration: none;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Logout</a></i></li>
+                <li class="user"><a href="login.php" style="font-size: 15px; text-decoration: none;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Logout</a></i></li>
             <?php endif; ?>
         </div>
     </ul>

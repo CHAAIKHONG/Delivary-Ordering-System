@@ -22,35 +22,32 @@
         $userName = $_SESSION['fullname'];
     }
 
-    // 查询产品信息
-    $query = "SELECT p.*, c.category_name FROM product p JOIN category c ON p.category_id = c.category_id";
-    $result = mysqli_query($connect, $query);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoonBees | Menu</title>
+    <title>MoonBees | Contact</title>
     <link rel="icon" type="image" href="image/burger-removebg-preview.png">
+    <!-- <link rel="stylesheet" href="ContactUs.css"> -->
     <link rel="stylesheet" href="menu.css">
     <link rel="stylesheet" href="head_footer.css">
-    <script src="menu.js" type="text/javascript"></script> 
+    <script src="ContactUs.js" type="javascript"></script>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
 </head>
 <body>
     <ul class="head">
-        <li class="topleft"><a href="" class="head_title">MoonBees</a></li>
+        <li class="topleft"><a href="#home" class="head_title">MoonBees</a></li>
         <div class="all_topcenter">
             <li class="topcenter"><a href="menu.php" class="head_title">Menu</a></li>
             <li class="topcenter"><a href="ContactUs.php" class="head_title">Contact Us</a></li>
             <li class="topcenter"><a href="aboutus.php" class="head_title">About Us</a></li>
         </div>
         <div class="all_topright">
-            <li class="shopping_card"><a href="shopping_cart.php"><i class="ri-shopping-cart-fill" style="color: white; display: block; margin-top: 20px;"></i></a></li>
-            <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding: 0px 15px;"> Help</i></li>
+            <li class="shopping_card"><a href="shopping_cart.php"><i class="ri-shopping-cart-fill" style="color: white; display: block; margin-top: 20px; padding-right: 15px"></i></a></li>
+            <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding-right: 15px;"> Help</i></li>
             <li class="user">
                 <a href="profile.html" style="font-size: 15px; text-decoration: none;">
                 <?php if ($userPhoto) : ?>
@@ -63,49 +60,36 @@
         </div>
     </ul>
 
-    <div class="container">
-        <div class="category">
-            <ul class="category_menu">
-                <li class="Meal" onclick="filterProducts('meal')">Meal</li>
-                <li class="Burger" onclick="filterProducts('burger')">Burger</li>
-                <li class="Fried_Chicken" onclick="filterProducts('fried_chicken')">Fried Chicken</li>
-                <li class="Drinks" onclick="filterProducts('drinks')">Drinks</li>
-                <li class="Dessert_Sides" onclick="filterProducts('dessert_sides')">Dessert & Sides</li>
-            </ul>
-        </div>
+    
+    <!-- <video src="Video/6月9日.mp4" class="contactus_video"></video> -->
+    <img src="image/contact us.png" alt="Contect Us" class="contactus_image">
+    
+    <div class="contactus_body">
+        <!-- <h1>Contact Us</h1> -->
+        <form class="feedbackfrm">
+            <div class="fb_topic">
+                <label><p>Topic</p></label>
+                <select name="topic_selection" id="topic_selection">
+                    <option value>--Select One--</option>
+                    <option value="Food">Food</option>
+                    <option value="DeliveryService">Delivery Service</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
 
-        <div class="product_list">
-            <?php
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo '<div class="product_container '.strtolower(str_replace(' ', '_', $row['category_name'])).'">
-                        <div class="product_body">
-                            <div class="product_image_detail">
-                                <div class="product_image">
-                                    <img src="image/food/'.$row['photo'].'" alt="'.$row['product_name'].'">
-                                    <p>'.$row['product_name'].'</p>
-                                </div>
-                                <div class="product_content">
-                                    <h2>Detail</h2>
-                                    <p>'.$row['description'].'</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product_footer">
-                            <div class="product_price">
-                                <span class="ste_price">RM'.$row['price'].'</span>
-                            </div>
-                            <div class="orderbtm">
-                                <a href="#" class="add-to-cart" data-id="'.$row['product_id'].'">Add Cart</a>
-                            </div>
-                        </div>
-                    </div>';
-                }
-            }
+            <div class="fb_sgt">
+                <label><p>Feed Back / Suggestion</p></label>
+                <textarea name="comment" id="comment"></textarea>
+            </div>
 
-            mysqli_close($connect);
-            ?>
-        </div>
+            <!-- <div>
+                <img src="" alt="">
+            </div> -->
+
+        </form>
+
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2449.718088386932!2d102.25115649935964!3d2.2223818231622383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d1f028a6dec9ab%3A0xbcefbe90f37590e1!2sR1%2C%20Jalan%20Tun%20Razak%2C%20Plaza%20Melaka%20Sentral%2C%2075400%20Melaka!5e0!3m2!1szh-CN!2smy!4v1717865441281!5m2!1szh-CN!2smy" width="600" height="450" style="border:0; margin-right: auto; display: block; padding: 10px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade " class="map"></iframe>
+    
     </div>
 
     <br>
@@ -131,7 +115,7 @@
             <ul>
                 <li><a href="#">Facebook</a></li>
                 <li><a href="#">Instagram</a></li>
-                <li><a href="#">Tiktok</a></li>
+                <li><a href="#">Tiktokv</a></li>
             </ul>
         </div>
         <div id="footer-section">
@@ -144,5 +128,3 @@
     </footer>
 </body>
 </html>
-
-

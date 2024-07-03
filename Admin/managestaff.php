@@ -1,3 +1,25 @@
+<?php 
+$connect = mysqli_connect("localhost","root","","moonbeedb"); 
+
+if (!$connect) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+if (isset($_GET['delete_id'])) {
+    $id = intval($_GET['delete_id']);
+    $query = "DELETE FROM staff WHERE id=$id";
+
+    if (mysqli_query($connect, $query)) {
+        echo "Record deleted successfully";
+    } else {
+        echo "Error deleting record: " . mysqli_error($connect);
+    }
+}
+
+$query = "SELECT * FROM staff";
+$result = mysqli_query($connect, $query);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,9 +27,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MoonBees | Manage Staff</title>
 <link rel="icon" href="burger.png" type="image/png">
-<link
-    href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
-    rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
 <style>
     body {
@@ -16,29 +36,29 @@
         background-repeat: no-repeat; 
         background-attachment:fixed;
     }
-    
-    ul.head{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: black;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1;
+
+    ul.head {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: black;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1;
     }
 
-    ul.head li{
+    ul.head li {
         float: left;
     }
 
-    ul.head li.topleft{
+    ul.head li.topleft {
         margin-left: 100px;
         display: flex;
     }
 
-    .head_title, .head li a{
+    .head_title, .head li a {
         display: block;
         color: white;
         text-align: center;
@@ -48,15 +68,15 @@
         font-family: initial;
     }
 
-    ul.head li.topcenter:hover{
+    ul.head li.topcenter:hover {
         background-color: green;
     }
 
-    .all_topcenter{
-    margin-left: 37%;
+    .all_topcenter {
+        margin-left: 37%;
     }
 
-    .all_topright{
+    .all_topright {
         margin-left: 80%;
     }
 
@@ -125,26 +145,26 @@
 
     .staffbox2 {
         padding: 20px; 
-        margin:20px auto 20px; 
+        margin: 20px auto 20px; 
         border-radius: 50px;
         width: 100%; 
         max-width: 950px; 
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
-        align-items: center;
+        align-items: center.
     }
 
     .staff-member {
         background-color: white;
-        border: 5px solid black; /* Individual border for each staff member */
+        border: 5px solid black;
         border-radius: 15px;
         padding: 10px;
         margin: 10px;
         text-align: center;
-        width: 200px; /* Adjust the width as needed */
+        width: 200px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s, box-shadow 0.3s; /* Add transition for hover effect */
+        transition: transform 0.3s, box-shadow 0.3s;
         position: relative;
     }
 
@@ -159,9 +179,8 @@
         cursor: pointer;
     }
 
-
     .staff-member img.add {
-        width: 70%; /* Adjust the size as needed */
+        width: 70%;
     }
 
     .staff-member:hover .details {
@@ -198,7 +217,6 @@
     .details button:hover {
         background-color: green;
     }
-
 </style>
 </head>
 <body>
@@ -209,7 +227,6 @@
                 <a href="#home">MoonBees</a>
             </li>
             <div class="all_topright">
-                <!-- <li class="shopping_card"><i class="ri-shopping-cart-fill" style="color: white; display: block; margin-top: 20px;"></i></li> -->
                 <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding: 0px 15px;"> Help</i></li>
                 <li class="user"><a href="staff_login.html" style="font-size: 15px; text-decoration: none; padding: 0;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Login</a></i></li>
             </div>
@@ -221,7 +238,7 @@
                     <li>
                         <a href="javascript:void(0)" onclick="location.href='mainmenu.html'">Admin</a>
                         <ul>
-                            <li><a href="javascript:void(0)"onclick="location.href='managestaff.html'">Manage Staff</a></li>
+                            <li><a href="javascript:void(0)" onclick="location.href='managestaff.php'">Manage Staff</a></li>
                             <li><a href="javascript:void(0)" onclick="location.href='manageproduct.html'">Manage Products</a></li>
                             <li><a href="javascript:void(0)" onclick="location.href='report.html'">Report</a></li>
                         </ul>
@@ -231,53 +248,26 @@
         </div>
 
         <div class="staffbox">
-            <div class="staff-member">
-                <img src="staff.png" alt="Staff 1">
-                <p>Ben</p>
-                <div class="details">
-                    <button onclick="location.href='staffdetails.html'">Staff Details</button>
-                    <button>Remove</button>
-                </div>
-            </div>
-            <div class="staff-member">
-                <img src="staff.png" alt="Staff 2">
-                <p>Jeff</p>
-                <div class="details">
-                    <button>Staff Details</button>
-                    <button>Remove</button>
-                </div>
-            </div>
-            <div class="staff-member">
-                <img src="staff.png" alt="Staff 3">
-                <p>Cyndi</p>
-                <div class="details">
-                    <button>Staff Details</button>
-                    <button>Remove</button>
-                </div>
-            </div>
-        </div>
-        <div class="staffbox2">
-            <div class="staff-member">
-                <img src="staff.png" alt="Staff 4">
-                <p>Rebecca</p>
-                <div class="details">
-                    <button>Staff Details</button>
-                    <button>Remove</button>
-                </div>
-            </div>
-            <div class="staff-member">
-                <img src="staff.png" alt="Staff 5">
-                <p>Tommy</p>
-                <div class="details">
-                    <button>Staff Details</button>
-                    <button>Remove</button>
-                </div>
-            </div>
+            <?php
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo '<div class="staff-member">
+                        <img src="'.$row['photo'].'" alt="'.$row['fullname'].'">
+                        <p>'.$row['fullname'].'</p>
+                        <div class="details">
+                            <button onclick="location.href=\'staffdetails.php?id='.$row['id'].'\'">Staff Details</button>
+                            <button onclick="if(confirm(\'Are you sure you want to delete this staff member?\')) location.href=\'managestaff.php?delete_id='.$row['id'].'\'">Remove</button>
+                        </div>
+                    </div>';
+                }
+            }
+            mysqli_close($connect);
+            ?>
             <div class="staff-member">
                 <img src="add.png" alt="Add Staff" class="add">
                 <p>Add</p>
                 <div class="details">
-                    <button>Add New Staff</button>
+                <button type="button"  onclick="location.href='addnewstaff.php'">Add New Staff</button>
                 </div>
             </div>
         </div>
@@ -287,19 +277,6 @@
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('collapsed');
             document.getElementById('content-wrapper').classList.toggle('collapsed');
-        }
-
-        function showReport() {
-            document.querySelector('.sales-report').style.display = 'block';
-            generateReport();
-        }
-
-        function showManageProducts() {
-            document.querySelector('.sales-report').style.display = 'none';
-        }
-
-        function showManageStaff() {
-            document.querySelector('.sales-report').style.display = 'none';
         }
     </script>
 </body>
