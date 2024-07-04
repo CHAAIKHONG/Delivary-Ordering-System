@@ -30,15 +30,16 @@ $result = mysqli_query($connect, $query);
     </ul>
 
     <div class="sidebar" id="sidebar">
-        <nav>
+    <nav>
             <ul>
                 <li>
-                    <a href="javascript:void(0)" onclick="location.href='mainmenu.php'">Admin</a>
+                    <a href="javascript:void(0)" onclick="location.href='mainmenu.html'">Admin</a>
                     <ul>
                         <li><a href="javascript:void(0)" onclick="location.href='managestaff.php'">Manage Staff</a></li>
 
-=======
                         <li><a href="javascript:void(0)" onclick="location.href='Manageproduct.php'">Manage Products</a></li>
+
+                        <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
 
                         <li><a href="javascript:void(0)" onclick="location.href='report.html'">Report</a></li>
                     </ul>
