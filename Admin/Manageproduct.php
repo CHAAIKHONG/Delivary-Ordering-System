@@ -30,17 +30,14 @@ $result = mysqli_query($connect, $query);
     </ul>
 
     <div class="sidebar" id="sidebar">
-    <nav>
+        <nav>
             <ul>
                 <li>
                     <a href="javascript:void(0)" onclick="location.href='mainmenu.html'">Admin</a>
                     <ul>
                         <li><a href="javascript:void(0)" onclick="location.href='managestaff.php'">Manage Staff</a></li>
-
-                        <li><a href="javascript:void(0)" onclick="location.href='Manageproduct.php'">Manage Products</a></li>
-
+                        <li><a href="javascript:void(0)" onclick="location.href='manage_product.php'">Manage Products</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
-
                         <li><a href="javascript:void(0)" onclick="location.href='report.html'">Report</a></li>
                     </ul>
                 </li>
@@ -88,7 +85,7 @@ $result = mysqli_query($connect, $query);
                             <td>" . htmlspecialchars($quantity) . "</td>
                             <td>" . nl2br(htmlspecialchars_decode($row['description'])) . "</td>
                             <td class='actions'>
-                                <button onclick=\"showEditProductModal(" . htmlspecialchars($row['product_id']) . ")\">Edit</button>
+                                <button onclick=\"window.location.href='edit.php?id=" . htmlspecialchars($row['product_id']) . "'\">Edit</button>
                                 <button onclick=\"deleteProduct(" . htmlspecialchars($row['product_id']) . ")\">Delete</button>
                             </td>
                         </tr>";
@@ -129,97 +126,47 @@ $result = mysqli_query($connect, $query);
                 <label for="description">Description:</label>
                 <textarea name="description" required></textarea><br>
 
-                <label for="image_path">Image:</label>
-                <input type="file" name="image_path" required><br>
+                <label for="image">Image:</label>
+                <input type="file" name="image" required><br>
 
                 <button type="submit">Add Product</button>
             </form>
         </div>
     </div>
 
-    <div id="editProductModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('editProductModal')">&times;</span>
-            <h2>Edit Product</h2>
-            <form action="edit_product.php" method="POST">
-                <input type="hidden" id="edit_product_id" name="product_id">
-
-                <label for="edit_product_name">Product Name:</label>
-                <input type="text" id="edit_product_name" name="product_name" required><br>
-                
-                <label for="edit_category_id">Category:</label>
-                <select id="edit_category_id" name="category_id" required>
-                    <?php
-                    $category_query = "SELECT * FROM category";
-                    $category_result = mysqli_query($connect, $category_query);
-                    while ($row = mysqli_fetch_assoc($category_result)) {
-                        echo "<option value='" . htmlspecialchars($row["category_id"]) . "'>" . htmlspecialchars($row["category_name"]) . "</option>";
-                    }
-                    ?>
-                </select><br>
-
-                <label for="edit_price">Price:</label>
-                <input type="text" id="edit_price" name="price" required><br>
-
-                <label for="edit_quantity">Quantity:</label>
-                <input type="text" id="edit_quantity" name="quantity" required><br>
-
-                <label for="edit_description">Description:</label>
-                <textarea id="edit_description" name="description" required></textarea><br>
-
-                <button type="submit">Update Product</button>
-            </form>
-        </div>
-    </div>
-
     <script>
         function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
-            document.getElementById('content-wrapper').classList.toggle('collapsed');
+            var sidebar = document.getElementById('sidebar');
+            var contentWrapper = document.getElementById('content-wrapper');
+            sidebar.classList.toggle('active');
+            contentWrapper.classList.toggle('active');
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
+        function filterCategory(category) {
+            var rows = document.querySelectorAll("#productTable tr");
+            rows.forEach(function(row) {
+                if (category === 'all' || row.cells[2].innerText === category) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
         }
 
         function showAddProductModal() {
             document.getElementById('addProductModal').style.display = 'block';
         }
 
-        function showEditProductModal(id) {
-            const product_name = document.getElementById('product_name_' + id).textContent;
-            const category_id = document.getElementById('category_id_' + id).value;
-            const price = document.getElementById('price_' + id).textContent;
-            const quantity = document.getElementById('quantity_' + id).textContent;
-            const description = document.getElementById('description_' + id).innerHTML;
-
-            document.getElementById('edit_product_id').value = id;
-            document.getElementById('edit_product_name').value = product_name;
-            document.getElementById('edit_category_id').value = category_id;
-            document.getElementById('edit_price').value = price;
-            document.getElementById('edit_quantity').value = quantity;
-            document.getElementById('edit_description').value = description;
-
-            document.getElementById('editProductModal').style.display = 'block';
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
         }
 
-        function deleteProduct(id) {
+        function deleteProduct(productId) {
             if (confirm("Are you sure you want to delete this product?")) {
-                window.location.href = 'delete_product.php?id=' + id;
+                window.location.href = "delete_product.php?id=" + productId;
             }
-        }
-
-        function filterCategory(category) {
-            const rows = document.querySelectorAll('#productTable tr');
-            rows.forEach(row => {
-                const categoryCell = row.querySelector('td:nth-child(3)');
-                if (category === 'all' || categoryCell.textContent.trim() === category) {
-                    row.style.display = 'table-row';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
         }
     </script>
 </body>
 </html>
+<?php mysqli_close($connect); ?>
