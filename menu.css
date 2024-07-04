@@ -310,16 +310,14 @@ transition: 500ms;
 
 .picdetail{
     margin: 10%;
-
 }
 
 .all_infor{
     display: flex;
-    flex-direction: row;
     margin: 60px auto;
     padding: 20px;
     width:1000px;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .left_infor{

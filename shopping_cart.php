@@ -74,24 +74,25 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <body>
     <ul class="head">
-        <li class="topleft"><a href="" class="head_title">MoonBees</a></li>
+        <li class="topleft"><a href="#home" class="head_title">MoonBees</a></li>
         <div class="all_topcenter">
             <li class="topcenter"><a href="menu.php" class="head_title">Menu</a></li>
             <li class="topcenter"><a href="ContactUs.php" class="head_title">Contact Us</a></li>
             <li class="topcenter"><a href="aboutus.php" class="head_title">About Us</a></li>
         </div>
         <div class="all_topright">
-            <li class="shopping_card"><a href="shopping_cart.php"><i class="ri-shopping-cart-fill" style="color: white; display: block; margin-top: 20px;"></i></a></li>
-            <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding: 0px 15px;"> Help</i></li>
-            <li class="user">
-                <a href="profile.html" style="font-size: 15px; text-decoration: none;">
-                <?php if ($userPhoto) : ?>
-                    <img src="image/user/<?php echo $userPhoto; ?>" alt="User Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;"><?php echo $userName; ?>
-                <?php else : ?>
-                    <i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"><?php echo $userName; ?></i>
-                <?php endif; ?>
+            <li class="shopping_card"><a href="shopping_cart.php"><i class="ri-shopping-cart-fill" style="color: white; display: block; margin-top: 20px; padding-right: 15px"></i></a></li>
+            <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding-right: 15px;"> Help</i></li>
+            <li class="dropdown">
+                <a href="profile.php" style="font-size: 15px; text-decoration: none;">
+                    <?php if ($userPhoto) : ?>
+                        <img src="image/user/<?php echo $userPhoto; ?>" alt="User Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;"><?php echo $userName; ?>
+                    <?php else : ?>
+                        <i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"><?php echo $userName; ?></i>
+                    <?php endif; ?>
                 </a>
             </li>
+            <li class="logout"><a href="logout.php" style="color: white; display: block; margin-top: 20px; padding-left: 15px; text-decoration: none">Logout</a></li>
         </div>
     </ul>
 
@@ -216,7 +217,7 @@ if (isset($_SESSION['user_id'])) {
                 <span class="total_price">RM <?php echo number_format($total, 2); ?></span>
             </div>
             <button class="confirm_payment">Payment</button>
-            <form id="paymentForm" action="process_payment.php" method="post" style="display: none;">
+            <form id="paymentForm" action="payment.php" method="post" style="display: none;">
                 <input type="hidden" name="total" value="<?php echo number_format($total, 2); ?>">
                 <input type="hidden" name="order_items" value='<?php echo json_encode($orderItems); ?>'>
             </form>
@@ -280,7 +281,7 @@ if (isset($_SESSION['user_id'])) {
     addressForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const newAddress = document.getElementById('newAddress').value;
-        fetch('update_address.php', {
+        fetch('save_address.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
