@@ -13,7 +13,7 @@ if (isset($_SESSION['user_id'])) {
     // $delivery_status = 'Pending'; // 或其他默认状态
 
     // 插入订单到 order 表
-    $query = "INSERT INTO `order` (user_id, total_price, payment_status, delivery_status) VALUES ($user_id, $total, 'Pending', 'Pending')";
+    $query = "INSERT INTO `order` (user_id, total_price, payment_status) VALUES ($user_id, $total, 'Pending')";
     // $stmt = $connect->prepare($query);
     // $stmt->bind_param("idss", $user_id, $total, $payment_status, $delivery_status);
     // $stmt->execute();
