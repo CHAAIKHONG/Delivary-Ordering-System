@@ -15,7 +15,7 @@ if (isset($_SESSION['user_id'])) {
     // $delivery_status = 'Pending'; // 或其他默认状态
 
     // 插入订单到 order 表
-    $query = "INSERT INTO `order` (user_id, total_price, payment_status, payment_method) VALUES ($user_id, $total, 'Pending', 'Cash_On_Delivery')";
+    $query = "INSERT INTO `order` (user_id, total_price, payment_status, payment_method) VALUES ($user_id, $total, 'DONE', 'Cash_On_Delivery')";
     // $stmt = $connect->prepare($query);
     // $stmt->bind_param("idss", $user_id, $total, $payment_status, $delivery_status);
     // $stmt->execute();
@@ -53,8 +53,9 @@ if (isset($_SESSION['user_id'])) {
             // $stmt->close();
             mysqli_query($connect, $sql);
         }
+        // echo "<script>alert(Order placed successfully!)</script>";
         echo "<script>alert(Order placed successfully!)</script>";
-        header("Location: payment.php?order_id=$order_id");
+        header("Location: menu.php");
         exit();
     } else {
         echo "<script>alert(Error: Invalid order items data.)</script>";
