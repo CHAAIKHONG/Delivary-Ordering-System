@@ -47,10 +47,6 @@
             background-color: green;
         }
 
-        .all_topright {
-            margin-left: 80%;
-        }
-
         .sidebar {
             width: 250px;
             background-color: #333;
@@ -154,7 +150,7 @@
             margin-left: auto;
             margin-right: 0;
             background-color: #ffc107;
-            color: white;
+            color: black;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
@@ -185,16 +181,33 @@
             background-color: #f2f2f2;
         }
 
-        .actions button {
+        .actions a {
             margin-right: 5px;
             padding: 5px 10px;
             border: none;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            text-decoration: none; /* remove underline */
+            color: #007bff; /* default link color */
         }
 
-        .actions button:hover {
+        .actions a.delete {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .actions a.delete:hover {
+            background-color: #c82333;
+        }
+
+        .actions a.edit {
             background-color: #ffc107;
+            color: black; /* text color on yellow background */
+        }
+
+        .actions a.edit:hover {
+            background-color: #e0a800;
+            color: black;
         }
 
         .modal {
@@ -351,8 +364,8 @@
                 echo "<td>" . $row['category_id'] . "</td>";
                 echo "<td>" . $row['category_name'] . "</td>";
                 echo "<td class='actions'>";
-                echo "<a href='?delete=" . $row['category_id'] . "' onclick='return confirm(\"Are you sure you want to delete this category?\")'>Delete</a>";
-                echo "<a href='?edit=" . $row['category_id'] . "'>Edit</a>";
+                echo "<a href='?delete=" . $row['category_id'] . "' class='delete' onclick='return confirm(\"Are you sure you want to delete this category?\")'>Delete</a>";
+                echo "<a href='?edit=" . $row['category_id'] . "' class='edit'>Edit</a>";
                 echo "</td>";
                 echo "</tr>";
             }
