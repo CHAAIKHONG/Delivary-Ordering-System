@@ -1,17 +1,18 @@
 <?php
-    session_start();
-    $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
+session_start();
+$connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
-    // 检查数据库连接
-    if (!$connect) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
+// 检查数据库连接
+if (!$connect) {
+    die("Connection failed: " . mysqli_connect_error());
+}
 
-    // 检查用户登录状态和获取用户信息
-    $userPhoto = null;
-    $userName = 'user';
+// 检查用户登录状态和获取用户信息
+$userPhoto = null;
+$userName = 'user';
+$userAddress = '';
 
-    
+if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 
     if (isset($_SESSION['photo'])) {
@@ -21,6 +22,46 @@
     if (isset($_SESSION['fullname'])) {
         $userName = $_SESSION['fullname'];
     }
+
+    // 获取用户地址
+    $query = "SELECT address, email, phone_number FROM user WHERE user_id = ?";
+    $stmt = $connect->prepare($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $userAddress = $row['address'];
+        $userEmail = $row['email'];
+        $userPhoneNumber = $row['phone_number'];
+    }
+
+    $stmt->close();
+
+    // 获取用户的订单项
+    $query = "SELECT cartitem.product_id, product.product_name, product.price, product.photo, cartitem.quantity 
+            FROM cartitem 
+            INNER JOIN product ON cartitem.product_id = product.product_id 
+            WHERE cartitem.user_id = ?";
+    $stmt = $connect->prepare($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $orderItemsResult = $stmt->get_result();
+
+    $orderItems = [];
+    while ($row = $orderItemsResult->fetch_assoc()) {
+        $orderItems[] = $row;
+    }
+    
+
+    $stmt->close();
+} else {
+    // 用户未登录，重定向到登录页面
+    header("Location: login.php");
+    exit();
+}
+
 
 ?>
 
@@ -69,29 +110,22 @@
                         <div class="detail_2">
                             <h4>Deliver to</h4>
                             <div class="icon_address">
-                                <!-- <span class="icon"> -->
-                                    <i class="ri-home-8-line"></i>
-                                <!-- </span> -->
-                                <!-- <div> -->
-                                    <p>house</p>
-                                    <p>address</p>
-                                <!-- </div> -->
+                                <i class="ri-home-8-line"></i>
+                                <p><?php echo $userAddress ? $userAddress : "No address found"; ?></p>
                             </div>
                         </div>
-                        <i class="ri-arrow-right-s-line"></i>
                     </div>
                 </div>
                 <hr>
                 <div class="date_time">
                     <div class="popup_container">
                         <div class="detail_2">
-                            <h4>Date and Time</h4>
+                            <h4>Delivery Time</h4>
                             <div class="icon_address">
                                 <i class="ri-time-line"></i>
-                                <p>date and time</p>
+                                <p>It will be delivered within 30 minutes.</p>
                             </div>
-                        </div>
-                        <i class="ri-arrow-right-s-line"></i>
+                        </div> 
                     </div>
                 </div>
                 <hr>
@@ -100,28 +134,25 @@
                         <h2>Add Your Details</h2>
                         <form>
                             <div class="container">
-                                <div class="all_name"> 
-                                    <input type="text" placeholder="First Name" name="first_name" required>
-                                    <input type="text" placeholder="Last Name" name="last_name" required>
-                                </div>
-                                <input type="email" placeholder="Email" name="email" required>
-                                <input type="number" placeholder="Phone number" name="phone_num" required>
+                                <p>Full Name: <?php echo htmlspecialchars($userName); ?></p>
+                                <p>Email: <?php echo htmlspecialchars($userEmail); ?></p>
+                                <p>Phone Number: <?php echo htmlspecialchars($userPhoneNumber); ?></p>
                             </div>
                         </form>
                     </div>
                 </ul>
-                <hr>
-                <div class="order_requests">
+                <!-- <hr> -->
+                <!-- <div class="order_requests">
                     <h2>Order Requests (Optional)</h2>
                     <textarea name="requests" id="requests" placeholder="Example: give me 2 set of spoon and fork" style="width: 568px; height: 100px; resize: vertical; min-height: 40px;"></textarea>
                 </div>
-                <br>
+                <br> -->
                 <hr>
                 <br>
                 <div class="payment_method">
                     <h2>Payment Method</h2>
                     <div class="option_method">
-                        <input type="radio" id="choose_btm">
+                    <input type="radio" id="choose_btm" name="payment_method" value="Cash On Delivery">
                         <p id="cach_delivery">Cach On Delivery</p>
                     </div>
                 </div>
@@ -129,17 +160,25 @@
         </div>
 
         <div class="price_detail">
+            <?php
+            $subtotal = array_reduce($orderItems, function($sum, $item) {
+                return $sum + ($item['price'] * $item['quantity']);
+            }, 0);
+            $delivery_fee = 5.00;
+            $service_tax = 0.06 * $subtotal;
+            $total = $subtotal + $delivery_fee + $service_tax;
+            ?>
             <div class="Subtotal">
                 <p>Subtotal (include SST)</p>
-                <span class="subtotal_price">RM 9.90</span>
+                <span class="subtotal_price">RM <?php echo number_format($subtotal, 2); ?></span>
             </div>
             <div class="Delivery">
                 <p>Delivery & Processing Fee</p>
-                <span class="delivery_price">RM 5.00</span>
+                <span class="delivery_price">RM <?php echo number_format($delivery_fee, 2); ?></span>
             </div>
             <div class="ServiceTax">
                 <p>Service Tax (6%)</p>
-                <span class="servicetax_price">RM 0.60</span>
+                <span class="servicetax_price">RM <?php echo number_format($service_tax, 2); ?></span>
             </div>
             <br>
             <hr>
@@ -158,11 +197,16 @@
             <br>
             <hr>
             <div>
-                <p>total(include SST)</p>
-                <span class="total_price">RM 15.5</span>
+                <p>Total (include SST)</p>
+                <span class="total_price">RM <?php echo number_format($total, 2); ?></span>
             </div>
-
             <button class="confirm_payment">Payment</button>
+            <form id="paymentForm" action="process_payment.php" method="post" style="display: none;">
+                <input type="hidden" name="total" value="<?php echo number_format($total, 2); ?>">
+                <input type="hidden" name="order_items" value='<?php echo json_encode($orderItems); ?>'>
+                <input type="hidden" name="payment_method" id="paymentMethod">
+            </form>
+            <!-- <button class="confirm_payment">Payment</button> -->
         </div>
     </div>
 
@@ -200,30 +244,15 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const reduceBtns = document.querySelectorAll('.quantity_reduce');
-            const increaseBtns = document.querySelectorAll('.quantity_increase');
-            const quantities = document.querySelectorAll('#items_quantity');
+        document.querySelector('.confirm_payment').addEventListener('click', function() {
+            var paymentMethod = document.querySelector('input[name="payment_method"]:checked');
+            if (!paymentMethod) {
+                alert('Please select a payment method.');
+                return;
+            }
 
-            reduceBtns.forEach((btn, index) => {
-                btn.addEventListener('click', () => {
-                    event.preventDefault();
-                    let quantity = parseInt(quantities[index].textContent);
-                    if (quantity > 1) {
-                        quantity--;
-                        quantities[index].textContent = quantity;
-                    }
-                });
-            });
-
-            increaseBtns.forEach((btn, index) => {
-                btn.addEventListener('click', () => {
-                    event.preventDefault();
-                    let quantity = parseInt(quantities[index].textContent);
-                    quantity++;
-                    quantities[index].textContent = quantity;
-                });
-            });
+            document.getElementById('paymentMethod').value = paymentMethod.value;
+            document.getElementById('paymentForm').submit();
         });
     </script>
 </body>
