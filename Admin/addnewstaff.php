@@ -42,28 +42,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     if (move_uploaded_file($photo_tmp_name, $photo_destination)) {
                         // 文件上传成功
-                        echo '<script>alert("File uploaded successfully.<br>")</script>';
+                        echo "File uploaded successfully.<br>";
                     } else {
-                        echo "Failed to move the uploaded file.<br>";
+                        echo '<script>alert("Failed to move the uploaded file.")</script>'; 
                     }
                 } else {
-                    echo "Your file is too big!";
+                    echo '<script>alert("Your file is too big!")</script>'; 
                 }
             } else {
-                echo "There was an error uploading your file!";
+                echo '<script>alert("There was an error uploading your file!")</script>'; 
             }
         } else {
-            echo "You cannot upload files of this type!";
+            echo '<script>alert("You cannot upload files of this type!")</script>'; 
         }
     } else {
-        echo "No file uploaded or there was an error!";
+        echo '<script>alert("No file uploaded or there was an error!")</script>'; 
     }
 
     // 插入数据到数据库
     $query = "INSERT INTO staff (fullname, yearsold, email, phone, salary, address, workexperience, skill, photo, position) VALUES ('$fullname', '$years', '$email', '$phone', '$salary', '$address', '$experience', '$skills', '$photo_destination', '$position')";
 
     if (mysqli_query($connect, $query)) {
-        $update_success = true;
+        header("Location: ".$_SERVER['PHP_SELF']."?success=1");
+        exit();
     } else {
         echo "Error adding new record: " . mysqli_error($connect);
     }
@@ -80,7 +81,6 @@ mysqli_close($connect);
 <title>MoonBees | Add New Staff</title>
 <link rel="icon" href="burger.png" type="image/png">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
-
 <style>
 body {
     background-image: url("bg.jpg.png"); 
@@ -188,6 +188,40 @@ body, html {
     position: relative; /* For positioning the button */
 }
 
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    padding-top: 60px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+}
+.sidebar.collapsed {
+    transform: translateX(-100%);
+}
+.sidebar nav ul {
+    padding: 0;
+    list-style: none;
+}
+.sidebar nav ul li {
+    padding: 10px 0;
+}
+.sidebar nav ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+.sidebar nav ul li a:hover {
+    background-color: #575757;
+}
+
 .staff-profile {
     text-align: center;
     margin-right: 20px;
@@ -262,121 +296,128 @@ body, html {
     resize: vertical;
 }
 
-.back-button {
+.button-container {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 10px; /* Add some space between the buttons */
     position: absolute;
-    top: 10px;
     right: 10px;
-    background-color: #f44336;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
-    text-decoration: none;
 }
 
-.staff-details .form-group input[type="submit"] {
-    width: auto;
-    background-color: green;
-    color: white;
-    border: none;
+.add-button,
+.back-button {
     padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
+    font-size: 16px;
+    color: black;
+    background-color: lightgrey;
+    border: 1px solid #ccc;
     border-radius: 5px;
+    cursor: pointer;
 }
 
-.staff-details .form-group input[type="submit"]:hover {
-    background-color: #45a049;
-}
-</style>
+.add-button:hover,
+.back-button:hover {
+    background-color: grey;
+}</style>
 </head>
 <body>
-    <ul class="head">
-        <li class="topleft">
-            <a href="javascript:void(0);" onclick="toggleMenu()">&#9776;</a>
-            <a href="staffdetails.php">Staff Details</a>
-        </li>
-        <li class="topright">
-            <a href="index.php" class="all_topright">Home</a>
-        </li>
-        <li class="topright">
-            <a href="logout.php">Logout</a>
-        </li>
-    </ul>
+<?php if (isset($_GET['success'])): ?>
+    <script>alert('Staff added successfully!');</script>
+<?php endif; ?>
 
-    <div class="container">
-        <div class="scrollable-content">
-            <div class="profile-container">
-                <div class="staff-details">
-                    <h3>Staff Details</h3>
-                    <form action="" method="POST" enctype="multipart/form-data">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="Name">Full Name:</label>
-                                <input type="text" id="Name" name="Name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="years">Years Old:</label>
-                                <input type="text" id="years" name="years" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="email">Email:</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Phone:</label>
-                                <input type="tel" id="phone" name="phone" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="Salary">Salary:</label>
-                                <input type="text" id="Salary" name="Salary" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="address">Address:</label>
-                                <input type="text" id="address" name="address" required>
-                            </div>
+<ul class="head">
+    <li class="topleft">
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <a href="#home">MoonBees</a>
+    </li>
+    <div class="all_topright">
+            <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding: 0px 15px;"> Help</i></li>
+            <li class="user"><a href="staff_login.html" style="font-size: 15px; text-decoration: none; padding: 0;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Login</a></i></li>
+        </div>
+</ul>
+
+<div class="sidebar" id="sidebar">
+    <nav>
+        <ul>
+            <li>
+                <a href="javascript:void(0)" onclick="location.href='mainmenu.html'">Admin</a>
+                <ul>
+                    <li><a href="javascript:void(0)" onclick="location.href='managestaff.php'">Manage Staff</a></li>
+                    <li><a href="javascript:void(0)" onclick="location.href='manageproduct.html'">Manage Products</a></li>
+                    <li><a href="javascript:void(0)" onclick="location.href='report.html'">Report</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="container">
+    <div class="scrollable-content">
+        <div class="profile-container">
+            <div class="staff-details">
+                <h3>Staff Details</h3>
+                <form action="" method="POST" enctype="multipart/form-data">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="Name">Full Name:</label>
+                            <input type="text" id="Name" name="Name" required>
                         </div>
                         <div class="form-group">
-                            <label for="experience">Work Experience:</label>
-                            <textarea id="experience" name="experience" required></textarea>
+                            <label for="years">Years Old:</label>
+                            <input type="text" id="years" name="years" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="skills">Skills:</label>
-                            <textarea id="skills" name="skills" required></textarea>
+                            <label for="phone">Phone:</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="Salary">Salary:</label>
+                            <input type="text" id="Salary" name="Salary" required>
                         </div>
                         <div class="form-group">
-                            <label for="position">Position:</label>
-                            <input type="text" id="position" name="position" required>
+                            <label for="address">Address:</label>
+                            <input type="text" id="address" name="address" required>
                         </div>
-                        <div class="form-group">
-                            <label for="photo">Upload Photo:</label>
-                            <input type="file" id="photo" name="photo" accept="image/*">
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Add Staff">
-                        </div>
-                    </form>
-                    <button type="button" class="back-button" onclick="location.href='managestaff.php'">Back</button>
-                </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="experience">Work Experience:</label>
+                        <textarea id="experience" name="experience" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="skills">Skills:</label>
+                        <textarea id="skills" name="skills" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="position">Position:</label>
+                        <input type="text" id="position" name="position" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="photo">Upload Photo:</label>
+                        <input type="file" id="photo" name="photo" accept="image/*">
+                    </div>
+                    <div class="button-container">
+                        <button type="submit" class="add-button">Add</button>
+                        <button type="button" class="back-button" onclick="location.href='managestaff.php'">Back</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
 <script>
-function toggleMenu() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-        x.className += " responsive";
-    } else {
-        x.className = "topnav";
+function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('collapsed');
     }
-}
 </script>
 </body>
 </html>
+
