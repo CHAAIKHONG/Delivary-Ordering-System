@@ -8,7 +8,7 @@ if (!$connect) {
 // Fetch order history
 $orderHistoryQuery = "SELECT o.order_id, u.user_id, o.total_price FROM `order` o
                       JOIN user u ON o.user_id = u.user_id";
-$orderHistoryResult = mysqli_query($connect, $orderHistoryQuery); 
+$orderHistoryResult = mysqli_query($connect, $orderHistoryQuery);
 
 $orderDetails = [];
 
@@ -39,6 +39,7 @@ if (isset($_GET['order_id'])) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,21 +48,19 @@ if (isset($_GET['order_id'])) {
     <title>MoonBees Staff | Order History</title>
     <link rel="stylesheet" href="manageproduct.css">
     <style>
+        /* Existing styles */
         body {
             background-image: url("bg.jpg.png");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            overflow: hidden; /* Prevent scrolling */
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            overflow: hidden;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
-
-        /* Hide scrollbar for Chrome, Safari and Opera */
         body::-webkit-scrollbar {
             display: none;
         }
-
         ul.head {
             list-style-type: none;
             margin: 0;
@@ -73,15 +72,12 @@ if (isset($_GET['order_id'])) {
             width: 100%;
             z-index: 1;
         }
-
         ul.head li {
             float: left;
         }
-
         ul.head li.topleft {
             margin-left: 100px;
         }
-
         .head_title {
             display: block;
             color: white;
@@ -91,89 +87,40 @@ if (isset($_GET['order_id'])) {
             font-size: 25px;
             font-family: initial;
         }
-
-        .all_topcenter {
-            margin-left: 37%;
-        }
-
         .all_topright {
             margin-left: 80%;
         }
-
         body, html {
             height: 100%;
             margin: 0;
             position: relative;
             font-family: Arial, sans-serif;
         }
-
-        .all_container {
-            padding-top: 50px; /* Increase top padding to move the content down */
+        .content-wrapper {
+            padding-top: 60px;
         }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            /* height: calc(100vh -); Adjusted to fit within viewport */
+        .order-history {
+            margin: 0 auto;
+            width: 80%;
         }
-
-        .all_button {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
-
-        .button_row {
-            display: flex;
-            flex-direction: row;
-            gap: 10%;
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            vertical-align: middle;
         }
-
-        .logo {
-            height: 250px; /* Adjusted height */
+        th {
+            background-color: #f2f2f2;
         }
-
-        .admin {
-            font-size: 20px;
-            margin: 10px 0;
+        .left-align {
+            text-align: left;
         }
-
-        .option {
-            border: 2px solid black;
-            border-radius: 20px;
-            padding: 10px 20px;
+        .center-align {
             text-align: center;
-            font-size: 20px;
-            width: 300px;
-            cursor: pointer;
-            background-color: white;
         }
-
-        .option img {
-            display: block;
-            margin: 0 auto 10px auto;
-            height: 100px;
-        }
-
-        .option:hover {
-            background-color: rgb(225, 255, 0);
-        }
-
-        .border-box {
-            border: 5px; /* Border around the entire content */
-            padding: 20px; /* Optional padding inside the border */
-            margin: 50px auto; /* Center the box horizontally */
-            background-color: rgba(107, 107, 107, 0.49);
-            backdrop-filter: blur(10px);
-            border-radius: 50px;
-            width: 100%; /* Adjust the width as needed */
-            max-width: 900px; /* Optional maximum width */
-            max-height: 750px;
-        }
-
         .modal {
             display: none;
             position: fixed;
@@ -185,7 +132,6 @@ if (isset($_GET['order_id'])) {
             overflow: auto;
             background-color: rgba(0, 0, 0, 0.5);
         }
-
         .modal-content {
             background-color: #fefefe;
             margin: 15% auto;
@@ -193,47 +139,22 @@ if (isset($_GET['order_id'])) {
             border: 1px solid #888;
             width: 80%;
         }
-
         .close {
             color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
-
         .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            vertical-align: middle; /* Center text vertically */
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        .left-align {
-            text-align: left;
-        }
-
-        .center-align {
-            text-align: center;
-        }
     </style>
 </head>
 <body>
-<ul class="head">
+    <ul class="head">
         <li class="topleft">
             <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
             <a href="#home" class="head_title">MoonBees</a>
@@ -314,11 +235,9 @@ if (isset($_GET['order_id'])) {
         }
 
         function showOrderDetails(orderId) {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'order_history.php?order_id=' + orderId, true);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    const orderDetails = JSON.parse(xhr.responseText);
+            fetch('orderhistory.php?order_id=' + orderId)
+                .then(response => response.json())
+                .then(orderDetails => {
                     const orderDetailsTableBody = document.getElementById('orderDetailsTable').querySelector('tbody');
                     orderDetailsTableBody.innerHTML = ''; // Clear previous contents
 
@@ -334,16 +253,21 @@ if (isset($_GET['order_id'])) {
                     });
 
                     document.getElementById('orderDetailsModal').style.display = 'block';
-                }
-            };
-            xhr.send();
+                })
+                .catch(error => console.error('Error:', error));
         }
 
         window.onclick = function(event) {
             if (event.target === document.getElementById('orderDetailsModal')) {
                 closeModal('orderDetailsModal');
             }
-        };
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal('orderDetailsModal');
+            }
+        });
     </script>
 </body>
 </html>
