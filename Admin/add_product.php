@@ -16,7 +16,7 @@ if (isset($_FILES['file']) && $_FILES['file']['name']) {
 }
 
 // Connect to your database (replace 'your_database' with your actual database name)
-$connect = mysqli_connect("localhost", "root", "", "your_database");
+$connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
 // Check connection
 if (!$connect) {
@@ -28,9 +28,10 @@ $product_name = isset($_POST['product_name']) ? $_POST['product_name'] : '';
 $category = isset($_POST['category']) ? $_POST['category'] : '';
 $price = isset($_POST['price']) ? $_POST['price'] : '';
 $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : '';
+$photo = isset($_POST['photo']) ? $_POST['photo'] : '';
 
 // Prepare insert statement (make sure to validate and sanitize input to prevent SQL injection)
-$query = "INSERT INTO product (product_name, category, price, quantity) VALUES ('$product_name', '$category', '$price', '$quantity')";
+$query = "INSERT INTO product (product_name, category, price, quantity, photo) VALUES ('$product_name', '$category', '$price', '$quantity')";
 
 // Execute query
 if (mysqli_query($connect, $query)) {
