@@ -9,11 +9,13 @@ if (!$connect) {
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
     $total = $_POST['total'];
+    // $requests = isset($_POST['requests']) ? str_replace(' ', '_', $_POST['requests']) : ''; 
+    // $payment_method = 'Cash On Delivery';
     // $payment_status = 'Pending'; // 或其他默认状态
     // $delivery_status = 'Pending'; // 或其他默认状态
 
     // 插入订单到 order 表
-    $query = "INSERT INTO `order` (user_id, total_price, payment_status) VALUES ($user_id, $total, 'Pending')";
+    $query = "INSERT INTO `order` (user_id, total_price, payment_status, payment_method) VALUES ($user_id, $total, 'Pending', 'Cash_On_Delivery')";
     // $stmt = $connect->prepare($query);
     // $stmt->bind_param("idss", $user_id, $total, $payment_status, $delivery_status);
     // $stmt->execute();

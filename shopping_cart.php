@@ -216,7 +216,7 @@ if (isset($_SESSION['user_id'])) {
                 <span class="total_price">RM <?php echo number_format($total, 2); ?></span>
             </div>
             <button class="confirm_payment">Payment</button>
-            <form id="paymentForm" action="process_payment.php" method="post" style="display: none;">
+            <form id="paymentForm" action="payment.php" method="post" style="display: none;">
                 <input type="hidden" name="total" value="<?php echo number_format($total, 2); ?>">
                 <input type="hidden" name="order_items" value='<?php echo json_encode($orderItems); ?>'>
             </form>
@@ -280,7 +280,7 @@ if (isset($_SESSION['user_id'])) {
     addressForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const newAddress = document.getElementById('newAddress').value;
-        fetch('update_address.php', {
+        fetch('save_address.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
