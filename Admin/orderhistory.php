@@ -1,45 +1,3 @@
-<?php
-$connect = mysqli_connect("localhost", "root", "", "moonbeedb");
-
-if (!$connect) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
-// Fetch order history
-$orderHistoryQuery = "SELECT o.order_id, u.user_id, o.total_price FROM `order` o
-                      JOIN user u ON o.user_id = u.user_id";
-$orderHistoryResult = mysqli_query($connect, $orderHistoryQuery);
-
-$orderDetails = [];
-
-if ($orderHistoryResult) {
-    while ($order = mysqli_fetch_assoc($orderHistoryResult)) {
-        $orderDetails[] = $order;
-    }
-}
-
-// Fetch order details if order_id is set
-if (isset($_GET['order_id'])) {
-    $orderId = intval($_GET['order_id']);
-    $orderDetailsQuery = "SELECT p.product_name, p.category, d.price, d.quantity 
-                          FROM order_detail d
-                          JOIN products p ON d.product_id = p.product_id
-                          WHERE d.order_id = $orderId";
-    $orderDetailsResult = mysqli_query($connect, $orderDetailsQuery);
-
-    $orderDetails = [];
-    if ($orderDetailsResult) {
-        while ($detail = mysqli_fetch_assoc($orderDetailsResult)) {
-            $orderDetails[] = $detail;
-        }
-    }
-
-    echo json_encode($orderDetails);
-    exit;
-}
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,79 +6,6 @@ if (isset($_GET['order_id'])) {
     <title>MoonBees Staff | Order History</title>
     <link rel="stylesheet" href="manageproduct.css">
     <style>
-        /* Existing styles */
-        body {
-            background-image: url("bg.jpg.png");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            overflow: hidden;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        body::-webkit-scrollbar {
-            display: none;
-        }
-        ul.head {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: black;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1;
-        }
-        ul.head li {
-            float: left;
-        }
-        ul.head li.topleft {
-            margin-left: 100px;
-        }
-        .head_title {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-size: 25px;
-            font-family: initial;
-        }
-        .all_topright {
-            margin-left: 80%;
-        }
-        body, html {
-            height: 100%;
-            margin: 0;
-            position: relative;
-            font-family: Arial, sans-serif;
-        }
-        .content-wrapper {
-            padding-top: 60px;
-        }
-        .order-history {
-            margin: 0 auto;
-            width: 80%;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            vertical-align: middle;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .left-align {
-            text-align: left;
-        }
-        .center-align {
-            text-align: center;
-        }
         .modal {
             display: none;
             position: fixed;
@@ -151,13 +36,31 @@ if (isset($_GET['order_id'])) {
             text-decoration: none;
             cursor: pointer;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            vertical-align: middle; /* Center text vertically */
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .left-align {
+            text-align: left;
+        }
+        .center-align {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <ul class="head">
+<ul class="head">
         <li class="topleft">
             <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-            <a href="#home" class="head_title">MoonBees</a>
+            <a href="#home">MoonBees</a>
         </li>
         <div class="all_topright">
             <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding: 0px 15px;"> Help</i></li>
@@ -192,15 +95,17 @@ if (isset($_GET['order_id'])) {
                     </tr>
                 </thead>
                 <tbody id="orderTable">
-                    <?php foreach ($orderDetails as $order): ?>
+                    <!-- Example Data -->
                     <tr>
-                        <td class="left-align"><?= htmlspecialchars($order['user_id']) ?></td>
-                        <td class="left-align">RM <?= htmlspecialchars($order['total_price']) ?></td>
-                        <td class="center-align">
-                            <img src="car.png" alt="Shopping Cart" width="50" height="50" onclick="showOrderDetails(<?= htmlspecialchars($order['order_id']) ?>)">
-                        </td>
+                        <td class="left-align">John Doe</td>
+                        <td class="left-align">RM 50.00</td>
+                        <td class="center-align"><img src="car.png" alt="Shopping Cart" width="50" height="50" onclick="showOrderDetails(1)"></td>
                     </tr>
-                    <?php endforeach; ?>
+                    <tr>
+                        <td class="left-align">Jane Smith</td>
+                        <td class="left-align">RM 75.00</td>
+                        <td class="center-align"><img src="car.png" alt="Shopping Cart" width="50" height="50" onclick="showOrderDetails(2)"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -219,29 +124,46 @@ if (isset($_GET['order_id'])) {
                         <th>Quantity</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    <!-- Order details will be populated here using JavaScript -->
+                </tbody>
             </table>
         </div>
     </div>
 
     <script>
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
-            document.getElementById('content-wrapper').classList.toggle('collapsed');
-        }
+        document.addEventListener("DOMContentLoaded", function() {
+            fetchOrders();
+        });
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
+        function fetchOrders() {
+            fetch('get_orders.php')
+                .then(response => response.json())
+                .then(data => {
+                    const orderTable = document.getElementById('orderTable');
+                    orderTable.innerHTML = ''; // Clear previous contents
+
+                    data.forEach(order => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td class="left-align">${order.customer_name}</td>
+                            <td class="left-align">RM ${order.total_amount}</td>
+                            <td class="center-align"><img src="car.png" alt="Shopping Cart" width="50" height="50" onclick="showOrderDetails(${order.id})"></td>
+                        `;
+                        orderTable.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
         }
 
         function showOrderDetails(orderId) {
-            fetch('orderhistory.php?order_id=' + orderId)
+            fetch(`get_order_details.php?order_id=${orderId}`)
                 .then(response => response.json())
-                .then(orderDetails => {
+                .then(data => {
                     const orderDetailsTableBody = document.getElementById('orderDetailsTable').querySelector('tbody');
                     orderDetailsTableBody.innerHTML = ''; // Clear previous contents
 
-                    orderDetails.forEach(detail => {
+                    data.forEach(detail => {
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>${detail.product_name}</td>
@@ -257,17 +179,17 @@ if (isset($_GET['order_id'])) {
                 .catch(error => console.error('Error:', error));
         }
 
-        window.onclick = function(event) {
-            if (event.target === document.getElementById('orderDetailsModal')) {
-                closeModal('orderDetailsModal');
-            }
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
         }
 
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeModal('orderDetailsModal');
-            }
-        });
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+            document.getElementById('content-wrapper').classList.toggle('collapsed');
+        }
     </script>
 </body>
 </html>
+
+
+
