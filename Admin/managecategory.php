@@ -89,15 +89,15 @@ body {
         background-color: #575757;
     }
 
-        .toggle-btn {
-            background-color: black;
-            color: white;
-            border: none;
-            padding: 14px 16px;
-            cursor: pointer;
-            font-size: 25px;
-            margin-right: 10px;
-        }
+    .toggle-btn {
+        background-color: black;
+        color: white;
+        border: none;
+        padding: 14px 16px;
+        cursor: pointer;
+        font-size: 25px;
+        margin-right: 10px;
+    }
 
         .content-wrapper {
             margin-left: 250px;
@@ -290,7 +290,7 @@ body {
         </nav>
     </div>
 
-    <div class="content-wrapper">
+    <div class="content-wrapper" id="content-wrapper">
         <h2>Manage Categories</h2>
         <form method="POST" action="">
             <input type="hidden" name="id" id="category_id">
