@@ -86,7 +86,7 @@ $result = mysqli_query($connect, $query);
                             <td>' . htmlspecialchars($quantity) . '</td>
                             <td>' . $row['description'] . '</td>
                             <td class="actions">
-                                <button onclick=\'window.location.href="edit.php?id=' . htmlspecialchars($row['product_id']) . '"\'>Edit</button>
+                                
                                 <button onclick="deleteProduct(' . htmlspecialchars($row['product_id']) . ')">Delete</button>
                             </td>
                         </tr>';
