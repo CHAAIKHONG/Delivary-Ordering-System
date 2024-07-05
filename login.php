@@ -107,7 +107,7 @@
                     </div>
                     <button type="submit">Login</button>
                     <input type="checkbox" name="remember">Remember Me
-                    <a href="#" class="forgetpass">Forget password</a>
+                    <a href="forget_password.php" class="forgetpass">Forget password</a>
                     <hr>
                     <p>New to our shop? <a href="register.php">Sign Up</a></p>
                 </div>
