@@ -46,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $mail->send();
             echo '<script>alert("Password has been sent to your email.")</script>';
+            
         } catch (Exception $e) {
             echo '<script>alert("Failed to send email. Mailer Error: ' . $mail->ErrorInfo . '")</script>';
         }
