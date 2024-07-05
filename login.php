@@ -15,39 +15,41 @@
         $password = mysqli_real_escape_string($connect, $_POST['password']);
         $remember = isset($_POST['remember']); // 是否选择了Remember Me
 
-        // 查询数据库检查email和password
-        $sql = "SELECT * FROM user WHERE email='$email' AND password='$password'";
-        $result = mysqli_query($connect, $sql);
+        if ($email === 'admin@gmail.com' && $password === 'admin1234') {
+            // 重定向到管理员主页
+            echo '<script>alert("Welcome Admin")</script>';
+            echo '<script>window.location.href = "Admin/mainmenu.html";</script>';
+            exit;
+        } else{
 
-        if (mysqli_num_rows($result) > 0) {
-            $user = mysqli_fetch_assoc($result);
+            // 查询数据库检查email和password
+            $sql = "SELECT * FROM user WHERE email='$email' AND password='$password'";
+            $result = mysqli_query($connect, $sql);
 
-            // 登录成功，设置会话
-            $_SESSION['username'] = $email;
-            $_SESSION['user_id'] = $user['user_id'];
-            $_SESSION['fullname'] = $user['first_name'] . ' ' . $user['last_name'];
-            $_SESSION['photo'] = $user['user_photo'];
+            if (mysqli_num_rows($result) > 0) {
+                $user = mysqli_fetch_assoc($result);
 
-            // 如果选择了Remember Me，设置Cookie
-            if ($remember) {
-                $cookie_name = 'user_cookie';
-                $cookie_value = $email;
-                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 30天有效期的Cookie
-            }
+                // 登录成功，设置会话
+                $_SESSION['username'] = $email;
+                $_SESSION['user_id'] = $user['user_id'];
+                $_SESSION['fullname'] = $user['first_name'] . ' ' . $user['last_name'];
+                $_SESSION['photo'] = $user['user_photo'];
 
-            // 检查是否为管理员
-            if ($email === 'admin@gmail.com' && $password === 'admin1234') {
-                // 重定向到管理员主页
-                header('Location: mainmenu.html'); // 替换成你的管理员主页地址
+                // 如果选择了Remember Me，设置Cookie
+                if ($remember) {
+                    $cookie_name = 'user_cookie';
+                    $cookie_value = $email;
+                    setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 30天有效期的Cookie
+                }
+
+                 // 重定向到其他页面，例如主页
+                header('Location: menu.php'); // 替换成你的主页地址
                 exit;
+                
             } else {
-                // 重定向到用户主页
-                header('Location: mainmenu.html'); // 替换成你的主页地址
-                exit;
+                // 登录失败，可以添加错误提示
+                echo '<script>alert("Invalid email or password")</script>';
             }
-        } else {
-            // 登录失败，可以添加错误提示
-            echo '<script>alert("Invalid email or password")</script>';
         }
     }
 
