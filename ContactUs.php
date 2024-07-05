@@ -11,7 +11,6 @@
     $userPhoto = null;
     $userName = 'user';
 
-    
     $user_id = $_SESSION['user_id'];
 
     if (isset($_SESSION['photo'])) {
@@ -22,6 +21,18 @@
         $userName = $_SESSION['fullname'];
     }
 
+    if (isset($_POST['submit_feedback'])) {
+        $topic = mysqli_real_escape_string($connect, $_POST['topic_selection']);
+        $comment = mysqli_real_escape_string($connect, $_POST['comment']);
+    
+        $sql = "INSERT INTO contactus (user_id, message) VALUES ('$user_id', '$comment')";
+    
+        if (mysqli_query($connect, $sql)) {
+            echo '<script>alert("New record created successfully")</script>';
+        } else {
+            echo '<script>alert("Error: " . $sql . "<br>" . mysqli_error($connect))</script>';
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -67,7 +78,7 @@
     
     <div class="contactus_body">
         <!-- <h1>Contact Us</h1> -->
-        <form class="feedbackfrm">
+        <form class="feedbackfrm" method="post">
             <div class="fb_topic">
                 <label><p>Topic</p></label>
                 <select name="topic_selection" id="topic_selection">
@@ -83,12 +94,12 @@
                 <textarea name="comment" id="comment"></textarea>
             </div>
 
-            <!-- <div>
-                <img src="" alt="">
-            </div> -->
-
+            <div class="submit_btn">
+                <button type="submit" name="submit_feedback" style="text-align: center; border: 1px solid black; background-color: yellow; border-radius: 10px; width: 70px;">Submit</button>
+            </div>
         </form>
-
+            
+        
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2449.718088386932!2d102.25115649935964!3d2.2223818231622383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d1f028a6dec9ab%3A0xbcefbe90f37590e1!2sR1%2C%20Jalan%20Tun%20Razak%2C%20Plaza%20Melaka%20Sentral%2C%2075400%20Melaka!5e0!3m2!1szh-CN!2smy!4v1717865441281!5m2!1szh-CN!2smy" width="600" height="450" style="border:0; margin-right: auto; display: block; padding: 10px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade " class="map"></iframe>
     
     </div>
