@@ -230,6 +230,80 @@ $result = mysqli_query($connect, $query);
             text-decoration: none;
             cursor: pointer;
         }
+
+        .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px; /* Adjust width to your preference */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+textarea,
+select,
+input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
     </style>
 </head>
 <body>
@@ -311,15 +385,17 @@ $result = mysqli_query($connect, $query);
     </div>
 
     <div id="addProductModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('addProductModal')">&times;</span>
-            <h2>Add Product</h2>
-            <form action="add_product.php" method="POST" enctype="multipart/form-data">
-                <label for="product_name">Product Name:</label>
-                <input type="text" name="product_name" required><br>
-                
-                <label for="category_id">Category:</label>
-                <select name="category_id" required>
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('addProductModal')">&times;</span>
+        <h2>Add Product</h2>
+        <form action="add_product.php" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="product_name">Product Name</label>
+                <input type="text" name="product_name" id="product_name" required>
+            </div>
+            <div class="form-group">
+                <label for="category_id">Category</label>
+                <select name="category_id" id="category_id" required>
                     <?php
                     $category_query = "SELECT * FROM category";
                     $category_result = mysqli_query($connect, $category_query);
@@ -327,24 +403,28 @@ $result = mysqli_query($connect, $query);
                         echo "<option value='" . htmlspecialchars($row['category_id']) . "'>" . htmlspecialchars($row['category_name']) . "</option>";
                     }
                     ?>
-                </select><br>
-
-                <label for="price">Price:</label>
-                <input type="text" name="price" required><br>
-
-                <label for="quantity">Quantity:</label>
-                <input type="text" name="quantity" required><br>
-
-                <label for="description">Description:</label>
-                <textarea name="description"></textarea><br>
-
-                <label for="image">Image:</label>
-                <input type="file" name="image" required><br>
-
-                <button type="submit">Add Product</button>
-            </form>
-        </div>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="text" name="price" id="price" required>
+            </div>
+            <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <input type="text" name="quantity" id="quantity" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea name="description" id="description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" name="image" id="image" required>
+            </div>
+            <button type="submit">Add Product</button>
+        </form>
     </div>
+</div>
 
     <script>
         function toggleSidebar() {
