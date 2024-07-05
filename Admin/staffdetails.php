@@ -351,6 +351,10 @@ body, html {
                                 <input type="text" id="Salary" name="Salary" value="<?php echo $staff['salary']; ?>">
                             </div>
                             <div class="form-group">
+                                <label for="Position">Position</label>
+                                <input type="text" id="Position" name="Position" value="<?php echo $staff['position']; ?>">
+                            </div>
+                            <div class="form-group">
                                 <label for="address">Address</label>
                                 <input type="text" id="address" name="address" value="<?php echo $staff['address']; ?>">
                             </div>
