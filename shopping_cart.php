@@ -86,7 +86,7 @@ if (isset($_SESSION['user_id'])) {
             <li class="dropdown">
                 <a href="profile.php" style="font-size: 15px; text-decoration: none;">
                     <?php if ($userPhoto) : ?>
-                        <img src="Admin/<?php echo $userPhoto; ?>" alt="User Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;"><?php echo $userName; ?>
+                        <img src="image/user/<?php echo $userPhoto; ?>" alt="User Photo" style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;"><?php echo $userName; ?>
                     <?php else : ?>
                         <i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"><?php echo $userName; ?></i>
                     <?php endif; ?>
@@ -147,7 +147,7 @@ if (isset($_SESSION['user_id'])) {
                             <li class="items_quantity" data-product-id="<?php echo $item['product_id']; ?>">
                                 <div class="name_price">
                                     <div>
-                                        <img src="image/food/<?php echo $item['photo']; ?>" alt="Product Photo" style="width: 50px; height: 50px; margin-right: 10px;">
+                                        <img src="Admin/<?php echo $item['photo']; ?>" alt="Product Photo" style="width: 50px; height: 50px; margin-right: 10px;">
                                         <div class="items_name"><h4><?php echo $item['product_name']; ?></h4></div>
                                     </div>
                                     <div class="items_price">
