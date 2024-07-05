@@ -27,8 +27,6 @@
             background-size: cover;
             background-repeat: no-repeat; 
             background-attachment: fixed;
-            font-family: Arial, sans-serif;
-            margin: 0;
         }
 
         ul.head {
@@ -55,7 +53,7 @@
             align-items: center;
         }
 
-        .head_title, .head li a {
+        .head_title, ul.head li a {
             display: block;
             color: white;
             text-align: center;
@@ -65,11 +63,25 @@
             font-family: initial;
         }
 
+        ul.head li.topcenter:hover {
+            background-color: black;
+        }
+
+        ul.head li a,
+        ul.head li a:hover,
+        ul.head li a:focus,
+        ul.head li a:active {
+            background-color: black !important; /* 强制设置与导航栏相同的背景色 */
+            color: white !important; /* 强制保持文字颜色不变 */
+            outline: none !important; /* 移除所有 outline */
+            border: none !important; /* 移除所有 border */
+            box-shadow: none !important; /* 移除任何可能的 box-shadow */
+        }
+
         h2 {
             text-align: center;
             color: #333;
-            margin-top: -55px
-        ; /* Remove default margin */
+            margin-top: -55px; /* Remove default margin */
             padding-top: 60px; 
         }
 
@@ -140,7 +152,7 @@
     <ul class="head">
         <li class="topleft">
             <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-            <a href="#home">MoonBees</a>
+            <a href="#home" style="background-color: black !important; color: white !important; outline: none !important; border: none !important; box-shadow: none !important;">MoonBees</a>
         </li>
         <li class="logout">
             <a href="logout2.php"><i class="ri-user-5-line"></i> Logout</a>
