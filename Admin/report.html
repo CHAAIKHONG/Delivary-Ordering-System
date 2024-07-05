@@ -146,6 +146,26 @@
         canvas {
             max-width: 100%;
         }
+        .pagination {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .pagination button {
+            margin: 0 5px;
+            padding: 5px 10px;
+        }
+        .month-selector {
+            text-align: center;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .month-selector button {
+            margin: 5px;
+            padding: 5px 10px;
+            flex: 1 1 8%;
+        }
     </style>
 </head>
 <body>
@@ -155,31 +175,47 @@
             <a href="#home">MoonBees</a>
         </li>
         <div class="all_topright">
-            <!-- <li class="shopping_card"><i class="ri-shopping-cart-fill" style="color: white; display: block; margin-top: 20px;"></i></li> -->
             <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding: 0px 15px;"> Help</i></li>
             <li class="user"><a href="staff_login.html" style="font-size: 15px; text-decoration: none; padding: 0;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Login</a></i></li>
         </div>
     </ul>
 
-    <div class="sidebar" id="sidebar">
+    <div class="sidebar">
         <nav>
-            <ul>
-                <li>
-                    <ul>
+                <ul>
+                    <li>
                         <a href="javascript:void(0)" onclick="location.href='mainmenu.html'">Admin</a>
                         <ul>
-                            <li><a href="javascript:void(0)"onclick="location.href='managestaff.php'">Manage Staff</a></li>
+                            <li><a href="javascript:void(0)" onclick="location.href='managestaff.php'">Manage Staff</a></li>
+    
                             <li><a href="javascript:void(0)" onclick="location.href='Manageproduct.php'">Manage Products</a></li>
+    
+                            <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
+    
                             <li><a href="javascript:void(0)" onclick="location.href='report.html'">Report</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-    </div>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
 
     <div class="content-wrapper" id="content-wrapper">
         <div class="sales-report">
-            <h2>Sales Report</h2>
+            <h2 id="report-title">Sales Report - January</h2>
+            <div class="month-selector">
+                <button onclick="showReport('January')">January</button>
+                <button onclick="showReport('February')">February</button>
+                <button onclick="showReport('March')">March</button>
+                <button onclick="showReport('April')">April</button>
+                <button onclick="showReport('May')">May</button>
+                <button onclick="showReport('June')">June</button>
+                <button onclick="showReport('July')">July</button>
+                <button onclick="showReport('August')">August</button>
+                <button onclick="showReport('September')">September</button>
+                <button onclick="showReport('October')">October</button>
+                <button onclick="showReport('November')">November</button>
+                <button onclick="showReport('December')">December</button>
+            </div>
             <canvas id="revenueChart" width="400" height="200"></canvas>
             <table id="report-table">
                 <thead>
@@ -192,26 +228,59 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Report data will be dynamically added here -->
                 </tbody>
             </table>
+            <div class="pagination" id="pagination-controls">
+            </div>
             <button onclick="downloadReport()">Download Report</button>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const salesData = [
-            { id: 1, name: 'Burger 1', price: 10, quantitySold: 50 },
-            { id: 2, name: 'Fries', price: 5, quantitySold: 100 },
-            { id: 3, name: 'Soda', price: 2, quantitySold: 200 }
+        const productNames = [
+            "Chicken Patty Combo", "Chicken Crispy Combo", "Chicken Grill Combo", 
+            "Beef Grill Combo", "Special Beef Combo", "Fries Chicken Regular Combo", 
+            "Fries Chicken Spicy Combo", "Burger Chicken Patty", "Burger Chicken Crispy", 
+            "Burger Chicken Grill", "Burger Beef Grill", "Burger Beef Special", 
+            "Fries Chicken Regular(2pc)", "Fries Chicken Spicy(2pc)", "Coca-Cola", 
+            "Iced-Lemon Tea", "Latte", "Caffè Americano"
         ];
 
-        function generateReport() {
-            const reportTableBody = document.getElementById('report-table').querySelector('tbody');
-            reportTableBody.innerHTML = '';
+        const salesData = {};
 
-            salesData.forEach(item => {
+        const generateSalesDataForMonth = (month) => {
+            return productNames.map((name, index) => ({
+                id: index + 1,
+                name: name,
+                price: Math.round(Math.random() * 100) + 1,
+                quantitySold: Math.round(Math.random() * 1000) + 1
+            }));
+        };
+
+        ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"].forEach(month => {
+            salesData[month] = generateSalesDataForMonth(month);
+        });
+
+        const itemsPerPage = 100;
+        let currentPage = 1;
+        let currentMonth = 'January';
+        let chartInstance = null;
+
+        function fetchMonthlySalesData(page, month) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const start = (page - 1) * itemsPerPage;
+                    const end = start + itemsPerPage;
+                    resolve(salesData[month].slice(start, end));
+                }, 500);
+            });
+        }
+
+        function generateReport(data) {
+            const tableBody = document.querySelector('#report-table tbody');
+            tableBody.innerHTML = '';
+            data.forEach(item => {
                 const totalRevenue = item.price * item.quantitySold;
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -221,29 +290,27 @@
                     <td>${item.quantitySold}</td>
                     <td>${totalRevenue.toFixed(2)}</td>
                 `;
-                reportTableBody.appendChild(row);
+                tableBody.appendChild(row);
             });
 
-            generateChart();
-        }
+            const chartData = {
+                labels: data.map(item => item.name),
+                datasets: [{
+                    label: 'Total Revenue',
+                    data: data.map(item => item.price * item.quantitySold),
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            };
 
-        function generateChart() {
             const ctx = document.getElementById('revenueChart').getContext('2d');
-            const labels = salesData.map(item => item.name);
-            const data = salesData.map(item => item.price * item.quantitySold);
-
-            new Chart(ctx, {
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+            chartInstance = new Chart(ctx, {
                 type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Total Revenue',
-                        data: data,
-                        backgroundColor: 'rgba(0, 123, 255, 0.5)',
-                        borderColor: 'rgba(0, 123, 255, 1)',
-                        borderWidth: 1
-                    }]
-                },
+                data: chartData,
                 options: {
                     scales: {
                         y: {
@@ -252,13 +319,15 @@
                     }
                 }
             });
+
+            document.getElementById('report-title').innerText = `Sales Report - ${currentMonth}`;
         }
 
         function downloadReport() {
             let csvContent = "data:text/csv;charset=utf-8,";
             csvContent += "Product ID,Name,Price,Quantity Sold,Total Revenue\n";
 
-            salesData.forEach(item => {
+            salesData[currentMonth].forEach(item => {
                 const totalRevenue = item.price * item.quantitySold;
                 const row = [
                     item.id,
@@ -285,21 +354,39 @@
             document.getElementById('content-wrapper').classList.toggle('collapsed');
         }
 
-        function showReport() {
+        function updatePagination(totalItems) {
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            const paginationControls = document.getElementById('pagination-controls');
+            paginationControls.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.innerText = i;
+                button.onclick = () => goToPage(i);
+                if (i === currentPage) {
+                    button.style.fontWeight = 'bold';
+                }
+                paginationControls.appendChild(button);
+            }
+        }
+
+        async function goToPage(page) {
+            currentPage = page;
+            const data = await fetchMonthlySalesData(page, currentMonth);
+            generateReport(data);
+            updatePagination(salesData[currentMonth].length);
+        }
+
+        async function showReport(month) {
+            currentMonth = month;
+            currentPage = 1; // Reset to first page when changing month
             document.querySelector('.sales-report').style.display = 'block';
-            generateReport();
+            const data = await fetchMonthlySalesData(currentPage, month);
+            generateReport(data);
+            updatePagination(salesData[month].length);
         }
 
-        function showManageProducts() {
-            document.querySelector('.sales-report').style.display = 'none';
-        }
-
-        function showManageStaff() {
-            document.querySelector('.sales-report').style.display = 'none';
-        }
-
-        // Generate the report when the page loads
-        window.onload = generateReport;
+        window.onload = () => showReport('January');
     </script>
 </body>
 </html>
