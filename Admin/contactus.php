@@ -7,8 +7,7 @@
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    // 查询订单信息
-    // $sql = "SELECT order_id, user_id, total_price FROM `order`";
+    // 查询联系我们历史记录
     $sql = "SELECT CONCAT(u.first_name, ' ', u.last_name) AS full_name, u.email, u.phone_number, c.* FROM `contactus` c JOIN `user` u ON c.user_id = u.user_id";
     $result = mysqli_query($connect, $sql);
 ?>
@@ -22,83 +21,128 @@
     <link rel="stylesheet" href="manageproduct.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
-   
-   <style>
-    body {
-        background-image: url("bg.jpg.png"); 
-        background-size: cover;
-        background-repeat: no-repeat; 
-        background-attachment:fixed;
-    }
+    <style>
+        body {
+            background-image: url("bg.jpg.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
 
-    ul.head {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background-color: black;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+        ul.head {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: black;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-    ul.head li {
-        float: left;
-    }
+        ul.head li {
+            float: left;
+        }
 
-    ul.head li.topleft {
-        display: flex;
-        align-items: center;
-    }
+        ul.head li.topleft {
+            display: flex;
+            align-items: center;
+        }
 
-    .head_title, .head li a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        font-size: 25px;
-        font-family: initial;
-    }
+        .head_title,
+        .head li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 25px;
+            font-family: initial;
+        }
 
-    .toggle-btn {
-        background-color: black;
-        color: white;
-        border: none;
-        padding: 14px 16px;
-        cursor: pointer;
-        font-size: 25px;
-        margin-right: 10px;
-    }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: -55px; /* Remove default margin */
+            padding-top: 60px;
+        }
 
-    .logout {
-        margin-right: 20px;
-    }
+        .toggle-btn {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 14px 16px;
+            cursor: pointer;
+            font-size: 25px;
+            margin-right: 10px;
+        }
 
-    .logout a {
-        font-size: 15px;
-        text-decoration: none;
-        color: white;
-        display: block;
-        padding: 14px 16px;
-    }
-</style>
+        .logout {
+            margin-right: 20px;
+        }
 
+        .logout a {
+            font-size: 15px;
+            text-decoration: none;
+            color: white;
+            display: block;
+            padding: 14px 16px;
+        }
+
+        .content-wrapper {
+            margin-left: 260px;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+        }
+
+        .contactus-history {
+            margin-top: 60px; /* Adjust based on your header height */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: black;
+            color: white;
+        }
+
+        .left-align {
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
-<ul class="head">
-    <li class="topleft">
-        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-        <a href="#home">MoonBees</a>
-    </li>
-    <li class="logout">
-        <a href="logout2.php"><i class="ri-user-5-line"></i> Logout</a>
-    </li>
-</ul>
+    <ul class="head">
+        <li class="topleft">
+            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+            <a href="#home">MoonBees</a>
+        </li>
+        <li class="logout">
+            <a href="logout2.php"><i class="ri-user-5-line"></i> Logout</a>
+        </li>
+    </ul>
 
     <div class="sidebar" id="sidebar">
         <nav>
@@ -110,7 +154,6 @@
                         <li><a href="javascript:void(0)" onclick="location.href='manageproduct.php'">Manage Products</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='report.html'">Report</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
-
                     </ul>
                 </li>
             </ul>
@@ -118,28 +161,30 @@
     </div>
 
     <div class="content-wrapper" id="content-wrapper">
-        <div class="order-history">
-            <h2>Order History</h2>
+        <div class="contactus-history">
+            <h2>Contact Us History</h2>
             <table>
                 <thead>
                     <tr>
                         <th class="left-align">Customers</th>
                         <th class="left-align">Customers Email</th>
                         <th class="left-align">Customers Phone Number</th>
-                        <th class="center-align">Comment</th>
+                        <th class="left-align">Comment</th>
                     </tr>
                 </thead>
-                <tbody id="orderTable">
+                <tbody id="contactusTable">
                     <?php
                     if (mysqli_num_rows($result) > 0) {
-                        while ($order_row = mysqli_fetch_assoc($result)) {
+                        while ($contact_row = mysqli_fetch_assoc($result)) {
                             echo "<tr>";
-                            echo "<td class='left-align'>" . $order_row['full_name'] . "</td>";
-                            echo "<td class='left-align'>" . $order_row['email'] . "</td>";
-                            echo "<td class='left-align'>" . $order_row['phone_number'] . "</td>";
-                            echo "<td class='left-align'>" . $order_row['message'] . "</td>";
+                            echo "<td class='left-align'>" . $contact_row['full_name'] . "</td>";
+                            echo "<td class='left-align'>" . $contact_row['email'] . "</td>";
+                            echo "<td class='left-align'>" . $contact_row['phone_number'] . "</td>";
+                            echo "<td class='left-align'>" . $contact_row['message'] . "</td>";
                             echo "</tr>";
                         }
+                    } else {
+                        echo "<tr><td colspan='4'>No results found</td></tr>";
                     }
 
                     mysqli_close($connect);
@@ -150,15 +195,6 @@
     </div>
 
     <script>
-        function toggleOrderDetails(orderId) {
-            const detailsDiv = document.getElementById(`orderDetails-${orderId}`);
-            if (detailsDiv.style.display === 'none') {
-                detailsDiv.style.display = 'block';
-            } else {
-                detailsDiv.style.display = 'none';
-            }
-        }
-
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('collapsed');
             document.getElementById('content-wrapper').classList.toggle('collapsed');

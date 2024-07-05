@@ -7,168 +7,186 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
     <style>
-body {
-        background-image: url("bg.jpg.png"); 
-        background-size: cover;
-        background-repeat: no-repeat; 
-        background-attachment:fixed;
-    }
+        body {
+            background-image: url("bg.jpg.png"); 
+            background-size: cover;
+            background-repeat: no-repeat; 
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
 
-    ul.head {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background-color: black;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+        ul.head {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: black;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-    ul.head li {
-        float: left;
-    }
+        ul.head li {
+            float: left;
+        }
 
-    ul.head li.topleft {
-        display: flex;
-        align-items: center;
-    }
+        ul.head li.topleft {
+            display: flex;
+            align-items: center;
+        }
 
-    .head_title, .head li a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        font-size: 25px;
-        font-family: initial;
-    }
+        .head_title, .head li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 25px;
+            font-family: initial;
+        }
 
-    body, html {
-        height: 100%;
-        margin: 0;
-        position: relative;
-        font-family: Arial, sans-serif;
-    }
+        .toggle-btn {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 14px 16px;
+            cursor: pointer;
+            font-size: 25px;
+            margin-right: 10px;
+        }
 
-    .sidebar {
-        width: 250px;
-        background-color: #333;
-        color: white;
-        padding: 20px;
-        padding-top: 60px;
-        box-sizing: border-box;
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        overflow-y: auto;
-        transition: transform 0.3s ease;
-    }
-    .sidebar.collapsed {
-        transform: translateX(-100%);
-    }
-    .sidebar nav ul {
-        padding: 0;
-        list-style: none;
-    }
-    .sidebar nav ul li {
-        padding: 10px 0;
-    }
-    .sidebar nav ul li a {
-        color: white;
-        text-decoration: none;
-        display: block;
-        padding: 10px;
-        transition: background-color 0.3s ease;
-    }
-    .sidebar nav ul li a:hover {
-        background-color: #575757;
-    }
+        body, html {
+            height: 100%;
+            margin: 0;
+            position: relative;
+        }
 
-    .toggle-btn {
-        background-color: black;
-        color: white;
-        border: none;
-        padding: 14px 16px;
-        cursor: pointer;
-        font-size: 25px;
-        margin-right: 10px;
-    }
-
-        .content-wrapper {
-            margin-left: 250px;
-            flex: 1;
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
             padding: 20px;
             padding-top: 60px;
-            background-color: #f4f4f4;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(-100%);
+        }
+
+        .sidebar nav ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        .sidebar nav ul li {
+            padding: 10px 0;
+        }
+
+        .sidebar nav ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar nav ul li a:hover {
+            background-color: #575757;
+        }
+
+        .content-wrapper {
+            margin-left: 260px;
+            padding: 20px;
             transition: margin-left 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
         }
 
         .content-wrapper.collapsed {
             margin-left: 0;
         }
 
-        .categories {
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 0; /* Remove default margin */
+            padding-top: 60px; 
+        }
+
+        form {
             display: flex;
+            justify-content: center;
             align-items: center;
+            flex-direction: column;
             margin-bottom: 20px;
         }
 
-        .categories button {
+        form input[type="text"] {
+            padding: 10px;
+            margin: 10px 0;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            border-color:black;
+        }
+
+        form button {
             background-color: #007bff;
             color: white;
             border: none;
             padding: 10px 20px;
-            margin-right: 10px;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
-        .categories button:hover {
+        form button:hover {
             background-color: #0056b3;
         }
 
-        .add-product-btn {
-            margin-left: auto;
-            margin-right: 0;
+        form .add-product-btn {
             background-color: black;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
         }
 
-        .add-product-btn:hover {
+        form .add-product-btn:hover {
             background-color: yellow;
         }
 
-        .edit-product-btn {
-            margin-left: auto;
-            margin-right: 0;
+        form .edit-product-btn {
             background-color: #ffc107;
             color: black;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
         }
 
-        .edit-product-btn:hover {
+        form .edit-product-btn:hover {
             background-color: #e0a800;
+        }
+
+        form .cancel-btn {
+            background-color: red;
+            color: white;
+        }
+
+        form .cancel-btn:hover {
+            background-color: darkred;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
         }
 
         table, th, td {
@@ -181,7 +199,8 @@ body {
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: black;
+            color: white;
         }
 
         .actions a {
@@ -191,102 +210,63 @@ body {
             cursor: pointer;
             transition: background-color 0.3s ease;
             text-decoration: none; /* remove underline */
-            color: #007bff; /* default link color */
+            color: white;
+            border-radius: 5px;
         }
 
         .actions a.delete {
-            background-color: black;
-            color: white;
-            border-radius: 10px;
+            background-color: red;
         }
 
         .actions a.delete:hover {
-            background-color: #c82333;
+            background-color: darkred;
         }
 
         .actions a.edit {
-            background-color: black;
-            color: white; /* text color on yellow background */
-            border-radius: 10px;
-
+            background-color: #ffc107;
+            color: black;
         }
 
         .actions a.edit:hover {
             background-color: #e0a800;
-            color: black;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
         }
 
         .logout {
-        margin-right: 20px;
-    }
+            margin-right: 20px;
+        }
 
-    .logout a {
-        font-size: 15px;
-        text-decoration: none;
-        color: white;
-        display: block;
-        padding: 14px 16px;
-    }
+        .logout a {
+            font-size: 15px;
+            text-decoration: none;
+            color: white;
+            display: block;
+            padding: 14px 16px;
+        }
     </style>
 </head>
 <body>
-<ul class="head">
-    <li class="topleft">
-        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-        <a href="#home">MoonBees</a>
-    </li>
-    <li class="logout">
-        <a href="logout2.php"><i class="ri-user-5-line"></i> Logout</a>
-    </li>
-</ul>
+    <ul class="head">
+        <li class="topleft">
+            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+            <a href="#home">MoonBees</a>
+        </li>
+        <li class="logout">
+            <a href="logout2.php"><i class="ri-user-5-line"></i> Logout</a>
+        </li>
+    </ul>
 
     <div class="sidebar" id="sidebar">
-    <nav>
+        <nav>
             <ul>
                 <li>
                     <a href="javascript:void(0)" onclick="location.href='mainmenu.html'">Admin</a>
                     <ul>
                         <li><a href="javascript:void(0)" onclick="location.href='managestaff.php'">Manage Staff</a></li>
-
                         <li><a href="javascript:void(0)" onclick="location.href='Manageproduct.php'">Manage Products</a></li>
-
                         <li><a href="javascript:void(0)" onclick="location.href='report.html'">Report</a></li>
-
                         <li><a href="javascript:void(0)" onclick="location.href='orderhistory.php'">Order History</a></li>
+                        <li><a href="javascript:void(0)" onclick="location.href='contactus.php'">Contact Us History</a></li>
+
                     </ul>
                 </li>
             </ul>
@@ -300,7 +280,7 @@ body {
             <input type="text" name="name" id="category_name" placeholder="Category Name">
             <button type="submit" name="save" class="add-product-btn">Add Category</button>
             <button type="submit" name="update" class="edit-product-btn" style="display: none;" id="update-btn">Done</button>
-            <button type="button" onclick="cancelEdit()" class="add-product-btn" style="display: none;" id="cancel-btn">Cancel</button>
+            <button type="button" onclick="cancelEdit()" class="cancel-btn" style="display: none;" id="cancel-btn">Cancel</button>
         </form>
 
         <?php
@@ -360,63 +340,50 @@ body {
             }
         }
 
-        if (isset($_GET['edit'])) {
-            $id = $_GET['edit'];
-            $result = $conn->query("SELECT * FROM category WHERE category_id=$id");
-
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                echo "<script>
-                    document.getElementById('category_id').value = " . $row['category_id'] . ";
-                    document.getElementById('category_name').value = '" . $row['category_name'] . "';
-                    document.getElementById('update-btn').style.display = 'inline-block';
-                    document.getElementById('cancel-btn').style.display = 'inline-block';
-                    document.getElementById('category_name').focus();
-                </script>";
-            }
-        }
-
-        echo "<table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>";
-
         $sql = "SELECT * FROM category";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
+            echo "<table>
+                    <tr>
+                        <th>Category ID</th>
+                        <th>Category Name</th>
+                        <th>Actions</th>
+                    </tr>";
             while ($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>" . $row['category_id'] . "</td>";
-                echo "<td>" . $row['category_name'] . "</td>";
-                echo "<td class='actions'>";
-                echo "<a href='?delete=" . $row['category_id'] . "' class='delete' onclick='return confirm(\"Are you sure you want to delete this category?\")'>Delete</a>";
-                echo "<a href='?edit=" . $row['category_id'] . "' class='edit'>Edit</a>";
-                echo "</td>";
-                echo "</tr>";
+                echo "<tr>
+                        <td>" . $row["category_id"] . "</td>
+                        <td>" . $row["category_name"] . "</td>
+                        <td class='actions'>
+                            <a href='javascript:void(0)' class='edit' onclick='editCategory(" . $row["category_id"] . ", \"" . $row["category_name"] . "\")'>Edit</a>
+                            <a href='?delete=" . $row["category_id"] . "' class='delete' onclick='return confirm(\"Are you sure you want to delete this category?\")'>Delete</a>
+                        </td>
+                    </tr>";
             }
+            echo "</table>";
         } else {
-            echo "<tr><td colspan='3'>No categories found</td></tr>";
+            echo "0 results";
         }
-
-        echo "</tbody>
-        </table>";
 
         $conn->close();
         ?>
     </div>
 
     <script>
+        function editCategory(id, name) {
+            document.getElementById('category_id').value = id;
+            document.getElementById('category_name').value = name;
+            document.getElementById('update-btn').style.display = 'inline-block';
+            document.getElementById('cancel-btn').style.display = 'inline-block';
+            document.getElementById('add-btn').style.display = 'none';
+        }
+
         function cancelEdit() {
             document.getElementById('category_id').value = '';
             document.getElementById('category_name').value = '';
             document.getElementById('update-btn').style.display = 'none';
             document.getElementById('cancel-btn').style.display = 'none';
+            document.getElementById('add-btn').style.display = 'inline-block';
         }
 
         function toggleSidebar() {

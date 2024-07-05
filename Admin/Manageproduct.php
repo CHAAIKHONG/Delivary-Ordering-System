@@ -128,7 +128,9 @@ body {
 
         .manage-products h2 {
             text-align: center;
-            color: white;
+            color: black;
+            margin-top: 0; /* Remove default margin */
+            padding-top: 60px;
         }
 
         .categories {
@@ -182,7 +184,7 @@ body {
         }
 
         .actions button:hover {
-            background-color: yellow;
+            background-color: red;
         }
 
         .modal {
@@ -255,6 +257,8 @@ body {
                         <li><a href="javascript:void(0)" onclick="location.href='report.html'">Report</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='orderhistory.php'">Order History</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
+                        <li><a href="javascript:void(0)" onclick="location.href='contactus.php'">Contact Us History</a></li>
+
                     </ul>
                 </li>
             </ul>
