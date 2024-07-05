@@ -8,55 +8,48 @@
 <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
 <style>
-body {
-    background-image: url("bg.jpg.png"); 
-    background-size: cover;
-    background-repeat: no-repeat; 
-    background-attachment: fixed;
-    overflow: auto; /* Ensure the page is scrollable */
-}
+ body {
+        background-image: url("bg.jpg.png"); 
+        background-size: cover;
+        background-repeat: no-repeat; 
+        background-attachment:fixed;
+    }
 
-ul.head{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: black;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1;
-}
+    ul.head {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: black;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-ul.head li{
-    float: left;
-}
+    ul.head li {
+        float: left;
+    }
 
-ul.head li.topleft{
-    margin-left: 100px;
-}
+    ul.head li.topleft {
+        display: flex;
+        align-items: center;
+        margin-left: 70px; 
 
-.head_title{
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    font-family: initial;
-}
+    }
 
-ul.head li.topcenter:hover{
-    background-color: green;
-}
-
-.all_topcenter{
-    margin-left: 37%;
-}
-
-.all_topright{
-    margin-left: 80%;
-}
+    .head_title, .head li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 25px;
+        font-family: initial;
+    }
 
 body, html {
     height: 100%;
@@ -131,15 +124,29 @@ body, html {
     max-width: 900px; /* Optional maximum width */
     max-height: 750px;
 }
+
+.logout {
+        margin-right: 20px;
+    }
+
+    .logout a {
+        font-size: 15px;
+        text-decoration: none;
+        color: white;
+        display: block;
+        padding: 14px 16px;
+    }
 </style>
 </head>
 <body>
     <div class="all_container">
         <ul class="head">
-            <li class="topleft"><a href="" class="head_title">MoonBees</a></li>
-            <div class="all_topright">
-                <li class="user"><a href="logout2.php" style="font-size: 15px; text-decoration: none;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Logout</a></i></li>
-            </div>
+            <li class="topleft">
+                <a href="#home">MoonBees</a>
+            </li>
+            <li class="logout">
+                <a href="logout2.php"><i class="ri-user-5-line"></i> Logout</a>
+            </li>
         </ul>
         
         <div class="border-box">
