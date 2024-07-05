@@ -4,87 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Categories</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+
     <style>
-        body {
-            display: flex;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
+body {
+        background-image: url("bg.jpg.png"); 
+        background-size: cover;
+        background-repeat: no-repeat; 
+        background-attachment:fixed;
+    }
 
-        ul.head {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: black;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1;
-        }
+    ul.head {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: black;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-        ul.head li {
-            float: left;
-        }
+    ul.head li {
+        float: left;
+    }
 
-        ul.head li.topleft {
-            margin-left: 20px;
-            display: flex;
-            align-items: center;
-        }
+    ul.head li.topleft {
+        display: flex;
+        align-items: center;
+    }
 
-        ul.head li a {
-            display: block;
-            color: rgb(255, 255, 255);
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-size: 25px;
-            font-family: initial;
-        }
+    .head_title, .head li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 25px;
+        font-family: initial;
+    }
 
-        ul.head li:hover {
-            background-color: green;
-        }
+    body, html {
+        height: 100%;
+        margin: 0;
+        position: relative;
+        font-family: Arial, sans-serif;
+    }
 
-        .sidebar {
-            width: 250px;
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            padding-top: 60px;
-            box-sizing: border-box;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            overflow-y: auto;
-            transition: transform 0.3s ease;
-        }
-
-        .sidebar.collapsed {
-            transform: translateX(-100%);
-        }
-
-        .sidebar nav ul {
-            padding: 0;
-            list-style: none;
-        }
-
-        .sidebar nav ul li {
-            padding: 10px 0;
-        }
-
-        .sidebar nav ul li a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        .sidebar nav ul li a:hover {
-            background-color: #575757;
-        }
+    .sidebar {
+        width: 250px;
+        background-color: #333;
+        color: white;
+        padding: 20px;
+        padding-top: 60px;
+        box-sizing: border-box;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        overflow-y: auto;
+        transition: transform 0.3s ease;
+    }
+    .sidebar.collapsed {
+        transform: translateX(-100%);
+    }
+    .sidebar nav ul {
+        padding: 0;
+        list-style: none;
+    }
+    .sidebar nav ul li {
+        padding: 10px 0;
+    }
+    .sidebar nav ul li a {
+        color: white;
+        text-decoration: none;
+        display: block;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+    }
+    .sidebar nav ul li a:hover {
+        background-color: #575757;
+    }
 
         .toggle-btn {
             background-color: black;
@@ -243,19 +246,32 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        .logout {
+        margin-right: 20px;
+    }
+
+    .logout a {
+        font-size: 15px;
+        text-decoration: none;
+        color: white;
+        display: block;
+        padding: 14px 16px;
+    }
     </style>
 </head>
 <body>
 <ul class="head">
-        <li class="topleft">
-            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-            <a href="#home">MoonBees</a>
-        </li>
-        <div class="all_topright">
-        <li class="user"><a href="logout2.php" style="font-size: 15px; text-decoration: none;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Logout</a></i></li>
-    </ul>
+    <li class="topleft">
+        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        <a href="#home">MoonBees</a>
+    </li>
+    <li class="logout">
+        <a href="logout2.php"><i class="ri-user-5-line"></i> Logout</a>
+    </li>
+</ul>
 
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
     <nav>
             <ul>
                 <li>
@@ -398,6 +414,11 @@
             document.getElementById('category_name').value = '';
             document.getElementById('update-btn').style.display = 'none';
             document.getElementById('cancel-btn').style.display = 'none';
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+            document.getElementById('content-wrapper').classList.toggle('collapsed');
         }
     </script>
 </body>
