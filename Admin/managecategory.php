@@ -136,7 +136,7 @@ body {
         .add-product-btn {
             margin-left: auto;
             margin-right: 0;
-            background-color: #28a745;
+            background-color: black;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -146,7 +146,7 @@ body {
         }
 
         .add-product-btn:hover {
-            background-color: #218838;
+            background-color: yellow;
         }
 
         .edit-product-btn {
@@ -195,8 +195,9 @@ body {
         }
 
         .actions a.delete {
-            background-color: #dc3545;
+            background-color: black;
             color: white;
+            border-radius: 10px;
         }
 
         .actions a.delete:hover {
@@ -204,8 +205,10 @@ body {
         }
 
         .actions a.edit {
-            background-color: #ffc107;
-            color: black; /* text color on yellow background */
+            background-color: black;
+            color: white; /* text color on yellow background */
+            border-radius: 10px;
+
         }
 
         .actions a.edit:hover {
