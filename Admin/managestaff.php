@@ -47,6 +47,9 @@ $result = mysqli_query($connect, $query);
         top: 0;
         width: 100%;
         z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
     ul.head li {
@@ -54,8 +57,8 @@ $result = mysqli_query($connect, $query);
     }
 
     ul.head li.topleft {
-        margin-left: 100px;
         display: flex;
+        align-items: center;
     }
 
     .head_title, .head li a {
@@ -70,14 +73,6 @@ $result = mysqli_query($connect, $query);
 
     ul.head li.topcenter:hover {
         background-color: green;
-    }
-
-    .all_topcenter {
-        margin-left: 37%;
-    }
-
-    .all_topright {
-        margin-left: 80%;
     }
 
     .toggle-btn {
@@ -217,19 +212,30 @@ $result = mysqli_query($connect, $query);
     .details button:hover {
         background-color: green;
     }
+
+    .logout {
+        margin-right: 20px;
+    }
+
+    .logout a {
+        font-size: 15px;
+        text-decoration: none;
+        color: white;
+        display: block;
+        padding: 14px 16px;
+    }
 </style>
 </head>
 <body>
     <div class="all_container">
-        <ul class="head">
+    <ul class="head">
             <li class="topleft">
                 <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
                 <a href="#home">MoonBees</a>
             </li>
-            <div class="all_topright">
-                <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding: 0px 15px;"> Help</i></li>
-                <li class="user"><a href="staff_login.html" style="font-size: 15px; text-decoration: none; padding: 0;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Login</a></i></li>
-            </div>
+            <li class="logout">
+                <a href="logout2.php"><i class="ri-user-5-line"></i> Logout</a>
+            </li>
         </ul>
 
         <div class="sidebar" id="sidebar">

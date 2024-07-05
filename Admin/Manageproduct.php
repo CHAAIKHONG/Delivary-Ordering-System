@@ -15,7 +15,222 @@ $result = mysqli_query($connect, $query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MoonBees Staff | Manage Product</title>
-    <link rel="stylesheet" href="manageproduct.css">
+    <link rel="icon" href="burger.png" type="image/png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-image: url("bg.jpg.png"); 
+            background-size: cover;
+            background-repeat: no-repeat; 
+            background-attachment: fixed;
+        }
+
+        ul.head {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: black;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        ul.head li {
+            float: left;
+        }
+
+        ul.head li.topleft {
+            display: flex;
+            align-items: center;
+        }
+
+        .head_title, .head li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 25px;
+            font-family: initial;
+        }
+
+        ul.head li.logout {
+            margin-right: 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        ul.head li.logout a {
+            font-size: 15px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .toggle-btn {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 14px 16px;
+            cursor: pointer;
+            font-size: 25px;
+            margin-right: 10px;
+        }
+        
+        body, html {
+            height: 100%;
+            margin: 0;
+            position: relative;
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            padding-top: 60px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(-100%);
+        }
+
+        .sidebar nav ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        .sidebar nav ul li {
+            padding: 10px 0;
+        }
+
+        .sidebar nav ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar nav ul li a:hover {
+            background-color: #575757;
+        }
+
+        .content-wrapper {
+            margin-left: 260px;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .content-wrapper.collapsed {
+            margin-left: 0;
+        }
+
+        .manage-products h2 {
+            text-align: center;
+            color: white;
+        }
+
+        .categories {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .categories button {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .categories button:hover {
+            background-color: yellow;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: black;
+            color: white;
+        }
+
+        .actions button {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 10px;
+
+        }
+
+        .actions button:hover {
+            background-color: yellow;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+
+        .modal-content span.close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .modal-content span.close:hover, .modal-content span.close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <ul class="head">
@@ -23,10 +238,9 @@ $result = mysqli_query($connect, $query);
             <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
             <a href="#home">MoonBees</a>
         </li>
-        <div class="all_topright">
-            <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding: 0px 15px;"> Help</i></li>
-            <li class="user"><a href="staff_login.html" style="font-size: 15px; text-decoration: none; padding: 0;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Login</a></i></li>
-        </div>
+        <li class="logout">
+            <a href="logout2.php"><i class="ri-user-5-line"></i> Logout</a>
+        </li>
     </ul>
 
     <div class="sidebar" id="sidebar">
@@ -36,9 +250,9 @@ $result = mysqli_query($connect, $query);
                     <a href="javascript:void(0)" onclick="location.href='mainmenu.html'">Admin</a>
                     <ul>
                         <li><a href="javascript:void(0)" onclick="location.href='managestaff.php'">Manage Staff</a></li>
-                        <li><a href="javascript:void(0)" onclick="location.href='manage_product.php'">Manage Products</a></li>
-                        <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='report.html'">Report</a></li>
+                        <li><a href="javascript:void(0)" onclick="location.href='orderhistory.php'">Order History</a></li>
+                        <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
                     </ul>
                 </li>
             </ul>
@@ -86,7 +300,6 @@ $result = mysqli_query($connect, $query);
                             <td>' . htmlspecialchars($quantity) . '</td>
                             <td>' . $row['description'] . '</td>
                             <td class="actions">
-                                
                                 <button onclick="deleteProduct(' . htmlspecialchars($row['product_id']) . ')">Delete</button>
                             </td>
                         </tr>';
@@ -123,7 +336,7 @@ $result = mysqli_query($connect, $query);
                 <input type="text" name="quantity" required><br>
 
                 <label for="description">Description:</label>
-                <textarea name="description" ></textarea><br>
+                <textarea name="description"></textarea><br>
 
                 <label for="image">Image:</label>
                 <input type="file" name="image" required><br>
@@ -137,8 +350,8 @@ $result = mysqli_query($connect, $query);
         function toggleSidebar() {
             var sidebar = document.getElementById('sidebar');
             var contentWrapper = document.getElementById('content-wrapper');
-            sidebar.classList.toggle('active');
-            contentWrapper.classList.toggle('active');
+            sidebar.classList.toggle('collapsed');
+            contentWrapper.classList.toggle('collapsed');
         }
 
         function filterCategory(category) {
@@ -163,16 +376,8 @@ $result = mysqli_query($connect, $query);
         function deleteProduct(productId) {
             if (confirm("Are you sure you want to delete this product?")) {
                 window.location.href = "delete_product.php?id=" + productId;
-            }
+            }                   
         }
     </script>
 </body>
 </html>
-<?php mysqli_close($connect); ?>
-
-
-
-
-
-
-

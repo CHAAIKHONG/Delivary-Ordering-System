@@ -147,7 +147,7 @@ if (isset($_SESSION['user_id'])) {
                             <li class="items_quantity" data-product-id="<?php echo $item['product_id']; ?>">
                                 <div class="name_price">
                                     <div>
-                                        <img src="image/food/<?php echo $item['photo']; ?>" alt="Product Photo" style="width: 50px; height: 50px; margin-right: 10px;">
+                                        <img src="Admin/<?php echo $item['photo']; ?>" alt="Product Photo" style="width: 50px; height: 50px; margin-right: 10px;">
                                         <div class="items_name"><h4><?php echo $item['product_name']; ?></h4></div>
                                     </div>
                                     <div class="items_price">
