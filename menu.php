@@ -66,24 +66,24 @@
 
     <div class="container">
         <div class="category">
-            <ul class="category_menu">
-                <li class="Meal" onclick="filterProducts('meal')">Meal</li>
-                <li class="Burger" onclick="filterProducts('burger')">Burger</li>
-                <li class="Fried_Chicken" onclick="filterProducts('fried_chicken')">Fried Chicken</li>
-                <li class="Drinks" onclick="filterProducts('drinks')">Drinks</li>
-                <li class="Dessert_Sides" onclick="filterProducts('dessert_sides')">Dessert & Sides</li>
-            </ul>
+        <ul class="category_menu">
+            <li class="Meal" onclick="filterProducts('meal')">Meal</li>
+            <li class="Burger" onclick="filterProducts('burger')">Burger</li>
+            <li class="Fried_Chicken" onclick="filterProducts('fried_chicken')">Fried Chicken</li>
+            <li class="Drinks" onclick="filterProducts('drinks')">Drinks</li>
+            <li class="Dessert_Sides" onclick="filterProducts('dessert_sides')">Dessert & Sides</li>
+        </ul>
         </div>
 
         <div class="product_list">
             <?php
             if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
-                    echo '<div class="product_container '.strtolower(str_replace(' ', '_', $row['category_name'])).'">
+                    echo '<div class="product_container '.strtolower(str_replace([' ', '&'], '_', $row['category_name'])).'">
                         <div class="product_body">
                             <div class="product_image_detail">
                                 <div class="product_image">
-                                    <img src="image/food/'.$row['photo'].'" alt="'.$row['product_name'].'">
+                                    <img src="Admin/'.$row['photo'].'" alt="'.$row['product_name'].'">
                                     <p>'.$row['product_name'].'</p>
                                 </div>
                                 <div class="product_content">

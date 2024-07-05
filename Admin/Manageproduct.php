@@ -58,8 +58,9 @@ $result = mysqli_query($connect, $query);
                     echo "<button onclick=\"filterCategory('" . htmlspecialchars($row['category_name']) . "')\">" . htmlspecialchars($row['category_name']) . "</button>";
                 }
                 ?>
+                <button class="add-product-btn" onclick="showAddProductModal()">Add Product</button>
             </div>
-
+            
             <table>
                 <thead>
                     <tr>
@@ -67,7 +68,7 @@ $result = mysqli_query($connect, $query);
                         <th>Product Name</th>
                         <th>Category</th>
                         <th>Price</th>
-                        <th>Quantity</th>
+                        <th>Stock</th>
                         <th>Description</th>
                         <th>Actions</th>
                     </tr>
@@ -75,26 +76,24 @@ $result = mysqli_query($connect, $query);
                 <tbody id="productTable">
                     <?php
                     while ($row = mysqli_fetch_assoc($result)) {
-                        $image_path = !empty($row['image_path']) ? $row['image_path'] : 'images/default.png';
-                        $quantity = isset($row['quantity']) ? $row['quantity'] : 0;
-                        echo "<tr>
-                            <td><img src='" . htmlspecialchars($image_path) . "' alt='Product Image' width='50' height='50'></td>
-                            <td>" . htmlspecialchars($row['product_name']) . "</td>
-                            <td>" . htmlspecialchars($row['category_name']) . "</td>
-                            <td>" . htmlspecialchars($row['price']) . "</td>
-                            <td>" . htmlspecialchars($quantity) . "</td>
-                            <td>" . nl2br(htmlspecialchars_decode($row['description'])) . "</td>
-                            <td class='actions'>
-                                <button onclick=\"window.location.href='edit.php?id=" . htmlspecialchars($row['product_id']) . "'\">Edit</button>
-                                <button onclick=\"deleteProduct(" . htmlspecialchars($row['product_id']) . ")\">Delete</button>
+                        $image_path = !empty($row['photo']) ? $row['photo'] : 'images/default.png';
+                        $quantity = isset($row['stock']) ? $row['stock'] : 0;
+                        echo '<tr>
+                            <td><img src="' . htmlspecialchars($image_path) . '" alt="' . htmlspecialchars($row['product_name']) . '" style="width: 50px; height: 50px;"></td>
+                            <td>' . htmlspecialchars($row['product_name']) . '</td>
+                            <td>' . htmlspecialchars($row['category_name']) . '</td>
+                            <td>' . htmlspecialchars($row['price']) . '</td>
+                            <td>' . htmlspecialchars($quantity) . '</td>
+                            <td>' . $row['description'] . '</td>
+                            <td class="actions">
+                                <button onclick=\'window.location.href="edit.php?id=' . htmlspecialchars($row['product_id']) . '"\'>Edit</button>
+                                <button onclick="deleteProduct(' . htmlspecialchars($row['product_id']) . ')">Delete</button>
                             </td>
-                        </tr>";
+                        </tr>';
                     }
                     ?>
                 </tbody>
             </table>
-
-            <button class="add-product-btn" onclick="showAddProductModal()">Add Product</button>
         </div>
     </div>
 
@@ -112,7 +111,7 @@ $result = mysqli_query($connect, $query);
                     $category_query = "SELECT * FROM category";
                     $category_result = mysqli_query($connect, $category_query);
                     while ($row = mysqli_fetch_assoc($category_result)) {
-                        echo "<option value='" . htmlspecialchars($row["category_id"]) . "'>" . htmlspecialchars($row["category_name"]) . "</option>";
+                        echo "<option value='" . htmlspecialchars($row['category_id']) . "'>" . htmlspecialchars($row['category_name']) . "</option>";
                     }
                     ?>
                 </select><br>
@@ -124,7 +123,7 @@ $result = mysqli_query($connect, $query);
                 <input type="text" name="quantity" required><br>
 
                 <label for="description">Description:</label>
-                <textarea name="description" required></textarea><br>
+                <textarea name="description" ></textarea><br>
 
                 <label for="image">Image:</label>
                 <input type="file" name="image" required><br>
@@ -170,3 +169,10 @@ $result = mysqli_query($connect, $query);
 </body>
 </html>
 <?php mysqli_close($connect); ?>
+
+
+
+
+
+
+
