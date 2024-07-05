@@ -1,3 +1,18 @@
+<?php
+    session_start();
+    $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
+
+    // 检查数据库连接
+    if (!$connect) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    // 查询订单信息
+    // $sql = "SELECT order_id, user_id, total_price FROM `order`";
+    $sql = "SELECT CONCAT(u.first_name, ' ', u.last_name) AS full_name, o.* FROM `order` o JOIN `user` u ON o.user_id = u.user_id";
+    $result = mysqli_query($connect, $sql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,36 +21,6 @@
     <title>MoonBees Staff | Order History</title>
     <link rel="stylesheet" href="manageproduct.css">
     <style>
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -91,105 +76,68 @@
                     <tr>
                         <th class="left-align">Customers</th>
                         <th class="left-align">Total (RM)</th>
-                        <th class="center-align">Actions</th>
+                        <th class="center-align">Products</th>
                     </tr>
                 </thead>
                 <tbody id="orderTable">
-                    <!-- Example Data -->
-                    <tr>
-                        <td class="left-align">John Doe</td>
-                        <td class="left-align">RM 50.00</td>
-                        <td class="center-align"><img src="car.png" alt="Shopping Cart" width="50" height="50" onclick="showOrderDetails(1)"></td>
-                    </tr>
-                    <tr>
-                        <td class="left-align">Jane Smith</td>
-                        <td class="left-align">RM 75.00</td>
-                        <td class="center-align"><img src="car.png" alt="Shopping Cart" width="50" height="50" onclick="showOrderDetails(2)"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+                    <?php
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($order_row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>";
+                            echo "<td class='left-align'>" . $order_row['full_name'] . "</td>";
+                            echo "<td class='left-align'>RM " . $order_row['total_price'] . "</td>";
+                            echo "<td class='center-align'>";
+                            // echo "<button onclick='toggleOrderDetails(" . $order_row['id'] . ")'>Show Details</button>";
+                            // echo "<div id='orderDetails-" . $order_row['id'] . "' style='display: none;'>";
+                            echo "<table>";
+                            echo "<thead>";
+                            echo "<tr>";
+                            echo "<th>Product Name</th>";
+                            // echo "<th>Category</th>";
+                            echo "<th>Price</th>";
+                            echo "<th>Quantity</th>";
+                            echo "</tr>";
+                            echo "</thead>";
+                            echo "<tbody>";
 
-    <div id="orderDetailsModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('orderDetailsModal')">&times;</span>
-            <h2>Order Details</h2>
-            <table id="orderDetailsTable">
-                <thead>
-                    <tr>
-                        <th>Product Name</th>
-                        <th>Category</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Order details will be populated here using JavaScript -->
+                            // 查询订单详细信息
+                            $order_id = $order_row['order_id'];
+                            $details_query = "SELECT p.product_name, d.* FROM order_detail d JOIN product p ON d.product_id = p.product_id WHERE order_id = $order_id ";
+                            // $details_query = "SELECT product_id, price, quantity FROM order_detail WHERE order_id = $order_id";
+                            $details_result = mysqli_query($connect, $details_query);
+
+                            while ($detail = mysqli_fetch_assoc($details_result)) {
+                                echo "<tr>";
+                                echo "<td>" . $detail['product_name'] . "</td>";
+                                echo "<td>RM " . $detail['price'] . "</td>";
+                                echo "<td>" . $detail['quantity'] . "</td>";
+                                echo "</tr>";
+                            }
+
+                            echo "</tbody>";
+                            echo "</table>";
+                            echo "</div>";
+                            echo "</td>";
+                            echo "</tr>";
+                        }
+                    }
+
+                    mysqli_close($connect);
+                    ?>
                 </tbody>
             </table>
         </div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            fetchOrders();
-        });
-
-        function fetchOrders() {
-            fetch('get_orders.php')
-                .then(response => response.json())
-                .then(data => {
-                    const orderTable = document.getElementById('orderTable');
-                    orderTable.innerHTML = ''; // Clear previous contents
-
-                    data.forEach(order => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td class="left-align">${order.customer_name}</td>
-                            <td class="left-align">RM ${order.total_amount}</td>
-                            <td class="center-align"><img src="car.png" alt="Shopping Cart" width="50" height="50" onclick="showOrderDetails(${order.id})"></td>
-                        `;
-                        orderTable.appendChild(row);
-                    });
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
-        function showOrderDetails(orderId) {
-            fetch(`get_order_details.php?order_id=${orderId}`)
-                .then(response => response.json())
-                .then(data => {
-                    const orderDetailsTableBody = document.getElementById('orderDetailsTable').querySelector('tbody');
-                    orderDetailsTableBody.innerHTML = ''; // Clear previous contents
-
-                    data.forEach(detail => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${detail.product_name}</td>
-                            <td>${detail.category}</td>
-                            <td>${detail.price}</td>
-                            <td>${detail.quantity}</td>
-                        `;
-                        orderDetailsTableBody.appendChild(row);
-                    });
-
-                    document.getElementById('orderDetailsModal').style.display = 'block';
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
-            document.getElementById('content-wrapper').classList.toggle('collapsed');
+        function toggleOrderDetails(orderId) {
+            const detailsDiv = document.getElementById(`orderDetails-${orderId}`);
+            if (detailsDiv.style.display === 'none') {
+                detailsDiv.style.display = 'block';
+            } else {
+                detailsDiv.style.display = 'none';
+            }
         }
     </script>
 </body>
 </html>
-
-
-
