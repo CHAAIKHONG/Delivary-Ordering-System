@@ -4,6 +4,11 @@
     // 连接到数据库
     $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
+    // 检查连接
+    if (!$connect) {
+        die("Database connection failed: " . mysqli_connect_error());
+    }
+
     // 处理登录表单提交
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = mysqli_real_escape_string($connect, $_POST['username']);
@@ -20,7 +25,7 @@
             // 登录成功，设置会话
             $_SESSION['username'] = $email;
             $_SESSION['user_id'] = $user['user_id'];
-            $_SESSION['fullname'] = $user['first_name'].''.$user['last_name'];
+            $_SESSION['fullname'] = $user['first_name'] . ' ' . $user['last_name'];
             $_SESSION['photo'] = $user['user_photo'];
 
             // 如果选择了Remember Me，设置Cookie
@@ -30,9 +35,16 @@
                 setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 30天有效期的Cookie
             }
 
-            // 重定向到其他页面，例如主页
-            header('Location: menu.php'); // 替换成你的主页地址
-            exit;
+            // 检查是否为管理员
+            if ($email === 'admin@gmail.com' && $password === 'admin1234') {
+                // 重定向到管理员主页
+                header('Location: mainmenu.html'); // 替换成你的管理员主页地址
+                exit;
+            } else {
+                // 重定向到用户主页
+                header('Location: mainmenu.html'); // 替换成你的主页地址
+                exit;
+            }
         } else {
             // 登录失败，可以添加错误提示
             echo '<script>alert("Invalid email or password")</script>';
@@ -46,7 +58,6 @@
 
     mysqli_close($connect);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
