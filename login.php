@@ -70,11 +70,11 @@
         </div>
         <div class="all_topright">
             <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding-right: 15px;"> Help</i></li>
-            <?php if (!isset($_SESSION['username'])) : ?>
+            <!-- <?php if (!isset($_SESSION['username'])) : ?>
                 <li class="user"><a href="login.php" style="font-size: 15px; text-decoration: none;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Login</a></i></li>
             <?php else : ?>
                 <li class="user"><a href="login.php" style="font-size: 15px; text-decoration: none;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Logout</a></i></li>
-            <?php endif; ?>
+            <?php endif; ?> -->
         </div>
     </ul>
         
