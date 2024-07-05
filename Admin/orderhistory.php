@@ -62,6 +62,8 @@
                         <li><a href="javascript:void(0)" onclick="location.href='managestaff.html'">Manage Staff</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='manageproduct.html'">Manage Products</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='report.html'">Report</a></li>
+                        <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
+
                     </ul>
                 </li>
             </ul>
