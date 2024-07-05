@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $salary = $_POST['Salary'];
+    $position = $_POST['position'];
     $address = $_POST['address'];
     $experience = $_POST['experience'];
     $skills = $_POST['skills'];
@@ -70,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $photo_query = "";
     }
 
-    $query = "UPDATE staff SET fullname='$fullname', yearsold='$years', email='$email', phone='$phone', salary='$salary', address='$address', workexperience='$experience', skill='$skills' $photo_query WHERE id='$id'";
+    $query = "UPDATE staff SET fullname='$fullname', yearsold='$years', email='$email', phone='$phone', salary='$salary', address='$address', workexperience='$experience', skill='$skills', position='$position' $photo_query WHERE id='$id'";
 
     if (mysqli_query($connect, $query)) {
         $update_success = true;
@@ -351,8 +352,8 @@ body, html {
                                 <input type="text" id="Salary" name="Salary" value="<?php echo $staff['salary']; ?>">
                             </div>
                             <div class="form-group">
-                                <label for="Position">Position</label>
-                                <input type="text" id="Position" name="Position" value="<?php echo $staff['position']; ?>">
+                                <label for="position">Position</label>
+                                <input type="text" id="position" name="position" value="<?php echo $staff['position']; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="address">Address</label>
