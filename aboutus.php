@@ -2,10 +2,12 @@
     session_start();
     $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
+    // 检查数据库连接
     if (!$connect) {
         die("Connection failed: " . mysqli_connect_error());
     }
 
+    // 检查用户登录状态和获取用户信息
     $userPhoto = null;
     $userName = 'user';
 
@@ -28,6 +30,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+    <!-- <link rel="stylesheet" href="aboutus.css"> -->
     <link rel="stylesheet" href="menu.css">
     <link rel="stylesheet" href="head_footer.css">
     <link rel="icon" href="image/burger-removebg-preview.png">
@@ -100,6 +103,9 @@
                         <img src="team photo/aikhong.jpg" height="300" width="230" alt="aikhong handsome boy" title="Cha Aik Hong">
                         <div class="picdetail"><h4>Cha Aik Hong</h4>
                             <div class="icon">
+                                <!-- <a href="#"><i class="ri-whatsapp-line"></i></a>
+                                <a href="#"><i class="ri-instagram-line"></i></a>
+                                <a href="#"><i class="ri-facebook-circle-fill"></i></a> -->
                             </div>
                         </div>
                     </div>
@@ -107,6 +113,9 @@
                         <img src="image/sing.png" height="300" width="230" alt="wenjie pretty girl" title="Sing Wen Jie">
                         <div class="picdetail"><h4>Sing Wen Jie</h4>
                             <div class="icon">
+                                <!-- <a href="#"><i class="ri-whatsapp-line"></i></a>
+                                <a href="#"><i class="ri-instagram-line"></i></a>
+                                <a href="#"><i class="ri-facebook-circle-fill"></i></a> -->
                             </div>
                         </div>
                     </div>
@@ -114,12 +123,20 @@
                         <img src="image/yiming.png" height="300" width="230" alt="what you expect" title="Khong Yi Ming">
                         <div class="picdetail"><h4>Khong Yi Ming</h4>
                             <div class="icon">
+                                <!-- <a href="#"><i class="ri-whatsapp-line"></i></a>
+                                <a href="#"><i class="ri-instagram-line"></i></a>
+                                <a href="#"><i class="ri-facebook-circle-fill"></i></a> -->
                             </div>
                         </div>
                     </div>
                     <div class="yuthee">
                         <img src="image/self.jpg" height="300" alt="yuthee so sleepy" title="Tang Yut Hee">
                         <div class="picdetail"><h4>Tang Yut Hee</h4>
+                            <!-- <div class="icon">
+                                <a href="#"><i class="ri-whatsapp-line"></i></a>
+                                <a href="#"><i class="ri-instagram-line"></i></a>
+                                <a href="#"><i class="ri-facebook-circle-fill"></i></a>
+                            </div> -->
                         </div>
                     </div>
 
