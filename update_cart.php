@@ -2,7 +2,6 @@
 session_start();
 $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
-// 检查数据库连接
 if (!$connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
@@ -21,7 +20,6 @@ if (isset($_POST['action']) && isset($_POST['product_id'])) {
         $stmt = $connect->prepare($query);
         $stmt->bind_param("ii", $user_id, $product_id);
     } elseif ($action === 'decrease') {
-        // 如果数量大于1，则减少数量；否则，直接删除该商品
         $query = "SELECT quantity FROM cartitem WHERE user_id = ? AND product_id = ?";
         $stmt = $connect->prepare($query);
         $stmt->bind_param("ii", $user_id, $product_id);

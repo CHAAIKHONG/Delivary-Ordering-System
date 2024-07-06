@@ -3,7 +3,6 @@ session_start();
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Include PHPMailer files
 require 'PHPMailer-master/src/Exception.php';
 require 'PHPMailer-master/src/PHPMailer.php';
 require 'PHPMailer-master/src/SMTP.php';
@@ -18,15 +17,13 @@ if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
     $total = $_POST['total'];
 
-    // 插入订单到 order 表
     $query = "INSERT INTO `order` (user_id, total_price, payment_status, payment_method) VALUES ($user_id, $total, 'DONE', 'Cash_On_Delivery')";
     mysqli_query($connect, $query);
     $order_id = mysqli_insert_id($connect);
 
-    $order_items = json_decode($_POST['order_items'], true); // 解码为关联数组
+    $order_items = json_decode($_POST['order_items'], true); 
 
     if (is_array($order_items)) {
-        // 插入订单详情到 order_detail 表
         foreach ($order_items as $item) {
             $product_id = $item['product_id'];
             $price = $item['price'];
@@ -38,7 +35,6 @@ if (isset($_SESSION['user_id'])) {
         $cartitem = "DELETE FROM cartitem WHERE user_id = $user_id";
         mysqli_query($connect, $cartitem);
 
-        // 发送确认邮件
         $userEmailQuery = "SELECT email FROM user WHERE user_id = $user_id";
         $userEmailResult = mysqli_query($connect, $userEmailQuery);
 
@@ -46,15 +42,13 @@ if (isset($_SESSION['user_id'])) {
             $user = mysqli_fetch_assoc($userEmailResult);
             $email = $user['email'];
 
-            // Send email using PHPMailer
             $mail = new PHPMailer(true);
             try {
-                // Server settings
                 $mail->isSMTP();
                 $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'moonbees5431@gmail.com'; // Your Gmail address
-                $mail->Password = 'dgjz zxiz hfwn cabp'; // Your Gmail password or app-specific password
+                $mail->Username = 'moonbees5431@gmail.com'; 
+                $mail->Password = 'dgjz zxiz hfwn cabp'; 
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
 

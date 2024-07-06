@@ -2,12 +2,10 @@
 session_start();
 $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
-// 检查数据库连接
 if (!$connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// 检查用户登录状态和获取用户信息
 $userPhoto = null;
 $userName = 'user';
 $userAddress = '';
@@ -23,7 +21,6 @@ if (isset($_SESSION['user_id'])) {
         $userName = $_SESSION['fullname'];
     }
 
-    // 获取用户地址
     $query = "SELECT address FROM user WHERE user_id = ?";
     $stmt = $connect->prepare($query);
     $stmt->bind_param("i", $user_id);
@@ -37,7 +34,6 @@ if (isset($_SESSION['user_id'])) {
 
     $stmt->close();
 
-    // 获取用户的订单项
     $query = "SELECT cartitem.product_id, product.product_name, product.price, product.photo, cartitem.quantity 
             FROM cartitem 
             INNER JOIN product ON cartitem.product_id = product.product_id 
@@ -55,7 +51,6 @@ if (isset($_SESSION['user_id'])) {
 
     $stmt->close();
 } else {
-    // 用户未登录，重定向到登录页面
     header("Location: login.php");
     exit();
 }
@@ -221,7 +216,6 @@ if (isset($_SESSION['user_id'])) {
                 <input type="hidden" name="total" value="<?php echo number_format($total, 2); ?>">
                 <input type="hidden" name="order_items" value='<?php echo json_encode($orderItems); ?>'>
             </form>
-            <!-- <button class="confirm_payment">Payment</button> -->
         </div>
     </div>
 
@@ -263,20 +257,14 @@ if (isset($_SESSION['user_id'])) {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     
-    // 自动设置并显示当前日期和时间
     window.onload = function() {
         var currentDateTime = new Date();
         var formattedDateTime = currentDateTime.toLocaleString('en-GB', { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
         document.getElementById('selectedDateTime').innerText = formattedDateTime;
 
         document.getElementById('selectedDateTime').innerText = formattedDateTime;
-
-        // 设置隐藏的表单字段值
-        // document.getElementById('hiddenDate').value = formattedDate;
-        // document.getElementById('hiddenTime').value = formattedTime;
     };
 
-    // Add event listener for the address change form
     const addressForm = document.getElementById('changeAddressForm');
     addressForm.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -297,7 +285,6 @@ if (isset($_SESSION['user_id'])) {
     });
 
     $(document).ready(function() {
-        // Remove item
         $('.remove-btn').click(function() {
             var productId = $(this).closest('.items_quantity').data('product-id');
             $.ajax({
@@ -310,7 +297,6 @@ if (isset($_SESSION['user_id'])) {
             });
         });
 
-        // Increase quantity
         $('.quantity_increase').click(function() {
             var productId = $(this).closest('.items_quantity').data('product-id');
             $.ajax({
@@ -323,7 +309,6 @@ if (isset($_SESSION['user_id'])) {
             });
         });
 
-        // Decrease quantity
         $('.quantity_reduce').click(function() {
             var productId = $(this).closest('.items_quantity').data('product-id');
             $.ajax({

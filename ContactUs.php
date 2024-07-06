@@ -2,12 +2,10 @@
     session_start();
     $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
-    // 检查数据库连接
     if (!$connect) {
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    // 检查用户登录状态和获取用户信息
     $userPhoto = null;
     $userName = 'user';
 
@@ -22,7 +20,6 @@
     }
 
     if (isset($_POST['submit_feedback'])) {
-        // $topic = mysqli_real_escape_string($connect, $_POST['topic_selection']);
         $comment = mysqli_real_escape_string($connect, $_POST['comment']);
     
         $sql = "INSERT INTO contactus (user_id, message) VALUES ('$user_id', '$comment')";
