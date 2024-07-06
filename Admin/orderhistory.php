@@ -18,14 +18,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MoonBees Staff | Order History</title>
-    <link rel="stylesheet" href="manageproduct.css">
+    <link rel="icon" href="burger.png" type="image/png">
+
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
     <style>
         body {
-            background-image: url("bg.jpg.png"); 
+            background-image: url("bg.jpg.png");
             background-size: cover;
-            background-repeat: no-repeat; 
+            background-repeat: no-repeat;
             background-attachment: fixed;
             font-family: Arial, sans-serif;
             margin: 0;
@@ -55,7 +56,8 @@
             align-items: center;
         }
 
-        .head_title, .head li a {
+        .head_title,
+        .head li a {
             display: block;
             color: white;
             text-align: center;
@@ -68,9 +70,8 @@
         h2 {
             text-align: center;
             color: #333;
-            margin-top: -55px
-        ; /* Remove default margin */
-            padding-top: 60px; 
+            margin-top: -55px; /* Remove default margin */
+            padding-top: 60px;
         }
 
         .toggle-btn {
@@ -81,6 +82,45 @@
             cursor: pointer;
             font-size: 25px;
             margin-right: 10px;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            padding-top: 60px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(-100%);
+        }
+
+        .sidebar nav ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        .sidebar nav ul li {
+            padding: 10px 0;
+        }
+
+        .sidebar nav ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar nav ul li a:hover {
+            background-color: #575757;
         }
 
         .logout {
@@ -103,6 +143,10 @@
             border-radius: 10px;
         }
 
+        .content-wrapper.collapsed {
+            margin-left: 0;
+        }
+
         .order-history {
             margin-top: 60px; /* Adjust based on your header height */
         }
@@ -116,7 +160,8 @@
             overflow: hidden;
         }
 
-        th, td {
+        th,
+        td {
             padding: 8px;
             text-align: left;
             border: 1px solid #ddd;
@@ -156,8 +201,9 @@
                         <li><a href="javascript:void(0)" onclick="location.href='managestaff.php'">Manage Staff</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='manageproduct.php'">Manage Products</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='report.html'">Report</a></li>
-                        <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
+                        <li><a href="javascript:void(0)" onclick="location.href='orderhistory.php'">Order History</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='contactus.php'">Contact Us History</a></li>
+                        <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
                     </ul>
                 </li>
             </ul>
