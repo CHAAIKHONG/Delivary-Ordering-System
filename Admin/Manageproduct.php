@@ -221,6 +221,82 @@ body {
             text-decoration: none;
             cursor: pointer;
         }
+
+        .modal {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.title span {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.input {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button-confirm {
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-confirm:hover {
+    background-color: #444;
+}
+
     </style>
 </head>
 <body>
@@ -307,40 +383,25 @@ body {
     <div class="modal-content">
         <span class="close" onclick="closeModal('addProductModal')">&times;</span>
         <h2>Add Product</h2>
-        <form action="add_product.php" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="product_name">Product Name</label>
-                <input type="text" name="product_name" id="product_name" required>
-            </div>
-            <div class="form-group">
-                <label for="category_id">Category</label>
-                <select name="category_id" id="category_id" required>
-                    <?php
-                    $category_query = "SELECT * FROM category";
-                    $category_result = mysqli_query($connect, $category_query);
-                    while ($row = mysqli_fetch_assoc($category_result)) {
-                        echo "<option value='" . htmlspecialchars($row['category_id']) . "'>" . htmlspecialchars($row['category_name']) . "</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="price">Price</label>
-                <input type="text" name="price" id="price" required>
-            </div>
-            <div class="form-group">
-                <label for="quantity">Quantity</label>
-                <input type="text" name="quantity" id="quantity" required>
-            </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea name="description" id="description"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="image">Image</label>
-                <input type="file" name="image" id="image" required>
-            </div>
-            <button type="submit">Add Product</button>
+        <form class="form" action="add_product.php" method="POST" enctype="multipart/form-data">
+            <input type="text" placeholder="Product Name" name="product_name" class="input" required><br>
+
+            <select name="category_id" class="input" required>
+                <?php
+                $category_query = "SELECT * FROM category";
+                $category_result = mysqli_query($connect, $category_query);
+                while ($row = mysqli_fetch_assoc($category_result)) {
+                    echo "<option value='" . htmlspecialchars($row['category_id']) . "'>" . htmlspecialchars($row['category_name']) . "</option>";
+                }
+                ?>
+            </select><br>
+
+            <input type="text" placeholder="Price" name="price" class="input" required><br>
+            <input type="text" placeholder="Quantity" name="quantity" class="input" required><br>
+            <textarea placeholder="Description" name="description" class="input"></textarea><br>
+            <input type="file" name="image" class="input" required><br>
+
+            <button type="submit" class="button-confirm">Let`s go →</button>
         </form>
     </div>
 </div>
