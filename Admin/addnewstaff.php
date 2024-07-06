@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     if (move_uploaded_file($photo_tmp_name, $photo_destination)) {
                         // 文件上传成功
-                        echo "File uploaded successfully.<br>";
+                        echo '<script>alert("File uploaded successfully.")</script>';
                     } else {
                         echo '<script>alert("Failed to move the uploaded file.")</script>'; 
                     }
@@ -63,7 +63,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $query = "INSERT INTO staff (fullname, yearsold, email, phone, salary, address, workexperience, skill, photo, position) VALUES ('$fullname', '$years', '$email', '$phone', '$salary', '$address', '$experience', '$skills', '$photo_destination', '$position')";
 
     if (mysqli_query($connect, $query)) {
-        header("Location: ".$_SERVER['PHP_SELF']."?success=1");
+        // header("Location: ".$_SERVER['PHP_SELF']."?success=1");
+        // echo '<script>alert("File uploaded successfully.<br>")</script>';
+        echo '<script>window.location.href = "managestaff.php";</script>';
         exit();
     } else {
         echo "Error adding new record: " . mysqli_error($connect);
