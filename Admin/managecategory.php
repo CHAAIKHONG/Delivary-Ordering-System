@@ -162,7 +162,7 @@
         }
 
         form .add-product-btn:hover {
-            background-color: yellow;
+            background-color: #ffcc00;
         }
 
         form .edit-product-btn {
@@ -171,7 +171,7 @@
         }
 
         form .edit-product-btn:hover {
-            background-color: #e0a800;
+            background-color: #ffcc00;
         }
 
         form .cancel-btn {
@@ -218,20 +218,19 @@
         }
 
         .actions a.delete {
-            background-color: red;
+            background-color: black;
         }
 
         .actions a.delete:hover {
-            background-color: darkred;
+            background-color: red;
         }
 
         .actions a.edit {
-            background-color: #ffc107;
-            color: black;
+            background-color: black;
         }
 
         .actions a.edit:hover {
-            background-color: #e0a800;
+            background-color: #ffcc00;
         }
 
         .logout {
