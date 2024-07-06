@@ -106,7 +106,7 @@ if (isset($_SESSION['user_id'])) {
                             <h4>Deliver to</h4>
                             <div class="icon_address">
                                 <i class="ri-home-8-line"></i>
-                                <p><?php echo $userAddress ? $userAddress : "No address found"; ?></p>
+                                <p id="userAddress"><?php echo $userAddress ? $userAddress : "No address found"; ?></p>
                             </div>
                         </div>
                         <button onclick="document.getElementById('addressModal').style.display='block'">Change Address</button>
@@ -338,7 +338,13 @@ if (isset($_SESSION['user_id'])) {
     });
 
     document.querySelector('.confirm_payment').addEventListener('click', function() {
-        document.getElementById('paymentForm').submit();
+        var userAddress = document.getElementById('userAddress').innerText;
+        if (userAddress === "No address found") {
+            alert("Please enter your address before proceeding to payment.");
+            document.getElementById('addressModal').style.display = 'block';
+        } else {
+            document.getElementById('paymentForm').submit();
+        }
     });
 </script>
 </body>
