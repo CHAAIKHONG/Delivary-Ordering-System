@@ -25,6 +25,9 @@
     // 查询产品信息
     $query = "SELECT p.*, c.category_name FROM product p JOIN category c ON p.category_id = c.category_id";
     $result = mysqli_query($connect, $query);
+
+    $category_query = "SELECT * FROM category";
+    $category_result = mysqli_query($connect, $category_query);
 ?>
 
 
@@ -67,11 +70,14 @@
     <div class="container">
         <div class="category">
         <ul class="category_menu">
-            <li class="Meal" onclick="filterProducts('meal')">Meal</li>
-            <li class="Burger" onclick="filterProducts('burger')">Burger</li>
-            <li class="Fried_Chicken" onclick="filterProducts('fried_chicken')">Fried Chicken</li>
-            <li class="Drinks" onclick="filterProducts('drinks')">Drinks</li>
-            <li class="Dessert_Sides" onclick="filterProducts('dessert_sides')">Dessert & Sides</li>
+            <?php
+                if (mysqli_num_rows($category_result) > 0) {
+                    while ($category = mysqli_fetch_assoc($category_result)) {
+                        $category_class = strtolower(str_replace([' ', '&'], '_', $category['category_name']));
+                        echo '<li class="' . $category_class . '" onclick="filterProducts(\'' . $category_class . '\')">' . $category['category_name'] . '</li>';
+                    }
+                }
+            ?>
         </ul>
         </div>
 
@@ -103,7 +109,6 @@
                     </div>';
                 }
             }
-
             mysqli_close($connect);
             ?>
         </div>

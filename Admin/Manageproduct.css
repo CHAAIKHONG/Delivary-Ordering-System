@@ -36,9 +36,9 @@ ul.head li a {
     font-family: initial;
 }
 
-/* ul.head li:hover {
+ul.head li:hover {
     background-color: green;
-} */
+}
 
 .all_topright {
     margin-left: 80%;
