@@ -2,12 +2,10 @@
     session_start();
     $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
-    // 检查数据库连接
     if (!$connect) {
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    // 查询联系我们历史记录
     $sql = "SELECT CONCAT(u.first_name, ' ', u.last_name) AS full_name, u.email, u.phone_number, c.* FROM `contactus` c JOIN `user` u ON c.user_id = u.user_id";
     $result = mysqli_query($connect, $sql);
 ?>
@@ -21,8 +19,9 @@
     <link rel="icon" href="burger.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
-    <style>
-        body {
+<style>
+        body 
+        {
             background-image: url("bg.jpg.png");
             background-size: cover;
             background-repeat: no-repeat;
@@ -31,7 +30,8 @@
             margin: 0;
         }
 
-        ul.head {
+        ul.head 
+        {
             list-style-type: none;
             margin: 0;
             padding: 0;
@@ -46,17 +46,20 @@
             justify-content: space-between;
         }
 
-        ul.head li {
+        ul.head li 
+        {
             float: left;
         }
 
-        ul.head li.topleft {
+        ul.head li.topleft 
+        {
             display: flex;
             align-items: center;
         }
 
         .head_title,
-        .head li a {
+        .head li a 
+        {
             display: block;
             color: white;
             text-align: center;
@@ -66,14 +69,16 @@
             font-family: initial;
         }
 
-        h2 {
+        h2 
+        {
             text-align: center;
             color: #333;
-            margin-top: -55px; /* Remove default margin */
+            margin-top: -55px; 
             padding-top: 60px;
         }
 
-        .toggle-btn {
+        .toggle-btn 
+        {
             background-color: black;
             color: white;
             border: none;
@@ -83,60 +88,69 @@
             margin-right: 10px;
         }
 
-        .sidebar {
-    width: 250px;
-    background-color: #333;
-    color: white;
-    padding: 20px;
-    padding-top: 60px;
-    box-sizing: border-box;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    overflow-y: auto;
-    transition: transform 0.3s ease;
-}
+        .sidebar
+        {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            padding-top: 60px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
 
-.sidebar.collapsed {
-    transform: translateX(-100%);
-}
+        .sidebar.collapsed 
+        {
+            transform: translateX(-100%);
+        }
 
-.sidebar nav ul {
-    padding: 0;
-    list-style: none;
-}
+        .sidebar nav ul 
+        {
+            padding: 0;
+            list-style: none;
+        }
 
-.sidebar nav ul li {
-    padding: 10px 0;
-}
+        .sidebar nav ul li 
+        {
+            padding: 10px 0;
+        }
 
-.sidebar nav ul li a {
-    color: white;
-    text-decoration: none;
-    display: block;
-    padding: 10px;
-    transition: background-color 0.3s ease;
-}
+        .sidebar nav ul li a 
+        {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
 
-.sidebar nav ul li a:hover {
-    background-color: #575757;
-}
+        .sidebar nav ul li a:hover 
+        {
+            background-color: #575757;
+        }
 
-.toggle-btn {
-    background-color: black;
-    color: white;
-    border: none;
-    padding: 14px 16px;
-    cursor: pointer;
-    font-size: 25px;
-    margin-right: 10px;
-}
+        .toggle-btn 
+        {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 14px 16px;
+            cursor: pointer;
+            font-size: 25px;
+            margin-right: 10px;
+        }
 
-        .logout {
+        .logout 
+        {
             margin-right: 20px;
         }
 
-        .logout a {
+        .logout a 
+        {
             font-size: 15px;
             text-decoration: none;
             color: white;
@@ -144,7 +158,8 @@
             padding: 14px 16px;
         }
 
-        .content-wrapper {
+        .content-wrapper 
+        {
             margin-left: 260px;
             padding: 20px;
             transition: margin-left 0.3s ease;
@@ -152,15 +167,18 @@
             border-radius: 10px;
         }
 
-        .content-wrapper.collapsed {
+        .content-wrapper.collapsed 
+        {
             margin-left: 0;
         }
 
-        .contactus-history {
-            margin-top: 60px; /* Adjust based on your header height */
+        .contactus-history 
+        {
+            margin-top: 60px; 
         }
 
-        table {
+        table 
+        {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
@@ -170,21 +188,24 @@
         }
 
         th,
-        td {
+        td 
+        {
             padding: 8px;
             text-align: left;
             border: 1px solid #ddd;
         }
 
-        th {
+        th 
+        {
             background-color: black;
             color: white;
         }
 
-        .left-align {
+        .left-align 
+        {
             text-align: left;
         }
-    </style>
+</style>
 </head>
 <body>
     <ul class="head">
@@ -249,7 +270,8 @@
     </div>
 
     <script>
-        function toggleSidebar() {
+        function toggleSidebar() 
+        {
             document.getElementById('sidebar').classList.toggle('collapsed');
             document.getElementById('content-wrapper').classList.toggle('collapsed');
         }

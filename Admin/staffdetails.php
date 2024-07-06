@@ -1,7 +1,8 @@
 <?php
 $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
-if (isset($_GET['id'])) {
+if (isset($_GET['id'])) 
+{
     $id = $_GET['id'];
     $query = "SELECT * FROM staff WHERE id = $id";
     $result = mysqli_query($connect, $query);
@@ -12,7 +13,9 @@ if (isset($_GET['id'])) {
         echo "No staff found with this ID.";
         exit;
     }
-} else {
+} 
+else 
+{
     echo "No ID provided.";
     exit;
 }
@@ -31,7 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $experience = $_POST['experience'];
     $skills = $_POST['skills'];
 
-    // Handle file upload
     if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
         $photo = $_FILES['photo'];
         $photo_name = $photo['name'];
@@ -47,13 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (in_array($photo_actual_ext, $allowed)) {
             if ($photo_error === 0) {
-                if ($photo_size < 1000000) { // 1MB limit
+                if ($photo_size < 1000000) { 
                     $photo_new_name = "staff_" . $id . "." . $photo_actual_ext;
                     $photo_destination = 'uploads/' . $photo_new_name;
 
                     move_uploaded_file($photo_tmp_name, $photo_destination);
 
-                    // Update photo path in the database
                     $photo_query = ", photo='$photo_destination'";
                 } else {
                     echo "Your file is too big.";
@@ -79,7 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Error updating record: " . mysqli_error($connect);
     }
 
-    // Refresh the staff details after update
     $query = "SELECT * FROM staff WHERE id = $id";
     $result = mysqli_query($connect, $query);
     $staff = mysqli_fetch_assoc($result);
@@ -98,14 +98,16 @@ mysqli_close($connect);
 <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
 <style>
-    body {
+    body
+    {
         background-image: url("bg.jpg.png"); 
         background-size: cover;
         background-repeat: no-repeat; 
         background-attachment:fixed;
     }
 
-    ul.head {
+    ul.head
+    {
         list-style-type: none;
         margin: 0;
         padding: 0;
@@ -120,18 +122,20 @@ mysqli_close($connect);
         justify-content: space-between;
     }
 
-    ul.head li {
+    ul.head li 
+    {
         float: left;
     }
 
-    ul.head li.topleft {
+    ul.head li.topleft 
+    {
     display: flex;
     align-items: center;
     margin-left: 70px; 
-}
+    }
 
-
-    .head_title, .head li a {
+    .head_title, .head li a 
+    {
         display: block;
         color: white;
         text-align: center;
@@ -141,155 +145,176 @@ mysqli_close($connect);
         font-family: initial;
     }
 
-body, html {
-    height: 100%;
-    margin: 0;
-    position: relative;
-    font-family: Arial, sans-serif;
-}
+    body, html 
+    {
+        height: 100%;
+        margin: 0;
+        position: relative;
+        font-family: Arial, sans-serif;
+    }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 80px; /* Adjust to avoid navbar */
-    height: calc(100vh - 80px); /* Adjust container height to avoid header */
-    overflow: hidden; 
-}
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 80px; 
+        height: calc(100vh - 80px); 
+        overflow: hidden; 
+    }
 
-.scrollable-content {
-    width: 100%;
-    max-width: 900px;
-    overflow-y: auto; /* Allow vertical scrolling */
-    padding: 20px;
-    box-sizing: border-box;
-    height: 100%;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE 10+ */
-}
+    .scrollable-content 
+    {
+        width: 100%;
+        max-width: 900px;
+        overflow-y: auto; 
+        box-sizing: border-box;
+        height: 100%;
+        scrollbar-width: none; 
+        -ms-overflow-style: none;  
+    }
 
-.scrollable-content::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
-}
+    .scrollable-content::-webkit-scrollbar 
+    { 
+        display: none;  
+    }
 
-.profile-container {
-    display: flex;
-    align-items: center;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 15px;
-    padding: 50px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin-bottom: 20px;
-    position: relative; /* For positioning the button */
-}
+    .profile-container 
+    {
+        display: flex;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 15px;
+        padding: 50px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px;
+        position: relative; 
+    }
 
-.staff-profile {
-    text-align: center;
-    margin-right: 20px;
-}
-
-.staff-profile img {
-    border-radius: 50%;
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    margin-bottom: 10px;
-    border: 5px solid rgba(0, 0, 0, 0.2); /* Adjusted border size */
-}
-
-.staff-profile h2 {
-    margin: 10px 0;
-    font-size: 30px;
-}
-
-.position {
-    font-size: 20px;
-}
-
-.staff-details {
-    width: 100%;
-    position: relative;
-}
-
-.staff-details h3 {
-    margin-bottom: 15px;
-    font-size: 30px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 5px;
-}
-
-.staff-details .form-group {
-    margin: 10px 0;
-}
-
-.staff-details .form-group label {
-    display: block;
-    font-weight: bold;
-}
-
-.staff-details .form-group input,
-.staff-details .form-group textarea {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-}
-
-.staff-details .form-row {
-    display: flex;
-    justify-content: space-between;
-}
-
-.staff-details .form-row .form-group {
-    width: 48%;
-}
-
-.staff-details .form-group input[type="text"],
-.staff-details .form-group input[type="email"],
-.staff-details .form-group input[type="tel"] {
-    height: 30px;
-}
-
-.staff-details .form-group textarea {
-    height: 80px;
-    resize: vertical;
-}
-
-.back-button {
-    position: absolute;
-    right: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    color: black;
-    background-color: lightgrey;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.save-button {
-    position: absolute;
-    right: 100px;
-    padding: 10px 20px;
-    font-size: 16px;
-    color: black;
-    background-color: lightgrey;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.back-button:hover {
-    background-color: grey;
-}
-
-.logout {
+    .staff-profile 
+    {
+        text-align: center;
         margin-right: 20px;
     }
 
-    .logout a {
+    .staff-profile img 
+    {
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        margin-bottom: 10px;
+        border: 5px solid rgba(0, 0, 0, 0.2); 
+    }
+
+ .staff-profile h2 
+    {
+        margin: 10px 0;
+        font-size: 30px;
+    }   
+
+    .position 
+    {
+        font-size: 20px;
+    }
+
+    .staff-details 
+    {
+        width: 100%;
+        position: relative;
+    }
+
+    .staff-details h3 
+    {
+        margin-bottom: 15px;
+        font-size: 30px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+    }
+
+    .staff-details .form-group 
+    {
+        margin: 10px 0;
+    }
+
+    .staff-details .form-group label 
+    {
+        display: block;
+        font-weight: bold;
+    }
+
+    .staff-details .form-group input,
+    .staff-details .form-group textarea 
+    {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    .staff-details .form-row 
+    {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .staff-details .form-row .form-group 
+    {
+        width: 48%;
+    }
+
+    .staff-details .form-group input[type="text"],
+    .staff-details .form-group input[type="email"],
+    .staff-details .form-group input[type="tel"] 
+    {
+        height: 30px;
+    }
+
+    .staff-details .form-group textarea 
+    {
+        height: 80px;
+        resize: vertical;
+    }   
+
+    .back-button 
+    {
+        position: absolute;
+        right: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: black;
+        background-color: lightgrey;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .save-button 
+    {
+        position: absolute;
+        right: 100px;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: black;
+        background-color: lightgrey;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .back-button:hover 
+    {
+        background-color: grey;
+    }
+
+    .logout    
+    {
+        margin-right: 20px;
+    }
+
+    .logout a 
+    {
         font-size: 15px;
         text-decoration: none;
         color: white;

@@ -14,10 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $skills = $_POST['skills'];
     $position = $_POST['position'];
 
-    $photo_destination = ''; // 初始化变量以避免未定义错误
+    $photo_destination = ''; 
 
-
-    // 处理上传的照片
     if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
         $photo = $_FILES['photo'];
         $photo_name = $photo['name'];
@@ -32,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (in_array($photo_actual_ext, $allowed)) {
             if ($photo_error === 0) {
-                if ($photo_size < 5000000) { // 文件大小限制为 5MB
+                if ($photo_size < 5000000) { 
                     $photo_new_name = uniqid('', true) . "." . $photo_actual_ext;
                     $photo_destination = 'uploads/' . $photo_new_name;
 
@@ -41,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     }
 
                     if (move_uploaded_file($photo_tmp_name, $photo_destination)) {
-                        // 文件上传成功
+                        
                         echo '<script>alert("File uploaded successfully.")</script>';
                     } else {
                         echo '<script>alert("Failed to move the uploaded file.")</script>'; 
@@ -59,12 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo '<script>alert("No file uploaded or there was an error!")</script>'; 
     }
 
-    // 插入数据到数据库
     $query = "INSERT INTO staff (fullname, yearsold, email, phone, salary, address, workexperience, skill, photo, position) VALUES ('$fullname', '$years', '$email', '$phone', '$salary', '$address', '$experience', '$skills', '$photo_destination', '$position')";
 
     if (mysqli_query($connect, $query)) {
-        // header("Location: ".$_SERVER['PHP_SELF']."?success=1");
-        // echo '<script>alert("File uploaded successfully.<br>")</script>';
         echo '<script>window.location.href = "managestaff.php";</script>';
         exit();
     } else {
@@ -84,7 +79,8 @@ mysqli_close($connect);
 <link rel="icon" href="burger.png" type="image/png">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 <style>
-body {
+body 
+{
     background-image: url("bg.jpg.png"); 
     background-size: cover;
     background-repeat: no-repeat;
@@ -94,7 +90,8 @@ body {
     overflow: hidden; 
 }
 
-ul.head {
+ul.head 
+{
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -106,17 +103,20 @@ ul.head {
     z-index: 1;
 }
 
-ul.head li {
+ul.head li 
+{
     float: left;
 }
 
-ul.head li.topleft {
+ul.head li.topleft 
+{
     margin-left: 20px;
     display: flex;
     align-items: center;
 }
 
-ul.head li a {
+ul.head li a 
+{
     display: block;
     color: rgb(255, 255, 255);
     text-align: center;
@@ -126,19 +126,23 @@ ul.head li a {
     font-family: initial;
 }
 
-ul.head li.topright:hover {
+ul.head li.topright:hover 
+{
     background-color: green;
 }
 
-ul.head li.topright {
+ul.head li.topright 
+{
     float: right;
 }
 
-.all_topright {
+.all_topright 
+{
     margin-left: 80%;
 }
 
-.toggle-btn {
+.toggle-btn 
+{
     background-color: black;
     color: white;
     border: none;
@@ -148,38 +152,43 @@ ul.head li.topright {
     margin-right: 10px;
 }
 
-body, html {
+body, html 
+{
     height: 100%;
     margin: 0;
     position: relative;
     font-family: Arial, sans-serif;
 }
 
-.container {
+.container 
+{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 80px; /* Adjust to avoid navbar */
-    height: calc(100vh - 80px); /* Adjust container height to avoid header */
+    margin-top: 80px; 
+    height: calc(100vh - 80px); 
     overflow: hidden; 
 }
 
-.scrollable-content {
+.scrollable-content 
+{
     width: 100%;
     max-width: 900px;
-    overflow-y: auto; /* Allow vertical scrolling */
+    overflow-y: auto; 
     padding: 20px;
     box-sizing: border-box;
     height: 100%;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE 10+ */
+    scrollbar-width: none; 
+    -ms-overflow-style: none;  
 }
 
-.scrollable-content::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
+.scrollable-content::-webkit-scrollbar 
+{ 
+    display: none;  
 }
 
-.profile-container {
+.profile-container 
+{
     display: flex;
     align-items: center;
     background-color: rgba(255, 255, 255, 0.8);
@@ -187,10 +196,11 @@ body, html {
     padding: 50px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin-bottom: 20px;
-    position: relative; /* For positioning the button */
+    position: relative; 
 }
 
-.sidebar {
+.sidebar 
+{
     width: 250px;
     background-color: #333;
     color: white;
@@ -203,33 +213,40 @@ body, html {
     overflow-y: auto;
     transition: transform 0.3s ease;
 }
-.sidebar.collapsed {
+.sidebar.collapsed 
+{
     transform: translateX(-100%);
 }
-.sidebar nav ul {
+.sidebar nav ul 
+{
     padding: 0;
     list-style: none;
 }
-.sidebar nav ul li {
+.sidebar nav ul li 
+{
     padding: 10px 0;
 }
-.sidebar nav ul li a {
+.sidebar nav ul li a 
+{
     color: white;
     text-decoration: none;
     display: block;
     padding: 10px;
     transition: background-color 0.3s ease;
 }
-.sidebar nav ul li a:hover {
+.sidebar nav ul li a:hover 
+{
     background-color: #575757;
 }
 
-.staff-profile {
+.staff-profile 
+{
     text-align: center;
     margin-right: 20px;
 }
 
-.staff-profile img {
+.staff-profile img 
+{
     border-radius: 50%;
     width: 150px;
     height: 150px;
@@ -238,38 +255,45 @@ body, html {
     border: 5px solid rgba(0, 0, 0, 0.2); /* Adjusted border size */
 }
 
-.staff-profile h2 {
+.staff-profile h2 
+{
     margin: 10px 0;
     font-size: 30px;
 }
 
-.position {
+.position 
+{
     font-size: 20px;
 }
 
-.staff-details {
+.staff-details 
+{
     width: 100%;
     position: relative;
 }
 
-.staff-details h3 {
+.staff-details h3 
+{
     margin-bottom: 15px;
     font-size: 30px;
     border-bottom: 1px solid #ddd;
     padding-bottom: 5px;
 }
 
-.staff-details .form-group {
+.staff-details .form-group 
+{
     margin: 10px 0;
 }
 
-.staff-details .form-group label {
+.staff-details .form-group label 
+{
     display: block;
     font-weight: bold;
 }
 
 .staff-details .form-group input,
-.staff-details .form-group textarea {
+.staff-details .form-group textarea 
+{
     width: 100%;
     padding: 8px;
     margin-top: 5px;
@@ -278,36 +302,42 @@ body, html {
     box-sizing: border-box;
 }
 
-.staff-details .form-row {
+.staff-details .form-row 
+{
     display: flex;
     justify-content: space-between;
 }
 
-.staff-details .form-row .form-group {
+.staff-details .form-row .form-group 
+{
     width: 48%;
 }
 
 .staff-details .form-group input[type="text"],
 .staff-details .form-group input[type="email"],
-.staff-details .form-group input[type="tel"] {
+.staff-details .form-group input[type="tel"] 
+{
     height: 30px;
 }
 
-.staff-details .form-group textarea {
+.staff-details .form-group textarea 
+{
     height: 80px;
     resize: vertical;
 }
 
-.button-container {
+.button-container 
+{
     display: flex;
-    justify-content: flex-end; /* Align buttons to the right */
-    gap: 10px; /* Add some space between the buttons */
+    justify-content: flex-end; 
+    gap: 10px;
     position: absolute;
     right: 10px;
 }
 
 .add-button,
-.back-button {
+.back-button 
+{
     padding: 10px 20px;
     font-size: 16px;
     color: black;
@@ -318,9 +348,11 @@ body, html {
 }
 
 .add-button:hover,
-.back-button:hover {
+.back-button:hover 
+{
     background-color: grey;
-}</style>
+}
+</style>
 </head>
 <body>
 <?php if (isset($_GET['success'])): ?>
@@ -416,9 +448,10 @@ body, html {
 </div>
 
 <script>
-function toggleSidebar() {
-        document.getElementById('sidebar').classList.toggle('collapsed');
-    }
+function toggleSidebar() 
+{
+    document.getElementById('sidebar').classList.toggle('collapsed');
+}
 </script>
 </body>
 </html>

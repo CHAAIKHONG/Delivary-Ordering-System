@@ -18,16 +18,17 @@ $result = mysqli_query($connect, $query);
     <link rel="icon" href="burger.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
-    <style>
-/* 全局样式 */
-body, html {
+<style>
+body, html 
+{
     height: 100%;
     margin: 0;
     position: relative;
     font-family: Arial, sans-serif;
 }
 
-body {
+body 
+{
     background-image: url("bg.jpg.png"); 
     background-size: cover;
     background-repeat: no-repeat; 
@@ -36,7 +37,8 @@ body {
 
 
 
-ul.head {
+ul.head 
+{
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -51,16 +53,19 @@ ul.head {
     justify-content: space-between;
 }
 
-ul.head li {
+ul.head li 
+{
     float: left;
 }
 
-ul.head li.topleft {
+ul.head li.topleft 
+{
     display: flex;
     align-items: center;
 }
 
-.head_title, .head li a {
+.head_title, .head li a 
+{
     display: block;
     color: white;
     text-align: center;
@@ -70,7 +75,8 @@ ul.head li.topleft {
     font-family: initial;
 }
 
-.toggle-btn {
+.toggle-btn 
+{
     background-color: black;
     color: white;
     border: none;
@@ -80,7 +86,8 @@ ul.head li.topleft {
     margin-right: 10px;
 }
 
-.sidebar {
+.sidebar 
+{
     width: 250px;
     background-color: #333;
     color: white;
@@ -94,20 +101,24 @@ ul.head li.topleft {
     transition: transform 0.3s ease;
 }
 
-.sidebar.collapsed {
+.sidebar.collapsed 
+{
     transform: translateX(-100%);
 }
 
-.sidebar nav ul {
+.sidebar nav ul 
+{
     padding: 0;
     list-style: none;
 }
 
-.sidebar nav ul li {
+.sidebar nav ul li 
+{
     padding: 10px 0;
 }
 
-.sidebar nav ul li a {
+.sidebar nav ul li a 
+{
     color: white;
     text-decoration: none;
     display: block;
@@ -115,33 +126,39 @@ ul.head li.topleft {
     transition: background-color 0.3s ease;
 }
 
-.sidebar nav ul li a:hover {
+.sidebar nav ul li a:hover 
+{
     background-color: #575757;
 }
 
-.content-wrapper {
+.content-wrapper 
+{
     margin-left: 260px;
     padding: 20px;
     transition: margin-left 0.3s ease;
 }
 
-.content-wrapper.collapsed {
+.content-wrapper.collapsed 
+{
     margin-left: 0;
 }
 
-.manage-products h2 {
+.manage-products h2 
+{
     text-align: center;
     color: black;
     margin-top: 0;
     padding-top: 60px;
 }
 
-.categories {
+.categories 
+{
     text-align: center;
     margin-bottom: 20px;
 }
 
-.categories button {
+.categories button 
+{
     background-color: black;
     color: white;
     border: none;
@@ -152,11 +169,13 @@ ul.head li.topleft {
     border-radius: 10px;
 }
 
-.categories button:hover {
+.categories button:hover 
+{
     background-color: #ffcc00;
 }
 
-table {
+table 
+{
     width: 100%;
     border-collapse: collapse;
     background-color: white;
@@ -164,18 +183,21 @@ table {
     overflow: hidden;
 }
 
-table th, table td {
+table th, table td 
+{
     padding: 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
 
-table th {
+table th 
+{
     background-color: black;
     color: white;
 }
 
-.actions button {
+.actions button 
+{
     background-color: black;
     color: white;
     border: none;
@@ -185,11 +207,13 @@ table th {
     border-radius: 10px;
 }
 
-.actions button:hover {
+.actions button:hover 
+{
     background-color: red;
 }
 
-.modal {
+.modal 
+{
     display: none;
     position: fixed;
     z-index: 1;
@@ -201,7 +225,8 @@ table th {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal-content {
+.modal-content 
+{
     background-color: #fff;
     margin: 5% auto;
     padding: 20px;
@@ -211,49 +236,55 @@ table th {
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     animation: fadeIn 0.3s ease;
-    overflow-y: auto; /* 允许垂直滚动 */
-    max-height: 80vh; /* 调整模态内容的最大高度 */
+    overflow-y: auto; 
+    max-height: 80vh;
     padding-right: 15px;
-    -ms-overflow-style: none; /* IE和Edge隐藏滚动条 */
-    scrollbar-width: none; /* Firefox隐藏滚动条 */
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+
+.modal-content::-webkit-scrollbar 
+{
+    display: none; 
 }
 
-.modal-content::-webkit-scrollbar {
-    display: none; /* Chrome, Safari和Opera隐藏滚动条 */
-}
-
-@keyframes fadeIn {
+@keyframes fadeIn 
+{
     from { opacity: 0; transform: scale(0.9); }
     to { opacity: 1; transform: scale(1); }
 }
 
-.close {
+.close 
+{
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
 
-.close:hover, .close:focus {
+.close:hover, .close:focus 
+{
     color: black;
     text-decoration: none;
     cursor: pointer;
 }
 
-.form {
+.form 
+{
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.form h2 {
+.form h2 
+{
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
     text-align: center;
 }
 
-.input {
+.input 
+{
     padding: 10px;
     margin: 5px 0;
     border: 1px solid #ccc;
@@ -261,12 +292,14 @@ table th {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.input:focus {
+.input:focus 
+{
     outline: none;
     border-color: #000;
 }
 
-.button-confirm {
+.button-confirm 
+{
     padding: 10px;
     background-color: black;
     color: white;
@@ -277,12 +310,13 @@ table th {
     transition: background-color 0.3s ease;
 }
 
-.button-confirm:hover {
+.button-confirm:hover 
+{
     background-color: #444;
 }
 
 
-    </style>
+</style>
 </head>
 <body>
 <ul class="head">
@@ -392,14 +426,16 @@ table th {
 </div>
 
 <script>
-    function toggleSidebar() {
+    function toggleSidebar() 
+    {
         var sidebar = document.getElementById('sidebar');
         var contentWrapper = document.getElementById('content-wrapper');
         sidebar.classList.toggle('collapsed');
         contentWrapper.classList.toggle('collapsed');
     }
 
-    function filterCategory(category) {
+    function filterCategory(category) 
+    {
         var rows = document.querySelectorAll("#productTable tr");
         rows.forEach(function(row) {
             if (category === 'all' || row.cells[2].innerText === category) {
@@ -410,15 +446,18 @@ table th {
         });
     }
 
-    function showAddProductModal() {
+    function showAddProductModal() 
+    {
         document.getElementById('addProductModal').style.display = 'block';
     }
 
-    function closeModal(modalId) {
+    function closeModal(modalId) 
+    {
         document.getElementById(modalId).style.display = 'none';
     }
 
-    function deleteProduct(productId) {
+    function deleteProduct(productId) 
+    {
         if (confirm("Are you sure you want to delete this product?")) {
             window.location.href = "delete_product.php?id=" + productId;
         }

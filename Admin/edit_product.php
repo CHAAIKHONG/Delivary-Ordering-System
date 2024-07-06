@@ -1,12 +1,10 @@
 <?php
-// Connect to your database
 $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
 if (!$connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// Get product details
 if (isset($_GET['id'])) {
     $product_id = $_GET['id'];
     $query = "SELECT * FROM product WHERE product_id = '$product_id'";
@@ -16,7 +14,6 @@ if (isset($_GET['id'])) {
     die("Product ID is required.");
 }
 
-// Update product
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_name = mysqli_real_escape_string($connect, $_POST['product_name']);
     $category_id = mysqli_real_escape_string($connect, $_POST['category_id']);
