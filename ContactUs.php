@@ -114,7 +114,7 @@
             <ul>
                 <li><a href="#">Facebook</a></li>
                 <li><a href="#">Instagram</a></li>
-                <li><a href="#">Tiktokv</a></li>
+                <li><a href="#">Tiktok</a></li>
             </ul>
         </div>
         <div id="footer-section">
