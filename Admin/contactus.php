@@ -18,7 +18,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MoonBees Staff | Contact Us History</title>
-    <link rel="stylesheet" href="manageproduct.css">
+    <link rel="icon" href="burger.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
     <style>
@@ -83,6 +83,55 @@
             margin-right: 10px;
         }
 
+        .sidebar {
+    width: 250px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    padding-top: 60px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+}
+
+.sidebar.collapsed {
+    transform: translateX(-100%);
+}
+
+.sidebar nav ul {
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar nav ul li {
+    padding: 10px 0;
+}
+
+.sidebar nav ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar nav ul li a:hover {
+    background-color: #575757;
+}
+
+.toggle-btn {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 14px 16px;
+    cursor: pointer;
+    font-size: 25px;
+    margin-right: 10px;
+}
+
         .logout {
             margin-right: 20px;
         }
@@ -101,6 +150,10 @@
             transition: margin-left 0.3s ease;
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
+        }
+
+        .content-wrapper.collapsed {
+            margin-left: 0;
         }
 
         .contactus-history {
@@ -153,6 +206,7 @@
                         <li><a href="javascript:void(0)" onclick="location.href='managestaff.php'">Manage Staff</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='manageproduct.php'">Manage Products</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='report.html'">Report</a></li>
+                        <li><a href="javascript:void(0)" onclick="location.href='orderhistory.php'">Order History</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
                     </ul>
                 </li>
