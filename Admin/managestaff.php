@@ -71,10 +71,6 @@ $result = mysqli_query($connect, $query);
         font-family: initial;
     }
 
-    ul.head li.topcenter:hover {
-        background-color: green;
-    }
-
     .toggle-btn {
         background-color: black;
         color: white;
@@ -210,7 +206,15 @@ $result = mysqli_query($connect, $query);
     }
 
     .details button:hover {
-        background-color: green;
+        background-color: #575757;
+    }
+
+    .details button:nth-child(1):hover {
+        background-color: #ffcc00;
+    }
+
+    .details button:nth-child(2):hover {
+        background-color: red;
     }
 
     .logout {
@@ -225,6 +229,7 @@ $result = mysqli_query($connect, $query);
         padding: 14px 16px;
     }
 </style>
+
 </head>
 <body>
     <div class="all_container">
