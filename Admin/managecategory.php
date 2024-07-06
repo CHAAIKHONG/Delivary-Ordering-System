@@ -10,7 +10,8 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
     <style>
-        body {
+        body 
+        {
             background-image: url("bg.jpg.png"); 
             background-size: cover;
             background-repeat: no-repeat; 
@@ -18,7 +19,8 @@
             font-family: Arial, sans-serif;
         }
 
-        ul.head {
+        ul.head 
+        {
             list-style-type: none;
             margin: 0;
             padding: 0;
@@ -33,16 +35,19 @@
             justify-content: space-between;
         }
 
-        ul.head li {
+        ul.head li 
+        {
             float: left;
         }
 
-        ul.head li.topleft {
+        ul.head li.topleft 
+        {
             display: flex;
             align-items: center;
         }
 
-        .head_title, .head li a {
+        .head_title, .head li a 
+        {
             display: block;
             color: white;
             text-align: center;
@@ -52,7 +57,8 @@
             font-family: initial;
         }
 
-        .toggle-btn {
+        .toggle-btn 
+        {
             background-color: black;
             color: white;
             border: none;
@@ -62,13 +68,15 @@
             margin-right: 10px;
         }
 
-        body, html {
+        body, html 
+        {
             height: 100%;
             margin: 0;
             position: relative;
         }
 
-        .sidebar {
+        .sidebar 
+        {
             width: 250px;
             background-color: #333;
             color: white;
@@ -82,20 +90,24 @@
             transition: transform 0.3s ease;
         }
 
-        .sidebar.collapsed {
+        .sidebar.collapsed 
+        {
             transform: translateX(-100%);
         }
 
-        .sidebar nav ul {
+        .sidebar nav ul 
+        {
             padding: 0;
             list-style: none;
         }
 
-        .sidebar nav ul li {
+        .sidebar nav ul li 
+        {
             padding: 10px 0;
         }
 
-        .sidebar nav ul li a {
+        .sidebar nav ul li a 
+        {
             color: white;
             text-decoration: none;
             display: block;
@@ -103,11 +115,13 @@
             transition: background-color 0.3s ease;
         }
 
-        .sidebar nav ul li a:hover {
+        .sidebar nav ul li a:hover 
+        {
             background-color: #575757;
         }
 
-        .content-wrapper {
+        .content-wrapper 
+        {
             margin-left: 260px;
             padding: 20px;
             transition: margin-left 0.3s ease;
@@ -115,18 +129,21 @@
             border-radius: 10px;
         }
 
-        .content-wrapper.collapsed {
+        .content-wrapper.collapsed 
+        {
             margin-left: 0;
         }
 
-        h2 {
+        h2 
+        {
             text-align: center;
             color: #333;
-            margin-top: 0; /* Remove default margin */
+            margin-top: 0; 
             padding-top: 60px; 
         }
 
-        form {
+        form 
+        {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -134,7 +151,8 @@
             margin-bottom: 20px;
         }
 
-        form input[type="text"] {
+        form input[type="text"] 
+        {
             padding: 10px;
             margin: 10px 0;
             width: 80%;
@@ -143,7 +161,8 @@
             border-color:black;
         }
 
-        form button {
+        form button 
+        {
             background-color: #007bff;
             color: white;
             border: none;
@@ -153,37 +172,45 @@
             transition: background-color 0.3s ease;
         }
 
-        form button:hover {
+        form button:hover 
+        {
             background-color: #0056b3;
         }
 
-        form .add-product-btn {
+        form .add-product-btn 
+        {
             background-color: black;
         }
 
-        form .add-product-btn:hover {
-            background-color: yellow;
+        form .add-product-btn:hover 
+        {
+            background-color: #ffcc00;
         }
 
-        form .edit-product-btn {
+        form .edit-product-btn 
+        {
             background-color: #ffc107;
             color: black;
         }
 
-        form .edit-product-btn:hover {
-            background-color: #e0a800;
+        form .edit-product-btn:hover 
+        {
+            background-color: #ffcc00;
         }
 
-        form .cancel-btn {
+        form .cancel-btn 
+        {
             background-color: red;
             color: white;
         }
 
-        form .cancel-btn:hover {
+        form .cancel-btn:hover 
+        {
             background-color: darkred;
         }
 
-        table {
+        table 
+        {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
@@ -192,53 +219,62 @@
             overflow: hidden;
         }
 
-        table, th, td {
+        table, th, td 
+        {
             border: 1px solid #ddd;
         }
 
-        th, td {
+        th, td 
+        {
             padding: 8px;
             text-align: left;
         }
 
-        th {
+        th
+        {
             background-color: black;
             color: white;
         }
 
-        .actions a {
+        .actions a
+        {
             margin-right: 5px;
             padding: 5px 10px;
             border: none;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            text-decoration: none; /* remove underline */
+            text-decoration: none; 
             color: white;
             border-radius: 5px;
         }
 
-        .actions a.delete {
+        .actions a.delete 
+        {
+            background-color: black;
+        }
+
+        .actions a.delete:hover 
+        {
             background-color: red;
         }
 
-        .actions a.delete:hover {
-            background-color: darkred;
+        .actions a.edit 
+        {
+            background-color: black;
         }
 
-        .actions a.edit {
-            background-color: #ffc107;
-            color: black;
+        .actions a.edit:hover 
+        {
+            background-color: #ffcc00;
         }
 
-        .actions a.edit:hover {
-            background-color: #e0a800;
-        }
-
-        .logout {
+        .logout 
+        {
             margin-right: 20px;
         }
 
-        .logout a {
+        .logout a 
+        {
             font-size: 15px;
             text-decoration: none;
             color: white;
@@ -373,7 +409,8 @@
     </div>
 
     <script>
-        function editCategory(id, name) {
+        function editCategory(id, name) 
+        {
             document.getElementById('category_id').value = id;
             document.getElementById('category_name').value = name;
             document.getElementById('update-btn').style.display = 'inline-block';
@@ -381,7 +418,8 @@
             document.getElementById('add-btn').style.display = 'none';
         }
 
-        function cancelEdit() {
+        function cancelEdit() 
+        {
             document.getElementById('category_id').value = '';
             document.getElementById('category_name').value = '';
             document.getElementById('update-btn').style.display = 'none';
@@ -389,7 +427,8 @@
             document.getElementById('add-btn').style.display = 'inline-block';
         }
 
-        function toggleSidebar() {
+        function toggleSidebar() 
+        {
             document.getElementById('sidebar').classList.toggle('collapsed');
             document.getElementById('content-wrapper').classList.toggle('collapsed');
         }

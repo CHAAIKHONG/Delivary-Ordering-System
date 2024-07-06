@@ -1,4 +1,5 @@
-body{
+body
+{
     font-family: Calibri,Helvetica,sans-serif;
     background-color: white;
     height: 100vh;
@@ -15,14 +16,16 @@ body{
     background-position-y: 10px;
 }
 
-nav{
+nav
+{
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 50px;
 }
 
-.video_container {
+.video_container 
+{
     position: fixed;
     top: 0;
     left: 0;
@@ -32,7 +35,8 @@ nav{
     z-index: -1;
 }
 
-#background_video {
+#background_video 
+{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -42,7 +46,8 @@ nav{
     transform: translate(-50%, -50%);
 }
 
-.form_container {
+.form_container 
+{
     position: relative;
     z-index: 1;
     background-color: rgba(255, 255, 255, 0.7);
@@ -55,13 +60,14 @@ nav{
     margin: 50px 0px;
 }
 
-.container{
+.container
+{
     padding: 25px;
-    /* background-color: lightblue; */
     vertical-align: top;
 }
 
-input[type=text],input[type=password]{
+input[type=text],input[type=password]
+{
     width: 100%;
     margin: 8px 0;
     padding: 12px 20px;
@@ -70,7 +76,8 @@ input[type=text],input[type=password]{
     box-sizing: border-box;
 }
 
-button{
+button
+{
     background-color: rgb(255, 251, 0);
     width: 100%;
     color: black;
@@ -81,48 +88,45 @@ button{
     border-radius: 50px;
 }
 
-button:hover{
+button:hover
+{
     opacity: 0.7;
 }
 
-.logo_container, .form_container{
+.logo_container, .form_container
+{
     display: inline-block;
 }
 
-.logo_container{
+.logo_container
+{
     margin-left: px;
 }
 
-.forgetpass{
+.forgetpass
+{
     padding-left: 120px;
 }
 
-.abc{
+.abc
+{
     padding: 20px;
-    /* background-color: gray; */
-    /* background-image: url(image/5.png);
-    flex: 1;
-    margin-top: 50px;
-    height: 600px;
-    background-size:cover;
-    background-position: center;
-    background-repeat: no-repeat; */
-    /* background-color: rgba(255, 255, 255, 0.7); */
-    /* z-index: -1; */
     justify-content: center;
     align-items: center;
     flex-direction: column;
     text-align: center;
 }
 
-.kuang{
+.kuang
+{
     position: relative;
     width: 350px;
     height: 60px;
     border-radius: 5px;
 }
 
-.concel{
+.concel
+{
     position: absolute;
     top: 15px;
     right: 15px;
@@ -134,7 +138,8 @@ button:hover{
     cursor: pointer;
 }
 
-.concel.open{
+.concel.open
+{
     background-image: url(image/open.png);
     background-size: 100%;
     top: 20px;
@@ -144,14 +149,10 @@ button:hover{
     background-repeat: no-repeat;
 }
 
-/* .moonbees{
-    padding-left: 100px;
-} */
-
-.footer {
+.footer 
+{
     display: flex;
     justify-content: space-around;
-    /* background-color: #333; */
     color: rgb(255, 255, 255);
     padding: 20px 0;
     list-style-type: none;
@@ -160,17 +161,20 @@ button:hover{
     margin: auto;
 }
 
-.footer ul{
+.footer ul
+{
     list-style: none;
     padding: 0;
 }
 
-.footer a{
+.footer a
+{
     text-decoration: none;
     color: rgb(255, 255, 255);
 }
 
-.footer a:hover{
+.footer a:hover
+{
     color: rgb(226, 99, 99);
 }
 

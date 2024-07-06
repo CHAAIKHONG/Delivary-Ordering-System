@@ -30,14 +30,16 @@ $result = mysqli_query($connect, $query);
 <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
 <style>
-    body {
+    body 
+    {
         background-image: url("bg.jpg.png"); 
         background-size: cover;
         background-repeat: no-repeat; 
         background-attachment:fixed;
     }
 
-    ul.head {
+    ul.head
+    {
         list-style-type: none;
         margin: 0;
         padding: 0;
@@ -52,16 +54,19 @@ $result = mysqli_query($connect, $query);
         justify-content: space-between;
     }
 
-    ul.head li {
+    ul.head li 
+    {
         float: left;
     }
 
-    ul.head li.topleft {
+    ul.head li.topleft 
+    {
         display: flex;
         align-items: center;
     }
 
-    .head_title, .head li a {
+    .head_title, .head li a 
+    {
         display: block;
         color: white;
         text-align: center;
@@ -71,11 +76,8 @@ $result = mysqli_query($connect, $query);
         font-family: initial;
     }
 
-    ul.head li.topcenter:hover {
-        background-color: green;
-    }
-
-    .toggle-btn {
+    .toggle-btn 
+    {
         background-color: black;
         color: white;
         border: none;
@@ -85,14 +87,16 @@ $result = mysqli_query($connect, $query);
         margin-right: 10px;
     }
     
-    body, html {
+    body, html 
+    {
         height: 100%;
         margin: 0;
         position: relative;
         font-family: Arial, sans-serif;
     }
 
-    .sidebar {
+    .sidebar 
+    {
         width: 250px;
         background-color: #333;
         color: white;
@@ -105,28 +109,39 @@ $result = mysqli_query($connect, $query);
         overflow-y: auto;
         transition: transform 0.3s ease;
     }
-    .sidebar.collapsed {
+
+    .sidebar.collapsed 
+    {
         transform: translateX(-100%);
     }
-    .sidebar nav ul {
+
+    .sidebar nav ul 
+    {
         padding: 0;
         list-style: none;
     }
-    .sidebar nav ul li {
+
+    .sidebar nav ul li 
+    {
         padding: 10px 0;
     }
-    .sidebar nav ul li a {
+
+    .sidebar nav ul li a 
+    {
         color: white;
         text-decoration: none;
         display: block;
         padding: 10px;
         transition: background-color 0.3s ease;
     }
-    .sidebar nav ul li a:hover {
+
+    .sidebar nav ul li a:hover 
+    {
         background-color: #575757;
     }
 
-    .staffbox {
+    .staffbox 
+    {
         padding: 20px;
         margin: 80px auto 50px; 
         border-radius: 50px;
@@ -138,7 +153,8 @@ $result = mysqli_query($connect, $query);
         align-items: center;
     }
 
-    .staffbox2 {
+    .staffbox2 
+    {
         padding: 20px; 
         margin: 20px auto 20px; 
         border-radius: 50px;
@@ -150,7 +166,8 @@ $result = mysqli_query($connect, $query);
         align-items: center.
     }
 
-    .staff-member {
+    .staff-member 
+    {
         background-color: white;
         border: 5px solid black;
         border-radius: 15px;
@@ -163,26 +180,31 @@ $result = mysqli_query($connect, $query);
         position: relative;
     }
 
-    .staff-member:hover {
+    .staff-member:hover 
+    {
         transform: scale(1.05);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
 
-    .staff-member img {
+    .staff-member img 
+    {
         width: 100%;
         border-radius: 10px;
         cursor: pointer;
     }
 
-    .staff-member img.add {
+    .staff-member img.add 
+    {
         width: 70%;
     }
 
-    .staff-member:hover .details {
+    .staff-member:hover .details 
+    {
         display: flex;
     }
 
-    .details {
+    .details 
+    {
         display: none;
         position: absolute;
         bottom: 10px;
@@ -198,7 +220,8 @@ $result = mysqli_query($connect, $query);
         gap: 5px;
     }
 
-    .details button {
+    .details button 
+    {
         margin: 5px;
         padding: 5px 10px;
         font-size: 14px;
@@ -209,15 +232,28 @@ $result = mysqli_query($connect, $query);
         border-radius: 5px;
     }
 
-    .details button:hover {
-        background-color: green;
+    .details button:hover 
+    {
+        background-color: #575757;
     }
 
-    .logout {
+    .details button:nth-child(1):hover 
+    {
+        background-color: #ffcc00;
+    }
+
+    .details button:nth-child(2):hover 
+    {
+        background-color: red;
+    }
+
+    .logout 
+    {
         margin-right: 20px;
     }
 
-    .logout a {
+    .logout a 
+    {
         font-size: 15px;
         text-decoration: none;
         color: white;
@@ -225,6 +261,7 @@ $result = mysqli_query($connect, $query);
         padding: 14px 16px;
     }
 </style>
+
 </head>
 <body>
     <div class="all_container">
@@ -245,15 +282,10 @@ $result = mysqli_query($connect, $query);
                     <a href="javascript:void(0)" onclick="location.href='mainmenu.html'">Admin</a>
                     <ul>
                         <li><a href="javascript:void(0)" onclick="location.href='Manageproduct.php'">Manage Products</a></li>
-
                         <li><a href="javascript:void(0)" onclick="location.href='report.html'">Report</a></li>
-
                         <li><a href="javascript:void(0)" onclick="location.href='orderhistory.php'">Order History</a></li>
-
                         <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
-
                         <li><a href="javascript:void(0)" onclick="location.href='contactus.php'">Contact Us History</a></li>
-
                     </ul>
                 </li>
             </ul>
@@ -287,7 +319,8 @@ $result = mysqli_query($connect, $query);
     </div>
 
     <script>
-        function toggleSidebar() {
+        function toggleSidebar() 
+        {
             document.getElementById('sidebar').classList.toggle('collapsed');
             document.getElementById('content-wrapper').classList.toggle('collapsed');
         }

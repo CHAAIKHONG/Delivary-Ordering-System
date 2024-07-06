@@ -2,12 +2,10 @@
     session_start();
     $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
-    // 检查数据库连接
     if (!$connect) {
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    // 检查用户登录状态和获取用户信息
     $userPhoto = null;
     $userName = 'user';
 
@@ -22,7 +20,6 @@
         $userName = $_SESSION['fullname'];
     }
 
-    // 查询产品信息
     $query = "SELECT p.*, c.category_name FROM product p JOIN category c ON p.category_id = c.category_id";
     $result = mysqli_query($connect, $query);
 

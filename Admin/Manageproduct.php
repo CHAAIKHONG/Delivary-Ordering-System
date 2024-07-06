@@ -18,212 +18,203 @@ $result = mysqli_query($connect, $query);
     <link rel="icon" href="burger.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
-    <style>
-body {
-        background-image: url("bg.jpg.png"); 
-        background-size: cover;
-        background-repeat: no-repeat; 
-        background-attachment:fixed;
-    }
+<style>
+body, html 
+{
+    height: 100%;
+    margin: 0;
+    position: relative;
+    font-family: Arial, sans-serif;
+}
 
-    ul.head {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background-color: black;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+body 
+{
+    background-image: url("bg.jpg.png"); 
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+}
 
-    ul.head li {
-        float: left;
-    }
 
-    ul.head li.topleft {
-        display: flex;
-        align-items: center;
-    }
 
-    .head_title, .head li a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-        font-size: 25px;
-        font-family: initial;
-    }
+ul.head 
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: black;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-        .toggle-btn {
-            background-color: black;
-            color: white;
-            border: none;
-            padding: 14px 16px;
-            cursor: pointer;
-            font-size: 25px;
-            margin-right: 10px;
-        }
-        
-        body, html {
-            height: 100%;
-            margin: 0;
-            position: relative;
-            font-family: Arial, sans-serif;
-        }
+ul.head li 
+{
+    float: left;
+}
 
-        .sidebar {
-            width: 250px;
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            padding-top: 60px;
-            box-sizing: border-box;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            overflow-y: auto;
-            transition: transform 0.3s ease;
-        }
+ul.head li.topleft 
+{
+    display: flex;
+    align-items: center;
+}
 
-        .sidebar.collapsed {
-            transform: translateX(-100%);
-        }
-
-        .sidebar nav ul {
-            padding: 0;
-            list-style: none;
-        }
-
-        .sidebar nav ul li {
-            padding: 10px 0;
-        }
-
-        .sidebar nav ul li a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        .sidebar nav ul li a:hover {
-            background-color: #575757;
-        }
-
-        .content-wrapper {
-            margin-left: 260px;
-            padding: 20px;
-            transition: margin-left 0.3s ease;
-        }
-
-        .content-wrapper.collapsed {
-            margin-left: 0;
-        }
-
-        .manage-products h2 {
-            text-align: center;
-            color: black;
-            margin-top: 0; /* Remove default margin */
-            padding-top: 60px;
-        }
-
-        .categories {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .categories button {
-            background-color: black;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            border-radius: 10px;
-        }
-
-        .categories button:hover {
-            background-color: yellow;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        table th, table td {
-            padding: 10px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-        }
-
-        table th {
-            background-color: black;
-            color: white;
-        }
-
-        .actions button {
-            background-color: black;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            border-radius: 10px;
-
-        }
-
-        .actions button:hover {
-            background-color: red;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-            border-radius: 10px;
-        }
-
-        .modal-content span.close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .modal-content span.close:hover, .modal-content span.close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .modal {
+.head_title, .head li a 
+{
     display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    font-family: initial;
+}
+
+.toggle-btn 
+{
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 14px 16px;
+    cursor: pointer;
+    font-size: 25px;
+    margin-right: 10px;
+}
+
+.sidebar 
+{
+    width: 250px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    padding-top: 60px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+}
+
+.sidebar.collapsed 
+{
+    transform: translateX(-100%);
+}
+
+.sidebar nav ul 
+{
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar nav ul li 
+{
+    padding: 10px 0;
+}
+
+.sidebar nav ul li a 
+{
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar nav ul li a:hover 
+{
+    background-color: #575757;
+}
+
+.content-wrapper 
+{
+    margin-left: 260px;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+.content-wrapper.collapsed 
+{
+    margin-left: 0;
+}
+
+.manage-products h2 
+{
+    text-align: center;
+    color: black;
+    margin-top: 0;
+    padding-top: 60px;
+}
+
+.categories 
+{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.categories button 
+{
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+}
+
+.categories button:hover 
+{
+    background-color: #ffcc00;
+}
+
+table 
+{
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+table th, table td 
+{
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+table th 
+{
+    background-color: black;
+    color: white;
+}
+
+.actions button 
+{
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+}
+
+.actions button:hover 
+{
+    background-color: red;
+}
+
+.modal 
+{
+    display: none;
     position: fixed;
     z-index: 1;
     left: 0;
@@ -231,52 +222,69 @@ body {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
+.modal-content 
+{
+    background-color: #fff;
+    margin: 5% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    max-width: 400px;
+    max-width: 500px;
     border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.3s ease;
+    overflow-y: auto; 
+    max-height: 80vh;
+    padding-right: 15px;
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+
+.modal-content::-webkit-scrollbar 
+{
+    display: none; 
 }
 
-.close {
+@keyframes fadeIn 
+{
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.close 
+{
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
+.close:hover, .close:focus 
+{
     color: black;
     text-decoration: none;
     cursor: pointer;
 }
 
-.form {
+.form 
+{
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.title {
+.form h2 
+{
     font-size: 24px;
     font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-.title span {
-    font-size: 16px;
-    font-weight: normal;
-}
-
-.input {
+.input 
+{
     padding: 10px;
     margin: 5px 0;
     border: 1px solid #ccc;
@@ -284,20 +292,31 @@ body {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.button-confirm {
+.input:focus 
+{
+    outline: none;
+    border-color: #000;
+}
+
+.button-confirm 
+{
     padding: 10px;
-    background-color: #000;
-    color: #fff;
+    background-color: black;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
-.button-confirm:hover {
+.button-confirm:hover 
+{
     background-color: #444;
 }
 
-    </style>
+
+</style>
 </head>
 <body>
 <ul class="head">
@@ -401,43 +420,49 @@ body {
             <textarea placeholder="Description" name="description" class="input"></textarea><br>
             <input type="file" name="image" class="input" required><br>
 
-            <button type="submit" class="button-confirm">Let`s go →</button>
+            <button type="submit" class="button-confirm">Save</button>
         </form>
     </div>
 </div>
 
-    <script>
-        function toggleSidebar() {
-            var sidebar = document.getElementById('sidebar');
-            var contentWrapper = document.getElementById('content-wrapper');
-            sidebar.classList.toggle('collapsed');
-            contentWrapper.classList.toggle('collapsed');
-        }
+<script>
+    function toggleSidebar() 
+    {
+        var sidebar = document.getElementById('sidebar');
+        var contentWrapper = document.getElementById('content-wrapper');
+        sidebar.classList.toggle('collapsed');
+        contentWrapper.classList.toggle('collapsed');
+    }
 
-        function filterCategory(category) {
-            var rows = document.querySelectorAll("#productTable tr");
-            rows.forEach(function(row) {
-                if (category === 'all' || row.cells[2].innerText === category) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-        }
+    function filterCategory(category) 
+    {
+        var rows = document.querySelectorAll("#productTable tr");
+        rows.forEach(function(row) {
+            if (category === 'all' || row.cells[2].innerText === category) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
 
-        function showAddProductModal() {
-            document.getElementById('addProductModal').style.display = 'block';
-        }
+    function showAddProductModal() 
+    {
+        document.getElementById('addProductModal').style.display = 'block';
+    }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
+    function closeModal(modalId) 
+    {
+        document.getElementById(modalId).style.display = 'none';
+    }
 
-        function deleteProduct(productId) {
-            if (confirm("Are you sure you want to delete this product?")) {
-                window.location.href = "delete_product.php?id=" + productId;
-            }                   
+    function deleteProduct(productId) 
+    {
+        if (confirm("Are you sure you want to delete this product?")) {
+            window.location.href = "delete_product.php?id=" + productId;
         }
-    </script>
+    }
+</script>
+
 </body>
 </html>

@@ -6,15 +6,17 @@
     <title>MoonBees Staff | Report</title>
     <link rel="icon" href="burger.png">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
-    <style>
-body {
+<style>
+    body 
+    {
         background-image: url("bg.jpg.png"); 
         background-size: cover;
         background-repeat: no-repeat; 
         background-attachment:fixed;
     }
 
-    ul.head {
+    ul.head 
+    {
         list-style-type: none;
         margin: 0;
         padding: 0;
@@ -29,16 +31,19 @@ body {
         justify-content: space-between;
     }
 
-    ul.head li {
+    ul.head li 
+    {
         float: left;
     }
 
-    ul.head li.topleft {
+    ul.head li.topleft 
+    {
         display: flex;
         align-items: center;
     }
 
-    .head_title, .head li a {
+    .head_title, .head li a 
+    {
         display: block;
         color: white;
         text-align: center;
@@ -48,134 +53,172 @@ body {
         font-family: initial;
     }
 
-    body, html {
+    body, html 
+    {
         height: 100%;
         margin: 0;
         position: relative;
         font-family: Arial, sans-serif;
     }
 
-        .toggle-btn {
-            background-color: black;
-            color: white;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            font-size: 25px;
-            margin-left: 10px;
-        }
-        .sidebar {
-            width: 250px;
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            padding-top: 60px;
-            box-sizing: border-box;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            overflow-y: auto;
-            transition: transform 0.3s ease;
-        }
+    .toggle-btn 
+    {
+        background-color: black;
+        color: white;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        font-size: 25px;
+        margin-left: 10px;
+    }
 
-        .sidebar.collapsed {
-            transform: translateX(-100%);
-        }
+    .sidebar 
+    {
+        width: 250px;
+        background-color: #333;
+        color: white;
+        padding: 20px;
+        padding-top: 60px;
+        box-sizing: border-box;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        overflow-y: auto;
+        transition: transform 0.3s ease;
+    }
 
-        .sidebar nav ul {
-            padding: 0;
-            list-style: none;
-        }
+    .sidebar.collapsed 
+    {
+        transform: translateX(-100%);
+    }
 
-        .sidebar nav ul li {
-            padding: 10px 0;
-        }
+    .sidebar nav ul 
+    {
+        padding: 0;
+        list-style: none;
+    }
 
-        .sidebar nav ul li a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 10px;
-            transition: background-color 0.3s ease;
-        }
+    .sidebar nav ul li
+    {
+        padding: 10px 0;
+    }
 
-        .sidebar nav ul li a:hover {
-            background-color: #575757;
-        }
+    .sidebar nav ul li a 
+    {
+        color: white;
+        text-decoration: none;
+        display: block;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+    }
 
-        .content-wrapper {
-            margin-left: 250px;
-            flex: 1;
-            padding: 20px;
-            padding-top: 60px;
-            background-color: #f4f4f4;
-            transition: margin-left 0.3s ease;
-        }
-        .content-wrapper.collapsed {
-            margin-left: 0;
-        }
-        .sales-report {
-            display: none;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        button {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #000000;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #f6ff00;
-        }
-        canvas {
-            max-width: 100%;
-        }
-        .pagination {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .pagination button {
-            margin: 0 5px;
-            padding: 5px 10px;
-        }
-        .month-selector {
-            text-align: center;
-            margin: 20px 0;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .month-selector button {
-            margin: 5px;
-            padding: 5px 10px;
-            flex: 1 1 8%;
-        }
+    .sidebar nav ul li a:hover 
+    {
+        background-color: #575757;
+    }
 
-        .logout {
+    .content-wrapper 
+    {
+        margin-left: 250px;
+        flex: 1;
+        padding: 20px;
+        padding-top: 60px;
+        background-color: #f4f4f4;
+        transition: margin-left 0.3s ease;
+    }
+       
+    .content-wrapper.collapsed 
+    {
+        margin-left: 0;
+    }
+
+    .sales-report 
+    {
+        display: none;
+    }
+    
+    table 
+    {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+        
+    table, th, td 
+    {
+        border: 1px solid #ddd;
+    }
+        
+    th, td 
+    {
+        padding: 8px;
+        text-align: left;
+    }
+
+    th
+    {
+        background-color: #f2f2f2;
+    }
+        
+    button 
+    {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #000000;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover
+    {
+        background-color: #ffcc00;
+    }
+
+    canvas 
+    {
+        max-width: 100%;
+    }
+    
+    .pagination 
+    {
+        text-align: center;
+        margin: 20px 0;
+    }
+        
+    .pagination button 
+    {
+        margin: 0 5px;
+        padding: 5px 10px;
+    }
+
+    .month-selector 
+    {
+        text-align: center;
+        margin: 20px 0;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .month-selector button 
+    {
+        margin: 5px;
+        padding: 5px 10px;
+        flex: 1 1 8%;
+    }
+
+    .logout 
+    {
         margin-right: 20px;
     }
 
-    .logout a {
+    .logout a 
+    {
         font-size: 15px;
         text-decoration: none;
         color: white;
@@ -202,16 +245,10 @@ body {
                         <a href="javascript:void(0)" onclick="location.href='mainmenu.html'">Admin</a>
                         <ul>
                             <li><a href="javascript:void(0)" onclick="location.href='managestaff.php'">Manage Staff</a></li>
-    
                             <li><a href="javascript:void(0)" onclick="location.href='Manageproduct.php'">Manage Products</a></li>
-
                             <li><a href="javascript:void(0)" onclick="location.href='orderhistory.php'">Order History</a></li>
-
                             <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
-
                             <li><a href="javascript:void(0)" onclick="location.href='contactus.php'">Contact Us History</a></li>
-
-    
                         </ul>
                     </li>
                 </ul>
@@ -286,7 +323,8 @@ body {
         let currentMonth = 'January';
         let chartInstance = null;
 
-        function fetchMonthlySalesData(page, month) {
+        function fetchMonthlySalesData(page, month) 
+        {
             return new Promise((resolve) => {
                 setTimeout(() => {
                     const start = (page - 1) * itemsPerPage;
@@ -296,7 +334,8 @@ body {
             });
         }
 
-        function generateReport(data) {
+        function generateReport(data) 
+        {
             const tableBody = document.querySelector('#report-table tbody');
             tableBody.innerHTML = '';
             data.forEach(item => {
@@ -342,7 +381,8 @@ body {
             document.getElementById('report-title').innerText = `Sales Report - ${currentMonth}`;
         }
 
-        function downloadReport() {
+        function downloadReport() 
+        {
             let csvContent = "data:text/csv;charset=utf-8,";
             csvContent += "Product ID,Name,Price,Quantity Sold,Total Revenue\n";
 
@@ -368,12 +408,14 @@ body {
             document.body.removeChild(link);
         }
 
-        function toggleSidebar() {
+        function toggleSidebar() 
+        {
             document.getElementById('sidebar').classList.toggle('collapsed');
             document.getElementById('content-wrapper').classList.toggle('collapsed');
         }
 
-        function updatePagination(totalItems) {
+        function updatePagination(totalItems) 
+        {
             const totalPages = Math.ceil(totalItems / itemsPerPage);
             const paginationControls = document.getElementById('pagination-controls');
             paginationControls.innerHTML = '';
@@ -389,16 +431,18 @@ body {
             }
         }
 
-        async function goToPage(page) {
+        async function goToPage(page) 
+        {
             currentPage = page;
             const data = await fetchMonthlySalesData(page, currentMonth);
             generateReport(data);
             updatePagination(salesData[currentMonth].length);
         }
 
-        async function showReport(month) {
+        async function showReport(month) 
+        {
             currentMonth = month;
-            currentPage = 1; // Reset to first page when changing month
+            currentPage = 1; 
             document.querySelector('.sales-report').style.display = 'block';
             const data = await fetchMonthlySalesData(currentPage, month);
             generateReport(data);

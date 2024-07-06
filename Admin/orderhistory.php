@@ -2,12 +2,10 @@
     session_start();
     $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
-    // 检查数据库连接
     if (!$connect) {
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    // 查询订单信息
     $sql = "SELECT CONCAT(u.first_name, ' ', u.last_name) AS full_name, o.* FROM `order` o JOIN `user` u ON o.user_id = u.user_id";
     $result = mysqli_query($connect, $sql);
 ?>
@@ -23,7 +21,8 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
     <style>
-        body {
+        body 
+        {
             background-image: url("bg.jpg.png");
             background-size: cover;
             background-repeat: no-repeat;
@@ -32,7 +31,8 @@
             margin: 0;
         }
 
-        ul.head {
+        ul.head 
+        {
             list-style-type: none;
             margin: 0;
             padding: 0;
@@ -47,17 +47,20 @@
             justify-content: space-between;
         }
 
-        ul.head li {
+        ul.head li 
+        {
             float: left;
         }
 
-        ul.head li.topleft {
+        ul.head li.topleft 
+        {
             display: flex;
             align-items: center;
         }
 
         .head_title,
-        .head li a {
+        .head li a 
+        {
             display: block;
             color: white;
             text-align: center;
@@ -67,14 +70,16 @@
             font-family: initial;
         }
 
-        h2 {
+        h2 
+        {
             text-align: center;
             color: #333;
-            margin-top: -55px; /* Remove default margin */
+            margin-top: -55px; 
             padding-top: 60px;
         }
 
-        .toggle-btn {
+        .toggle-btn 
+        {
             background-color: black;
             color: white;
             border: none;
@@ -84,7 +89,8 @@
             margin-right: 10px;
         }
 
-        .sidebar {
+        .sidebar 
+        {
             width: 250px;
             background-color: #333;
             color: white;
@@ -98,20 +104,24 @@
             transition: transform 0.3s ease;
         }
 
-        .sidebar.collapsed {
+        .sidebar.collapsed 
+        {
             transform: translateX(-100%);
         }
 
-        .sidebar nav ul {
+        .sidebar nav ul 
+        {
             padding: 0;
             list-style: none;
         }
 
-        .sidebar nav ul li {
+        .sidebar nav ul li
+        {
             padding: 10px 0;
         }
 
-        .sidebar nav ul li a {
+        .sidebar nav ul li a 
+        {
             color: white;
             text-decoration: none;
             display: block;
@@ -119,15 +129,18 @@
             transition: background-color 0.3s ease;
         }
 
-        .sidebar nav ul li a:hover {
+        .sidebar nav ul li a:hover 
+        {
             background-color: #575757;
         }
 
-        .logout {
+        .logout 
+        {
             margin-right: 20px;
         }
 
-        .logout a {
+        .logout a 
+        {
             font-size: 15px;
             text-decoration: none;
             color: white;
@@ -135,7 +148,8 @@
             padding: 14px 16px;
         }
 
-        .content-wrapper {
+        .content-wrapper 
+        {
             margin-left: 260px;
             padding: 20px;
             transition: margin-left 0.3s ease;
@@ -143,15 +157,18 @@
             border-radius: 10px;
         }
 
-        .content-wrapper.collapsed {
+        .content-wrapper.collapsed 
+        {
             margin-left: 0;
         }
 
-        .order-history {
-            margin-top: 60px; /* Adjust based on your header height */
+        .order-history 
+        {
+            margin-top: 60px; 
         }
 
-        table {
+        table 
+        {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
@@ -161,22 +178,26 @@
         }
 
         th,
-        td {
+        td 
+        {
             padding: 8px;
             text-align: left;
             border: 1px solid #ddd;
         }
 
-        th {
+        th 
+        {
             background-color: black;
             color: white;
         }
 
-        .left-align {
+        .left-align 
+        {
             text-align: left;
         }
 
-        .center-align {
+        .center-align 
+        {
             text-align: center;
         }
     </style>
@@ -201,7 +222,6 @@
                         <li><a href="javascript:void(0)" onclick="location.href='managestaff.php'">Manage Staff</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='manageproduct.php'">Manage Products</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='report.html'">Report</a></li>
-                        <li><a href="javascript:void(0)" onclick="location.href='orderhistory.php'">Order History</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='contactus.php'">Contact Us History</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
                     </ul>
@@ -239,7 +259,6 @@
                             echo "</thead>";
                             echo "<tbody>";
 
-                            // 查询订单详细信息
                             $order_id = $order_row['order_id'];
                             $details_query = "SELECT p.product_name, d.* FROM order_detail d JOIN product p ON d.product_id = p.product_id WHERE order_id = $order_id";
                             $details_result = mysqli_query($connect, $details_query);
@@ -269,7 +288,8 @@
     </div>
 
     <script>
-        function toggleSidebar() {
+        function toggleSidebar() 
+        {
             document.getElementById('sidebar').classList.toggle('collapsed');
             document.getElementById('content-wrapper').classList.toggle('collapsed');
         }

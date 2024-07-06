@@ -1,5 +1,5 @@
-/* Header Styles */
-ul.head{
+ul.head
+{
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -11,15 +11,18 @@ ul.head{
     z-index: 1;
 }
 
-ul.head li{
+ul.head li
+{
     float: left;
 }
 
-ul.head li.topleft{
+ul.head li.topleft
+{
     margin-left: 100px;
 }
 
-.head_title{
+.head_title
+{
     display: block;
     color: white;
     text-align: center;
@@ -29,22 +32,25 @@ ul.head li.topleft{
     font-family: initial;
 }
 
-ul.head li.topcenter:hover{
-    background-color: green;
+ul.head li.topcenter:hover
+{
+    background-color: #ffd700;
 }
 
-.all_topcenter{
+.all_topcenter
+{
 margin-left: 37%;
 }
 
-.all_topright{
+.all_topright
+{
     margin-left: 70%;
 }
 
-.footer {
+.footer 
+{
     display: flex;
     justify-content: space-around;
-    /* background-color: #333; */
     color: rgb(0, 0, 0);
     padding: 20px 0;
     list-style-type: none;
@@ -53,20 +59,24 @@ margin-left: 37%;
     margin: auto;
 }
 
-.footer ul{
+.footer ul
+{
     list-style: none;
     padding: 0;
 }
 
-.footer a{
+.footer a
+{
     text-decoration: none;
     color: rgb(0, 0, 0);
 }
 
-.footer a:hover{
+.footer a:hover
+{
     color: rgb(226, 99, 99);
 }
 
-#footer-section ul li {
+#footer-section ul li 
+{
     margin: 10px 0;
 }

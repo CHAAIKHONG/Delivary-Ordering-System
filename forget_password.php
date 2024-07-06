@@ -1,7 +1,6 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-// Include PHPMailer files
 require 'PHPMailer-master/src/Exception.php';
 require 'PHPMailer-master/src/PHPMailer.php';
 require 'PHPMailer-master/src/SMTP.php';
@@ -22,15 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = mysqli_fetch_assoc($result);
         $password = $user['password'];
 
-        // Send email using PHPMailer
         $mail = new PHPMailer(true);
         try {
-            // Server settings
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'moonbees5431@gmail.com'; // Your Gmail address
-            $mail->Password = 'dgjz zxiz hfwn cabp'; // Your Gmail password or app-specific password
+            $mail->Username = 'moonbees5431@gmail.com'; 
+            $mail->Password = 'dgjz zxiz hfwn cabp'; 
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
@@ -115,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <ul>
                 <li><a href="#">Facebook</a></li>
                 <li><a href="#">Instagram</a></li>
-                <li><a href="#">Tiktokv</a></li>
+                <li><a href="#">Tiktok</a></li>
             </ul>
         </div>
         <div id="footer-section">

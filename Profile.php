@@ -2,12 +2,10 @@
     session_start();
     $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
-    // 检查数据库连接
     if (!$connect) {
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    // 检查用户登录状态和获取用户信息
     $userPhoto = null;
     $userName = 'user';
     $user_id = $_SESSION['user_id'] ?? null;
@@ -20,7 +18,6 @@
         $userName = $_SESSION['fullname'];
     }
 
-    // 初始化用户信息
     $firstName = '';
     $lastName = '';
     $email = '';
@@ -28,7 +25,6 @@
     $place = '';
     $birthDate = '';
 
-    // 获取用户信息
     $query = "SELECT first_name, last_name, email, phone_number, address FROM user WHERE user_id = '$user_id'";
     $result = mysqli_query($connect, $query);
 
@@ -41,7 +37,6 @@
         $place = $row['address'];
     }
 
-    // 处理表单提交
     if (isset($_POST['save_profile'])) {
         $firstName = mysqli_real_escape_string($connect, $_POST['first_name']);
         $lastName = mysqli_real_escape_string($connect, $_POST['last_name']);
@@ -50,11 +45,9 @@
         $place = mysqli_real_escape_string($connect, $_POST['address']);
         $birthDate = mysqli_real_escape_string($connect, $_POST['birth_date']);
 
-        // 更新数据库
         $update_query = "UPDATE user SET first_name = '$firstName', last_name = '$lastName', email = '$email', phone_number = '$phoneNum', address = '$place' WHERE user_id = '$user_id'";
 
         if (mysqli_query($connect, $update_query)) {
-            // 更新成功，可以添加成功的消息或者重定向
             $_SESSION['fullname'] = $firstName . ' ' . $lastName;
             echo '<script>alert("Profile updated successfully!");</script>';
             echo '<script>window.location.href = "profile.php";</script>';

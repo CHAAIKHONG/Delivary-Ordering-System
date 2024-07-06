@@ -1,59 +1,49 @@
 <?php
     session_start();
 
-    // 连接到数据库
     $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
-    // 检查连接
     if (!$connect) {
         die("Database connection failed: " . mysqli_connect_error());
     }
 
-    // 处理登录表单提交
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = mysqli_real_escape_string($connect, $_POST['username']);
         $password = mysqli_real_escape_string($connect, $_POST['password']);
-        $remember = isset($_POST['remember']); // 是否选择了Remember Me
+        $remember = isset($_POST['remember']); 
 
         if ($email === 'admin@gmail.com' && $password === 'admin1234') {
-            // 重定向到管理员主页
             echo '<script>alert("Welcome Admin")</script>';
             echo '<script>window.location.href = "Admin/mainmenu.html";</script>';
             exit;
         } else{
 
-            // 查询数据库检查email和password
             $sql = "SELECT * FROM user WHERE email='$email' AND password='$password'";
             $result = mysqli_query($connect, $sql);
 
             if (mysqli_num_rows($result) > 0) {
                 $user = mysqli_fetch_assoc($result);
 
-                // 登录成功，设置会话
                 $_SESSION['username'] = $email;
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['fullname'] = $user['first_name'] . ' ' . $user['last_name'];
                 $_SESSION['photo'] = $user['user_photo'];
 
-                // 如果选择了Remember Me，设置Cookie
                 if ($remember) {
                     $cookie_name = 'user_cookie';
                     $cookie_value = $email;
-                    setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 30天有效期的Cookie
+                    setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); 
                 }
 
-                 // 重定向到其他页面，例如主页
-                header('Location: menu.php'); // 替换成你的主页地址
+                header('Location: menu.php'); 
                 exit;
                 
             } else {
-                // 登录失败，可以添加错误提示
                 echo '<script>alert("Invalid email or password")</script>';
             }
         }
     }
 
-    // 检查是否存在持久性Cookie，如果存在且没有会话则自动登录
     if (!isset($_SESSION['username']) && isset($_COOKIE['user_cookie'])) {
         $_SESSION['username'] = $_COOKIE['user_cookie'];
     }
@@ -78,17 +68,11 @@
     <ul class="head">
         <li class="topleft"><a href="#home" class="head_title">MoonBees</a></li>
         <div class="all_topcenter">
-            <!-- <li class="topcenter"><a href="menu.html" class="head_title">Menu</a></li> -->
-            <!-- <li class="topcenter"><a href="#Contact Us" class="head_title">Contact Us</a></li>
-            <li class="topcenter"><a href="#About Us" class="head_title">About Us</a></li> -->
-        </div>
         <div class="all_topright">
             <li class="help"><i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding-right: 15px;"> Help</i></li>
-            <!-- <?php if (!isset($_SESSION['username'])) : ?>
-                <li class="user"><a href="login.php" style="font-size: 15px; text-decoration: none;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Login</a></i></li>
+             <?php if (!isset($_SESSION['username'])) : ?>
             <?php else : ?>
-                <li class="user"><a href="login.php" style="font-size: 15px; text-decoration: none;"><i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Logout</a></i></li>
-            <?php endif; ?> -->
+            <?php endif; ?> 
         </div>
     </ul>
         
@@ -137,7 +121,7 @@
             <ul>
                 <li><a href="#">Facebook</a></li>
                 <li><a href="#">Instagram</a></li>
-                <li><a href="#">Tiktokv</a></li>
+                <li><a href="#">Tiktok</a></li>
             </ul>
         </div>
         <div id="footer-section">

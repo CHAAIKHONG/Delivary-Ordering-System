@@ -2,12 +2,10 @@
 session_start();
 $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
-// 检查数据库连接
 if (!$connect) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// 检查用户登录状态和获取用户信息
 $userPhoto = null;
 $userName = 'user';
 $userAddress = '';
@@ -23,7 +21,6 @@ if (isset($_SESSION['user_id'])) {
         $userName = $_SESSION['fullname'];
     }
 
-    // 获取用户地址
     $query = "SELECT address, email, phone_number FROM user WHERE user_id = ?";
     $stmt = $connect->prepare($query);
     $stmt->bind_param("i", $user_id);
@@ -39,7 +36,6 @@ if (isset($_SESSION['user_id'])) {
 
     $stmt->close();
 
-    // 获取用户的订单项
     $query = "SELECT cartitem.product_id, product.product_name, product.price, product.photo, cartitem.quantity 
             FROM cartitem 
             INNER JOIN product ON cartitem.product_id = product.product_id 
@@ -57,7 +53,6 @@ if (isset($_SESSION['user_id'])) {
 
     $stmt->close();
 } else {
-    // 用户未登录，重定向到登录页面
     header("Location: login.php");
     exit();
 }
@@ -142,12 +137,6 @@ if (isset($_SESSION['user_id'])) {
                         </form>
                     </div>
                 </ul>
-                <!-- <hr> -->
-                <!-- <div class="order_requests">
-                    <h2>Order Requests (Optional)</h2>
-                    <textarea name="requests" id="requests" placeholder="Example: give me 2 set of spoon and fork" style="width: 568px; height: 100px; resize: vertical; min-height: 40px;"></textarea>
-                </div>
-                <br> -->
                 <hr>
                 <br>
                 <div class="payment_method">
@@ -207,7 +196,6 @@ if (isset($_SESSION['user_id'])) {
                 <input type="hidden" name="order_items" value='<?php echo json_encode($orderItems); ?>'>
                 <input type="hidden" name="payment_method" id="paymentMethod">
             </form>
-            <!-- <button class="confirm_payment">Payment</button> -->
         </div>
     </div>
 

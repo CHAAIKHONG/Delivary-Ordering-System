@@ -2,12 +2,10 @@
     session_start();
     $connect = mysqli_connect("localhost", "root", "", "moonbeedb");
 
-    // 检查数据库连接
     if (!$connect) {
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    // 检查用户登录状态和获取用户信息
     $userPhoto = null;
     $userName = 'user';
 
@@ -22,7 +20,6 @@
     }
 
     if (isset($_POST['submit_feedback'])) {
-        $topic = mysqli_real_escape_string($connect, $_POST['topic_selection']);
         $comment = mysqli_real_escape_string($connect, $_POST['comment']);
     
         $sql = "INSERT INTO contactus (user_id, message) VALUES ('$user_id', '$comment')";
@@ -42,7 +39,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MoonBees | Contact</title>
     <link rel="icon" type="image" href="image/burger-removebg-preview.png">
-    <!-- <link rel="stylesheet" href="ContactUs.css"> -->
     <link rel="stylesheet" href="menu.css">
     <link rel="stylesheet" href="head_footer.css">
     <script src="ContactUs.js" type="javascript"></script>
@@ -73,26 +69,14 @@
     </ul>
 
     
-    <!-- <video src="Video/6月9日.mp4" class="contactus_video"></video> -->
     <img src="image/contact us.png" alt="Contect Us" class="contactus_image">
     
     <div class="contactus_body">
-        <!-- <h1>Contact Us</h1> -->
         <form class="feedbackfrm" method="post">
-            <div class="fb_topic">
-                <label><p>Topic</p></label>
-                <select name="topic_selection" id="topic_selection">
-                    <option value>--Select One--</option>
-                    <option value="Food">Food</option>
-                    <option value="DeliveryService">Delivery Service</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-
             <div class="fb_sgt">
                 <label><p>Feed Back / Suggestion</p></label>
-                <textarea name="comment" id="comment"></textarea>
-            </div>
+                <textarea name="comment" id="comment" style="width: 500px; height: 320px; resize: none;"></textarea>
+                </div>
 
             <div class="submit_btn">
                 <button type="submit" name="submit_feedback" style="text-align: center; border: 1px solid black; background-color: yellow; border-radius: 10px; width: 70px;">Submit</button>
@@ -127,7 +111,7 @@
             <ul>
                 <li><a href="#">Facebook</a></li>
                 <li><a href="#">Instagram</a></li>
-                <li><a href="#">Tiktokv</a></li>
+                <li><a href="#">Tiktok</a></li>
             </ul>
         </div>
         <div id="footer-section">
