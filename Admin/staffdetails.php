@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $salary = $_POST['Salary'];
+    $position = $_POST['position'];
     $address = $_POST['address'];
     $experience = $_POST['experience'];
     $skills = $_POST['skills'];
@@ -70,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $photo_query = "";
     }
 
-    $query = "UPDATE staff SET fullname='$fullname', yearsold='$years', email='$email', phone='$phone', salary='$salary', address='$address', workexperience='$experience', skill='$skills' $photo_query WHERE id='$id'";
+    $query = "UPDATE staff SET fullname='$fullname', yearsold='$years', email='$email', phone='$phone', salary='$salary', address='$address', workexperience='$experience', skill='$skills', position='$position' $photo_query WHERE id='$id'";
 
     if (mysqli_query($connect, $query)) {
         $update_success = true;
@@ -97,60 +98,48 @@ mysqli_close($connect);
 <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
 <style>
-body {
-    background-image: url("bg.jpg.png"); 
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    height: 100vh;
-    margin: 0;
-    overflow: hidden; 
-}
+    body {
+        background-image: url("bg.jpg.png"); 
+        background-size: cover;
+        background-repeat: no-repeat; 
+        background-attachment:fixed;
+    }
 
-ul.head {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: black;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1;
-}
+    ul.head {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: black;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-ul.head li {
-    float: left;
-}
+    ul.head li {
+        float: left;
+    }
 
-ul.head li.topleft {
-    margin-left: 100px;
+    ul.head li.topleft {
     display: flex;
     align-items: center;
+    margin-left: 70px; 
 }
 
-ul.head li a {
-    display: block;
-    color: rgb(255, 255, 255);
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    font-family: initial;
-}
 
-ul.head li.topright:hover {
-    background-color: green;
-}
-
-ul.head li.topright {
-    float: right;
-}
-
-.all_topright {
-    margin-left: 80%;
-}
-
+    .head_title, .head li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 25px;
+        font-family: initial;
+    }
 
 body, html {
     height: 100%;
@@ -295,6 +284,18 @@ body, html {
 .back-button:hover {
     background-color: grey;
 }
+
+.logout {
+        margin-right: 20px;
+    }
+
+    .logout a {
+        font-size: 15px;
+        text-decoration: none;
+        color: white;
+        display: block;
+        padding: 14px 16px;
+    }
 </style>
 
 <script>
@@ -306,20 +307,13 @@ body, html {
 </head>
 <body>
     <div class="all_container">
-        <ul class="head">
+    <ul class="head">
             <li class="topleft">
                 <a href="#home">MoonBees</a>
             </li>
-            <div class="all_topright">
-                <li class="help">
-                    <i class="ri-question-line" style="color: white; display: block; margin-top: 20px; padding: 0px 15px;"> Help</i>
-                </li>
-                <li class="user">
-                    <a href="staff_login.html" style="font-size: 15px; text-decoration: none; padding: 0;">
-                        <i class="ri-user-5-line" style="color: white; display: block; margin-top: 20px;"> Login</i>
-                    </a>
-                </li>
-            </div>
+            <li class="logout">
+                <a href="logout2.php"><i class="ri-user-5-line"></i> Logout</a>
+            </li>
         </ul>
 
         <div class="container">
@@ -356,6 +350,10 @@ body, html {
                             <div class="form-group">
                                 <label for="Salary">Salary</label>
                                 <input type="text" id="Salary" name="Salary" value="<?php echo $staff['salary']; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="position">Position</label>
+                                <input type="text" id="position" name="position" value="<?php echo $staff['position']; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="address">Address</label>

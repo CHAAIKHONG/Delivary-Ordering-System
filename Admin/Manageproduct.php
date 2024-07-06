@@ -19,57 +19,46 @@ $result = mysqli_query($connect, $query);
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
     <style>
-        body {
-            background-image: url("bg.jpg.png"); 
-            background-size: cover;
-            background-repeat: no-repeat; 
-            background-attachment: fixed;
-        }
+body {
+        background-image: url("bg.jpg.png"); 
+        background-size: cover;
+        background-repeat: no-repeat; 
+        background-attachment:fixed;
+    }
 
-        ul.head {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: black;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1;
-            display: flex;
-            justify-content: space-between;
-        }
+    ul.head {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: black;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-        ul.head li {
-            float: left;
-        }
+    ul.head li {
+        float: left;
+    }
 
-        ul.head li.topleft {
-            display: flex;
-            align-items: center;
-        }
+    ul.head li.topleft {
+        display: flex;
+        align-items: center;
+    }
 
-        .head_title, .head li a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-size: 25px;
-            font-family: initial;
-        }
-
-        ul.head li.logout {
-            margin-right: 50px;
-            display: flex;
-            align-items: center;
-        }
-
-        ul.head li.logout a {
-            font-size: 15px;
-            text-decoration: none;
-            color: white;
-        }
+    .head_title, .head li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 25px;
+        font-family: initial;
+    }
 
         .toggle-btn {
             background-color: black;
@@ -139,7 +128,9 @@ $result = mysqli_query($connect, $query);
 
         .manage-products h2 {
             text-align: center;
-            color: white;
+            color: black;
+            margin-top: 0; /* Remove default margin */
+            padding-top: 60px;
         }
 
         .categories {
@@ -193,7 +184,7 @@ $result = mysqli_query($connect, $query);
         }
 
         .actions button:hover {
-            background-color: yellow;
+            background-color: red;
         }
 
         .modal {
@@ -230,92 +221,18 @@ $result = mysqli_query($connect, $query);
             text-decoration: none;
             cursor: pointer;
         }
-
-        .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-    background-color: #fff;
-    margin: 10% auto;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 300px; /* Adjust width to your preference */
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-label {
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-input[type="text"],
-textarea,
-select,
-input[type="file"] {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
-    background-color: black;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
     </style>
 </head>
 <body>
-    <ul class="head">
-        <li class="topleft">
-            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-            <a href="#home">MoonBees</a>
-        </li>
-        <li class="logout">
-            <a href="logout2.php"><i class="ri-user-5-line"></i> Logout</a>
-        </li>
-    </ul>
+<ul class="head">
+    <li class="topleft">
+        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        <a href="#home">MoonBees</a>
+    </li>
+    <li class="logout">
+        <a href="logout2.php"><i class="ri-user-5-line"></i> Logout</a>
+    </li>
+</ul>
 
     <div class="sidebar" id="sidebar">
         <nav>
@@ -327,6 +244,8 @@ button:hover {
                         <li><a href="javascript:void(0)" onclick="location.href='report.html'">Report</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='orderhistory.php'">Order History</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
+                        <li><a href="javascript:void(0)" onclick="location.href='contactus.php'">Contact Us History</a></li>
+
                     </ul>
                 </li>
             </ul>

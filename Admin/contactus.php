@@ -7,8 +7,8 @@
         die("Connection failed: " . mysqli_connect_error());
     }
 
-    // 查询订单信息
-    $sql = "SELECT CONCAT(u.first_name, ' ', u.last_name) AS full_name, o.* FROM `order` o JOIN `user` u ON o.user_id = u.user_id";
+    // 查询联系我们历史记录
+    $sql = "SELECT CONCAT(u.first_name, ' ', u.last_name) AS full_name, u.email, u.phone_number, c.* FROM `contactus` c JOIN `user` u ON c.user_id = u.user_id";
     $result = mysqli_query($connect, $sql);
 ?>
 
@@ -17,15 +17,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoonBees Staff | Order History</title>
+    <title>MoonBees Staff | Contact Us History</title>
     <link rel="stylesheet" href="manageproduct.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
 
     <style>
         body {
-            background-image: url("bg.jpg.png"); 
+            background-image: url("bg.jpg.png");
             background-size: cover;
-            background-repeat: no-repeat; 
+            background-repeat: no-repeat;
             background-attachment: fixed;
             font-family: Arial, sans-serif;
             margin: 0;
@@ -55,7 +55,8 @@
             align-items: center;
         }
 
-        .head_title, .head li a {
+        .head_title,
+        .head li a {
             display: block;
             color: white;
             text-align: center;
@@ -68,9 +69,8 @@
         h2 {
             text-align: center;
             color: #333;
-            margin-top: -55px
-        ; /* Remove default margin */
-            padding-top: 60px; 
+            margin-top: -55px; /* Remove default margin */
+            padding-top: 60px;
         }
 
         .toggle-btn {
@@ -103,7 +103,7 @@
             border-radius: 10px;
         }
 
-        .order-history {
+        .contactus-history {
             margin-top: 60px; /* Adjust based on your header height */
         }
 
@@ -116,7 +116,8 @@
             overflow: hidden;
         }
 
-        th, td {
+        th,
+        td {
             padding: 8px;
             text-align: left;
             border: 1px solid #ddd;
@@ -129,10 +130,6 @@
 
         .left-align {
             text-align: left;
-        }
-
-        .center-align {
-            text-align: center;
         }
     </style>
 </head>
@@ -157,7 +154,6 @@
                         <li><a href="javascript:void(0)" onclick="location.href='manageproduct.php'">Manage Products</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='report.html'">Report</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
-                        <li><a href="javascript:void(0)" onclick="location.href='contactus.php'">Contact Us History</a></li>
                     </ul>
                 </li>
             </ul>
@@ -165,54 +161,30 @@
     </div>
 
     <div class="content-wrapper" id="content-wrapper">
-        <div class="order-history">
-            <h2>Order History</h2>
+        <div class="contactus-history">
+            <h2>Contact Us History</h2>
             <table>
                 <thead>
                     <tr>
                         <th class="left-align">Customers</th>
-                        <th class="left-align">Total (RM)</th>
-                        <th class="center-align">Products</th>
+                        <th class="left-align">Customers Email</th>
+                        <th class="left-align">Customers Phone Number</th>
+                        <th class="left-align">Comment</th>
                     </tr>
                 </thead>
-                <tbody id="orderTable">
+                <tbody id="contactusTable">
                     <?php
                     if (mysqli_num_rows($result) > 0) {
-                        while ($order_row = mysqli_fetch_assoc($result)) {
+                        while ($contact_row = mysqli_fetch_assoc($result)) {
                             echo "<tr>";
-                            echo "<td class='left-align'>" . $order_row['full_name'] . "</td>";
-                            echo "<td class='left-align'>RM " . $order_row['total_price'] . "</td>";
-                            echo "<td class='center-align'>";
-                            echo "<table>";
-                            echo "<thead>";
-                            echo "<tr>";
-                            echo "<th>Product Name</th>";
-                            echo "<th>Price</th>";
-                            echo "<th>Quantity</th>";
-                            echo "</tr>";
-                            echo "</thead>";
-                            echo "<tbody>";
-
-                            // 查询订单详细信息
-                            $order_id = $order_row['order_id'];
-                            $details_query = "SELECT p.product_name, d.* FROM order_detail d JOIN product p ON d.product_id = p.product_id WHERE order_id = $order_id";
-                            $details_result = mysqli_query($connect, $details_query);
-
-                            while ($detail = mysqli_fetch_assoc($details_result)) {
-                                echo "<tr>";
-                                echo "<td>" . $detail['product_name'] . "</td>";
-                                echo "<td>RM " . $detail['price'] . "</td>";
-                                echo "<td>" . $detail['quantity'] . "</td>";
-                                echo "</tr>";
-                            }
-
-                            echo "</tbody>";
-                            echo "</table>";
-                            echo "</td>";
+                            echo "<td class='left-align'>" . $contact_row['full_name'] . "</td>";
+                            echo "<td class='left-align'>" . $contact_row['email'] . "</td>";
+                            echo "<td class='left-align'>" . $contact_row['phone_number'] . "</td>";
+                            echo "<td class='left-align'>" . $contact_row['message'] . "</td>";
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='3'>No results found</td></tr>";
+                        echo "<tr><td colspan='4'>No results found</td></tr>";
                     }
 
                     mysqli_close($connect);

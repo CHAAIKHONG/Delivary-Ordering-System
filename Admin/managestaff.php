@@ -252,6 +252,8 @@ $result = mysqli_query($connect, $query);
 
                         <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
 
+                        <li><a href="javascript:void(0)" onclick="location.href='contactus.php'">Contact Us History</a></li>
+
                     </ul>
                 </li>
             </ul>
