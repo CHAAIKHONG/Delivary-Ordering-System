@@ -201,7 +201,6 @@
                         <li><a href="javascript:void(0)" onclick="location.href='managestaff.php'">Manage Staff</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='manageproduct.php'">Manage Products</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='report.html'">Report</a></li>
-                        <li><a href="javascript:void(0)" onclick="location.href='orderhistory.php'">Order History</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='contactus.php'">Contact Us History</a></li>
                         <li><a href="javascript:void(0)" onclick="location.href='managecategory.php'">Manage Category</a></li>
                     </ul>
